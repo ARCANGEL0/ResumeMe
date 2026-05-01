@@ -87,7 +87,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "entwickelt von: ARCANGELO",
-    "custom": "Benutzerdefiniert"
+    "custom": "Benutzerdefiniert",
+    "present": "Aktuell",
+    "native": "Muttersprache",
+    "fluent": "Fließend",
+    "intermediate": "Fortgeschritten",
+    "beginner": "Anfänger"
   },
   "sectionTitles": {
     "education": "Ausbildung",

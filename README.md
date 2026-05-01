@@ -73,12 +73,30 @@ ResumeMe/
 │   │   │
 │   │   ├── preview/           # Handlers for CV preview
 │   │   │   ├── PreviewPanel.tsx
-│   │   │   └── TemplateDocument.tsx
+│   │   │   └── getTemplate.tsx
 │   │   │
-│   │   ├── templates/         # 🎨 Templates selectors
+│   │   ├── templates/         # 🎨 Templates
+│   │   │   ├── TemplateDocument.tsx
 │   │   │   ├── TemplateSelector.tsx
+│   │   │   ├── templateComponents.tsx
+│   │   │   ├── templateCatalog.ts
 │   │   │   ├── templateLayout.ts
-│   │   │   └── templateColors.ts
+│   │   │   ├── templateUtils.ts
+│   │   │   ├── Atlas.tsx
+│   │   │   ├── Classic.tsx
+│   │   │   ├── Creative.tsx
+│   │   │   ├── Dossier.tsx
+│   │   │   ├── Editorial.tsx
+│   │   │   ├── Executive.tsx
+│   │   │   ├── Ivory.tsx
+│   │   │   ├── Minimal.tsx
+│   │   │   ├── Modern.tsx
+│   │   │   ├── North.tsx
+│   │   │   ├── Professional.tsx
+│   │   │   ├── Slate.tsx
+│   │   │   ├── Studio.tsx
+│   │   │   ├── Summit.tsx
+│   │   │   └── Zenith.tsx
 │   │   │
 │   │   ├── landing/           # 🚀 Landing page 
 │   │   │   └── LandingPage.tsx

@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "sukūrė: ARCANGELO",
-    "custom": "Pasirinktinis"
+    "custom": "Pasirinktinis",
+    "present": "Dabartinis",
+    "native": "Gimtoji",
+    "fluent": "Sklandžiai",
+    "intermediate": "Vidutiniškas",
+    "beginner": "Pradinukas"
   },
   "sectionTitles": {
     "experience": "Patirtis",

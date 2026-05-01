@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "dibangunkan oleh: ARCANGELO",
-    "custom": "Tersuai"
+    "custom": "Tersuai",
+    "present": "Kini",
+    "native": "Peribumi",
+    "fluent": "Fasih",
+    "intermediate": "Pertengahan",
+    "beginner": "Pemula"
   },
   "sectionTitles": {
     "experience": "Pengalaman",

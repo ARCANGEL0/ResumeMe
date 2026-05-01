@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "fejlesztette: ARCANGELO",
-    "custom": "Egyéni"
+    "custom": "Egyéni",
+    "present": "Jelenleg",
+    "native": "Anyanyelv",
+    "fluent": "Folyékony",
+    "intermediate": "Középhaladó",
+    "beginner": "Kezdő"
   },
   "sectionTitles": {
     "experience": "Tapasztalat",

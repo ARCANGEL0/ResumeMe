@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "izstrādājis: ARCANGELO",
-    "custom": "Pielāgots"
+    "custom": "Pielāgots",
+    "present": "Pašreizējais",
+    "native": "Dzimtā",
+    "fluent": "Brīvs",
+    "intermediate": "Vidējs",
+    "beginner": "Iesācējs"
   },
   "sectionTitles": {
     "experience": "Pieredze",

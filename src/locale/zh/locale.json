@@ -6,7 +6,7 @@
     "fiveTemplates": "15 Templates",
     "next": "Next ->",
     "endDate": "End date",
-    "downloadPdf": "Download PDF",
+    "downloadPdf": "下载 PDF",
     "socialLinksDescription": "Add only the profiles you want to display. You can add multiple.",
     "proficiency": "Proficiency",
     "fullName": "Full Name",
@@ -29,7 +29,7 @@
     "issuer": "Issuer",
     "showOnlyStartDate": "Show only start date",
     "templatePickerSubtitle": "Choose a layout and preview on A4",
-    "return": "Back",
+    "return": "返回",
     "currentlyWorking": "Currently working here",
     "description": "Description",
     "resumeSections": "CV Sections",
@@ -85,7 +85,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "由 ARCANGELO 开发",
-    "custom": "自定义"
+    "custom": "自定义",
+    "present": "至今",
+    "native": "母语",
+    "fluent": "流利",
+    "intermediate": "中级",
+    "beginner": "初级"
   },
   "sectionTitles": {
     "education": "教育",

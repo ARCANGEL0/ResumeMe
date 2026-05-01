@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "พัฒนาโดย ARCANGELO",
-    "custom": "กำหนดเอง"
+    "custom": "กำหนดเอง",
+    "present": "ปัจจุบัน",
+    "native": "เจ้าของภาษา",
+    "fluent": "คล่อง",
+    "intermediate": "ระดับกลาง",
+    "beginner": "ระดับเริ่มต้น"
   },
   "sectionTitles": {
     "experience": "ประสบการณ์",

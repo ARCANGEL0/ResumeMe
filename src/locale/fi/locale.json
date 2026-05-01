@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "kehittänyt: ARCANGELO",
-    "custom": "Mukautettu"
+    "custom": "Mukautettu",
+    "present": "Nykyinen",
+    "native": "Äidinkieli",
+    "fluent": "Sujuva",
+    "intermediate": "Keskitaso",
+    "beginner": "Aloittelija"
   },
   "sectionTitles": {
     "experience": "Kokemus",

@@ -51,7 +51,7 @@
     "socialLinks": "Sociale Links",
     "templates": "Sjablonen",
     "return": "Terug",
-    "downloadPdf": "Download PDF",
+    "downloadPdf": "PDF downloaden",
     "next": "Volgende ->",
     "sectionLibrary": "Sectiebibliotheek",
     "contact": "Contact",
@@ -85,7 +85,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "ontwikkeld door: ARCANGELO",
-    "custom": "Aangepast"
+    "custom": "Aangepast",
+    "present": "Huidig",
+    "native": "Moedertaal",
+    "fluent": "Vloeiend",
+    "intermediate": "Gemiddeld",
+    "beginner": "Beginner"
   },
   "sectionTitles": {
     "education": "Opleiding",

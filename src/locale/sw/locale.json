@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "imeundwa na ARCANGELO",
-    "custom": "Maalum"
+    "custom": "Maalum",
+    "present": "Kwa sasa",
+    "native": "Asili",
+    "fluent": "Kirahisi",
+    "intermediate": "Kati",
+    "beginner": "Mwanzo"
   },
   "sectionTitles": {
     "experience": "Uzoefu",

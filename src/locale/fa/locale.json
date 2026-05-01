@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "توسط ARCANGELO توسعه یافته است",
-    "custom": "سفارشی"
+    "custom": "سفارشی",
+    "present": "اکنون",
+    "native": "زبان مادری",
+    "fluent": "روان",
+    "intermediate": "متوسط",
+    "beginner": "مبتدی"
   },
   "sectionTitles": {
     "experience": "تجربه",

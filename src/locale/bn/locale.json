@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "ARCANGELO দ্বারা তৈরি",
-    "custom": "কাস্টম"
+    "custom": "কাস্টম",
+    "present": "বর্তমান",
+    "native": "মাতৃভাষা",
+    "fluent": "সাবলীল",
+    "intermediate": "মধ্যম",
+    "beginner": "প্রাথমিক"
   },
   "sectionTitles": {
     "experience": "অভিজ্ঞতা",

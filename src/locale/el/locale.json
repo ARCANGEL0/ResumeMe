@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "αναπτύχθηκε από: ARCANGELO",
-    "custom": "Προσαρμοσμένο"
+    "custom": "Προσαρμοσμένο",
+    "present": "Σημερινή",
+    "native": "Μητρική γλώσσα",
+    "fluent": "Εκφραστικός",
+    "intermediate": "Μεσαίος",
+    "beginner": "Αρχάριος"
   },
   "sectionTitles": {
     "experience": "Εμπειρία",

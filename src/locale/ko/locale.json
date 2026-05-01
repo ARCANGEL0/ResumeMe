@@ -85,7 +85,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "ARCANGELO가 개발했습니다",
-    "custom": "사용자 정의"
+    "custom": "사용자 정의",
+    "present": "현재",
+    "native": "원어민",
+    "fluent": "유창한",
+    "intermediate": "중급",
+    "beginner": "초급"
   },
   "sectionTitles": {
     "education": "교육",

@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "được phát triển bởi ARCANGELO",
-    "custom": "Tùy chỉnh"
+    "custom": "Tùy chỉnh",
+    "present": "Hiện tại",
+    "native": "Bản xứ",
+    "fluent": "Thành thạo",
+    "intermediate": "Trung cấp",
+    "beginner": "Cơ bản"
   },
   "sectionTitles": {
     "experience": "Kinh nghiệm",

@@ -19,7 +19,7 @@
     "fiveTemplates": "15 Templates",
     "next": "Next ->",
     "endDate": "End date",
-    "downloadPdf": "Download PDF",
+    "downloadPdf": "Descargar PDF",
     "socialLinksDescription": "Add only the profiles you want to display. You can add multiple.",
     "proficiency": "Proficiency",
     "fullName": "Full Name",
@@ -40,7 +40,7 @@
     "selected": "Selected",
     "issuer": "Issuer",
     "templatePickerSubtitle": "Choose a layout and preview on A4",
-    "return": "Back",
+    "return": "Volver",
     "description": "Description",
     "resumeSections": "CV Sections",
     "profile": "Profile",
@@ -91,7 +91,12 @@
     "youtube": "YouTube",
     "discord": "Discord",
     "appTitle": "Resume.Me",
-    "developedByArcangelo": "desarrollado por: ARCANGELO"
+    "developedByArcangelo": "desarrollado por: ARCANGELO",
+    "present": "Actualmente",
+    "native": "Nativo",
+    "fluent": "Fluido",
+    "intermediate": "Intermedio",
+    "beginner": "Principiante"
   },
   "sectionTitles": {
     "education": "Educación",

@@ -29,9 +29,10 @@ const FIELD_LABELS: Record<string, Parameters<typeof t>[1]> = {
   title: 'titleField',
 };
 
-function getFieldType(key: string): 'text' | 'textarea' | 'date' {
+function getFieldType(key: string): 'text' | 'textarea' | 'date' | 'month' {
   if (key === 'description') return 'textarea';
-  if (key === 'startDate' || key === 'endDate' || key === 'date') return 'date';
+  if (key === 'startDate' || key === 'endDate') return 'month';
+  if (key === 'date') return 'date';
   return 'text';
 }
 

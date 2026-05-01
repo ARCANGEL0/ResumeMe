@@ -87,7 +87,12 @@
     "youtube": "YouTube",
     "discord": "Discord",
     "appTitle": "Resume.Me",
-    "custom": "Custom"
+    "custom": "Custom",
+    "present": "Present",
+    "native": "Native",
+    "fluent": "Fluent",
+    "intermediate": "Intermediate",
+    "beginner": "Beginner"
   },
   "sectionTitles": {
     "education": "Education",

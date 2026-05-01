@@ -8,6 +8,7 @@ import {
   type SocialLink,
   getSocialPlatformMeta,
 } from '../../types/cv';
+import {t, type UILanguage} from '../../i18n';
 import type { ContactIconName } from '../../ui/ContactIcon';
 
 export interface ContactItem {
@@ -77,12 +78,12 @@ export function createEmptySocialLink(id: string): SocialLink {
 }
 
 const LANGUAGE_LEVEL_MAP: Record<LanguageProficiency, string> = {
-  A1: 'Beginner',
-  A2: 'Beginner',
-  B1: 'Intermediate',
-  B2: 'Intermediate',
-  C1: 'Fluent',
-  C2: 'Native',
+  A1: 'beginner',
+  A2: 'beginner',
+  B1: 'intermediate',
+  B2: 'intermediate',
+  C1: 'fluent',
+  C2: 'native',
 };
 
 const LANGUAGE_ALIASES: Record<string, LanguageProficiency> = {
@@ -108,14 +109,18 @@ export function normalizeLanguageProficiency(value: string): LanguageProficiency
   return LANGUAGE_ALIASES[value.trim().toLowerCase()] ?? '';
 }
 
-export function getLanguageProficiencyScore(value: string): number {
+export function getLangScore(value: string): number {
   const normalized = normalizeLanguageProficiency(value);
   return normalized ? LANGUAGE_PROFICIENCY_OPTIONS.indexOf(normalized) + 1 : 0;
 }
 
-export function getLanguageProficiencyLabel(value: string, format: 'cefr' | 'words' = 'cefr'): string {
+export function getLangLevel(value: string, format: 'cefr' | 'words' = 'cefr', lang?: string): string {
   const normalized = normalizeLanguageProficiency(value);
   if (!normalized) return value.trim();
+  if (format === 'words' && lang) {
+    const key = LANGUAGE_LEVEL_MAP[normalized];
+    return t(lang as UILanguage, key) || LANGUAGE_LEVEL_MAP[normalized];
+  }
   return format === 'words' ? LANGUAGE_LEVEL_MAP[normalized] : normalized;
 }
 
@@ -155,12 +160,19 @@ export function getEntrySubtitle(entry: CVEntry): string {
     .join(' · ');
 }
 
-export function getEntryDate(entry: CVEntry): string {
+export function fmtDate(d: string): string {
+  if (!d) return '';
+  const m = d.match(/^(\d{4})-(\d{2})/);
+  if (m) return `${m[2]}/${m[1]}`;
+  return d;
+}
+
+export function getEntryDate(entry: CVEntry, lang?: string): string {
   const isCurrent = entry.fields.isCurrent === 'true';
   const showStartOnly = entry.fields.showStartOnly === 'true';
   const showEndOnly = entry.fields.showEndOnly === 'true';
-  const startDate = entry.fields.startDate || '';
-  const endDate = entry.fields.endDate || '';
+  const startDate = fmtDate(entry.fields.startDate || '');
+  const endDate = fmtDate(entry.fields.endDate || '');
 
   if (showStartOnly) {
     return startDate;
@@ -171,7 +183,7 @@ export function getEntryDate(entry: CVEntry): string {
   }
 
   if (startDate || endDate) {
-    return [startDate, isCurrent ? 'Present' : endDate].filter(Boolean).join(' - ');
+    return [startDate, isCurrent ? (lang ? t(lang as UILanguage, 'present') : 'Present') : endDate].filter(Boolean).join(' - ');
   }
 
   return entry.fields.date || '';

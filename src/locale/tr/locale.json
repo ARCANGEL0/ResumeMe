@@ -85,7 +85,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "ARCANGELO tarafından geliştirildi",
-    "custom": "Özel"
+    "custom": "Özel",
+    "present": "Şu an",
+    "native": "Ana dil",
+    "fluent": "Akıcı",
+    "intermediate": "Orta",
+    "beginner": "Başlangıç"
   },
   "sectionTitles": {
     "education": "Eğitim",

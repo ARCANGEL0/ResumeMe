@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "ARCANGELO വികസിപ്പിച്ചു",
-    "custom": "ഇഷ്ടാപേക്ഷം"
+    "custom": "ഇഷ്ടാപേക്ഷം",
+    "present": "നിലവിൽ",
+    "native": "മാതൃഭാഷ",
+    "fluent": "പ്രവാഹി",
+    "intermediate": "ഇടത്തരം",
+    "beginner": "തുടക്കക്കാരൻ"
   },
   "sectionTitles": {
     "experience": "അനുഭവം",

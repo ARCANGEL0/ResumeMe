@@ -87,7 +87,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "udviklet af: ARCANGELO",
-    "custom": "Brugerdefineret"
+    "custom": "Brugerdefineret",
+    "present": "Nuværende",
+    "native": "Modersmål",
+    "fluent": "Flydende",
+    "intermediate": "Øvet",
+    "beginner": "Begynder"
   },
   "sectionTitles": {
     "experience": "Erfaring",

@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "פותח על ידי: ARCANGELO",
-    "custom": "מותאם אישית"
+    "custom": "מותאם אישית",
+    "present": "נוכחי",
+    "native": "שפת אם",
+    "fluent": "שוטף",
+    "intermediate": "בינוני",
+    "beginner": "מתחיל"
   },
   "sectionTitles": {
     "experience": "ניסיון",

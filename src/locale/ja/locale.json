@@ -85,7 +85,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "ARCANGELO によって開発されました",
-    "custom": "カスタム"
+    "custom": "カスタム",
+    "present": "現在",
+    "native": "ネイティブ",
+    "fluent": "流暢",
+    "intermediate": "中級",
+    "beginner": "初級"
   },
   "sectionTitles": {
     "education": "学歴",

@@ -86,7 +86,12 @@
     "discord": "Discord",
     "appTitle": "Resume.Me",
     "developedByArcangelo": "razvio: ARCANGELO",
-    "custom": "Prilagođeni"
+    "custom": "Prilagođeni",
+    "present": "Trenutno",
+    "native": "Materinski",
+    "fluent": "Tečan",
+    "intermediate": "Srednji",
+    "beginner": "Početnik"
   },
   "sectionTitles": {
     "experience": "Iskustvo",
