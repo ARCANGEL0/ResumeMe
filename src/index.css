@@ -2174,12 +2174,12 @@ a {
     display: none;
   }
 
-  /* Template preview centered and full */
+  /* Template preview centered and full - SAME as editor */
   .template-workspace .preview-panel {
     width: 100%;
     height: calc(100vh - 60px);
-    padding: 4px;
-    overflow-x: auto;
+    padding: 8px;
+    overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     display: flex;
@@ -2194,7 +2194,7 @@ a {
   }
 
   .template-workspace .preview-paper-shell {
-    transform: scale(0.78);
+    transform: scale(0.85);
     transform-origin: top center;
     width: 210mm;
     margin: 0 auto;
@@ -2227,17 +2227,17 @@ a {
 
   .template-workspace .preview-panel {
     height: calc(100vh - 52px);
-    padding: 2px;
+    padding: 6px;
   }
 
   .template-workspace .preview-paper-shell {
-    transform: scale(0.68);
+    transform: scale(0.72);
   }
 }
 
 @media (max-width: 480px) {
   .template-workspace .preview-paper-shell {
-    transform: scale(0.58);
+    transform: scale(0.62);
   }
 }
 
