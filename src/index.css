@@ -2422,29 +2422,32 @@ a {
   /* configs styles for preview to fit screen */
   .preview-panel .preview-paper-shell,
   .template-workspace .preview-paper-shell {
-    width: 100%; /* handler to fit device screen */
+    width: 100% !important; /* handler to fit device screen */
     max-width: 210mm;
     margin: 0 auto;
     box-sizing: border-box;
+    transform: none !important; /* override old scale */
   }
 }
 
 @media (max-width: 768px) {
   .preview-panel .preview-paper-shell,
   .template-workspace .preview-paper-shell {
-    width: 100%; /* handler for small screens */
+    width: 100% !important; /* handler for small screens */
     max-width: 210mm;
     margin: 0 auto;
     box-sizing: border-box;
+    transform: none !important;
   }
 }
 
 @media (max-width: 480px) {
   .preview-panel .preview-paper-shell,
   .template-workspace .preview-paper-shell {
-    width: 100%; /* handler to do responsive paper */
+    width: 100% !important; /* handler to do responsive paper */
     max-width: 210mm;
     margin: 0 auto;
     box-sizing: border-box;
+    transform: none !important;
   }
 }
