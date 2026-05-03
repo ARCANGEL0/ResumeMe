@@ -2414,3 +2414,37 @@ a {
     font-size: 13px;
   }
 }
+
+
+/* ===== handler for mobile responsive preview ===== */
+
+@media (max-width: 1024px) {
+  /* configs styles for preview to fit screen */
+  .preview-panel .preview-paper-shell,
+  .template-workspace .preview-paper-shell {
+    width: 100%; /* handler to fit device screen */
+    max-width: 210mm;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 768px) {
+  .preview-panel .preview-paper-shell,
+  .template-workspace .preview-paper-shell {
+    width: 100%; /* handler for small screens */
+    max-width: 210mm;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 480px) {
+  .preview-panel .preview-paper-shell,
+  .template-workspace .preview-paper-shell {
+    width: 100%; /* handler to do responsive paper */
+    max-width: 210mm;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+}
