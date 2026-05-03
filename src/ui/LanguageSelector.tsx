@@ -4,9 +4,10 @@ import { useCVStore } from '../store/cvStore';
 
 interface LanguageSelectorProps {
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export default function LanguageSelector({ className = '' }: LanguageSelectorProps) {
+export default function LanguageSelector({ className = '', style }: LanguageSelectorProps) {
   const { language, setLanguage } = useCVStore();
   const [isOpen, setIsOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -43,6 +44,7 @@ export default function LanguageSelector({ className = '' }: LanguageSelectorPro
       ref={rootRef}
       translate="no"
       className={['language-selector', isOpen ? 'is-open' : '', className].filter(Boolean).join(' ')}
+      style={style}
     >
       <button
         type="button"
