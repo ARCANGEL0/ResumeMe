@@ -12,6 +12,7 @@ export default function TemplateSelector() {
   const { language, personalInfo, sections, selectedTemplate, setTemplate, setTemplateLayout, setView, templateLayouts } =
     useCVStore();
   const currentIndex = TEMPLATES.findIndex((template) => template.id === selectedTemplate);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [dragState, setDragState] = useState<{
     regionKey: string;
     sectionId: string;
@@ -64,6 +65,16 @@ export default function TemplateSelector() {
 
   return (
     <div className="template-shell">
+      {/* Mobile toggle button */}
+      <button
+        type="button"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="template-sidebar-toggle no-print"
+        aria-label="Toggle templates"
+      >
+        {sidebarOpen ? '✕' : '☰'}
+      </button>
+
       <header className="topbar no-print">
         <div className="topbar__brand">
           <ResumeMark className="topbar__icon" />
@@ -77,12 +88,14 @@ export default function TemplateSelector() {
           </div>
         </div>
 
+        {/* Language selector inside header on mobile */}
+        <div className="topbar__language-mobile">
+          <LanguageSelector className="language-fab no-print" />
+        </div>
       </header>
 
-      <LanguageSelector className="language-fab no-print" />
-
       <div className="template-workspace">
-        <aside className="template-sidebar">
+        <aside className={`template-sidebar ${sidebarOpen ? 'is-open' : ''}`}>
           <div className="template-panel">
             <div className="template-panel__inner">
               <div className="editor-section-heading">{t(language, 'templates')}</div>
