@@ -1941,12 +1941,12 @@ a {
     z-index: 9985;
   }
 
-  /* Preview panel */
+  /* Preview panel - allow scroll to see full paper */
   .preview-panel {
     width: 100%;
     border-left: none;
     padding: 8px;
-    overflow-x: hidden;
+    overflow-x: auto; /* handler to scroll if paper is wider */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     height: calc(100vh - 60px);
@@ -1956,12 +1956,7 @@ a {
 
   /* Bigger preview - fits screen */
   /* Editor preview - same as template */
-  .preview-panel .preview-paper-shell {
-    transform: scale(0.85);
-    transform-origin: top center;
-    width: 210mm;
-    margin: 0 auto;
-  }
+
 
   /* Editor panel - 15% smaller fonts */
   .editor-panel {
@@ -2032,13 +2027,11 @@ a {
   .preview-panel {
     padding: 6px;
     height: calc(100vh - 52px);
+    overflow-x: auto; /* handler for small screens */
   }
 
   /* Editor preview - same as template */
-  .preview-panel .preview-paper-shell {
-    transform: scale(0.72);
-    width: 210mm;
-  }
+
 
   .editor-panel {
     padding: 14px 10px;
@@ -2070,9 +2063,7 @@ a {
 /* Extra small */
 @media (max-width: 480px) {
   /* Editor preview - same as template */
-  .preview-panel .preview-paper-shell {
-    transform: scale(0.62);
-  }
+
 
   .editor-panel {
     padding: 12px 8px;
@@ -2196,13 +2187,7 @@ a {
     justify-content: center;
   }
 
-  .template-workspace .preview-paper-shell {
-    transform: scale(0.85);
-    transform-origin: top center;
-    width: 210mm;
-    margin: 0 auto;
-    flex-shrink: 0;
-  }
+
 }
 
 @media (max-width: 768px) {
@@ -2233,15 +2218,11 @@ a {
     padding: 6px;
   }
 
-  .template-workspace .preview-paper-shell {
-    transform: scale(0.85);
-  }
+
 }
 
 @media (max-width: 480px) {
-  .template-workspace .preview-paper-shell {
-    transform: scale(0.72);
-  }
+
 }
 
 
@@ -2416,38 +2397,69 @@ a {
 }
 
 
+
 /* ===== handler for mobile responsive preview ===== */
 
 @media (max-width: 1024px) {
-  /* configs styles for preview to fit screen */
+  /* configs styles for preview to fit viewport */
+  .preview-panel {
+    overflow-x: auto !important;
+  }
+
   .preview-panel .preview-paper-shell,
   .template-workspace .preview-paper-shell {
-    width: 100% !important; /* handler to fit device screen */
-    max-width: 210mm;
+    width: calc(100vw - 16px) !important; /* handler to fit viewport */
+    max-width: 100vw;
     margin: 0 auto;
+    transform: none !important;
     box-sizing: border-box;
-    transform: none !important; /* override old scale */
+    overflow: visible;
+  }
+
+  .preview-panel .preview-paper,
+  .template-workspace .preview-paper {
+    width: 100% !important; /* handler for paper width */
+    min-width: auto;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 768px) {
+  .preview-panel {
+    overflow-x: auto !important;
+  }
+
   .preview-panel .preview-paper-shell,
   .template-workspace .preview-paper-shell {
-    width: 100% !important; /* handler for small screens */
-    max-width: 210mm;
+    width: calc(100vw - 12px) !important; /* handler for small screens */
+    max-width: 100vw;
     margin: 0 auto;
-    box-sizing: border-box;
     transform: none !important;
+  }
+
+  .preview-panel .preview-paper,
+  .template-workspace .preview-paper {
+    width: 100% !important;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 480px) {
+  .preview-panel {
+    overflow-x: auto !important;
+  }
+
   .preview-panel .preview-paper-shell,
   .template-workspace .preview-paper-shell {
-    width: 100% !important; /* handler to do responsive paper */
-    max-width: 210mm;
+    width: calc(100vw - 8px) !important; /* handler to do responsive paper */
+    max-width: 100vw;
     margin: 0 auto;
-    box-sizing: border-box;
     transform: none !important;
+  }
+
+  .preview-panel .preview-paper,
+  .template-workspace .preview-paper {
+    width: 100% !important;
+    max-width: 100%;
   }
 }
