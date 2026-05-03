@@ -2398,156 +2398,57 @@ a {
 
 
 
+
 /* ===== handler for mobile responsive preview ===== */
 
 @media (max-width: 1024px) {
-  /* configs styles for preview to fit viewport */
+  /* handler to fit preview on mobile */
   .preview-panel {
-    overflow-x: auto !important;
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
   }
 
+  /* scale inner paper, not the shell */
   .preview-panel .preview-paper-shell,
   .template-workspace .preview-paper-shell {
-    width: calc(100vw - 16px) !important; /* handler to fit viewport */
-    max-width: 100vw;
+    width: 380px !important; /* 793 * 0.48 */
     margin: 0 auto;
-    transform: none !important;
-    box-sizing: border-box;
     overflow: visible;
   }
 
   .preview-panel .preview-paper,
   .template-workspace .preview-paper {
-    width: 100% !important; /* handler for paper width */
-    min-width: auto;
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .preview-panel {
-    overflow-x: auto !important;
-  }
-
-  .preview-panel .preview-paper-shell,
-  .template-workspace .preview-paper-shell {
-    width: calc(100vw - 12px) !important; /* handler for small screens */
-    max-width: 100vw;
-    margin: 0 auto;
-    transform: none !important;
-  }
-
-  .preview-panel .preview-paper,
-  .template-workspace .preview-paper {
-    width: 100% !important;
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .preview-panel {
-    overflow-x: auto !important;
-  }
-
-  .preview-panel .preview-paper-shell,
-  .template-workspace .preview-paper-shell {
-    width: calc(100vw - 8px) !important; /* handler to do responsive paper */
-    max-width: 100vw;
-    margin: 0 auto;
-    transform: none !important;
-  }
-
-  .preview-panel .preview-paper,
-  .template-workspace .preview-paper {
-    width: 100% !important;
-    max-width: 100%;
-  }
-}
-
-/* ===== handler for mobile responsive preview ===== */
-
-@media (max-width: 1024px) {
-  /* handler to scale entire template to fit */
-  .preview-panel {
-    overflow-x: auto !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-    display: flex;
-    justify-content: center;
-  }
-
-  .preview-panel .preview-paper-shell,
-  .template-workspace .preview-paper-shell {
-    width: 793px !important; /* natural A4 pixel width */
-    margin: 0 auto;
-    transform: scale(0.48); /* handler to fit ~375px viewport */
-    transform-origin: top center;
-    box-sizing: border-box;
-  }
-
-  .preview-panel .preview-paper,
-  .template-workspace .preview-paper {
-    width: 100% !important;
+    width: 793px !important; /* natural A4 */
+    transform: scale(0.48);
+    transform-origin: top left;
+    margin: 0;
   }
 }
 
 @media (max-width: 768px) {
   .preview-panel .preview-paper-shell,
   .template-workspace .preview-paper-shell {
-    transform: scale(0.44); /* handler for small screens */
-    transform-origin: top center;
-  }
-}
-
-@media (max-width: 480px) {
-  .preview-panel .preview-paper-shell,
-  .template-workspace .preview-paper-shell {
-    transform: scale(0.40); /* handler to do responsive paper */
-    transform-origin: top center;
-  }
-}
-
-/* ===== handler for mobile responsive preview ===== */
-
-@media (max-width: 1024px) {
-  /* handler to scale entire template to fit */
-  .preview-panel {
-    overflow-x: auto !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-  }
-
-  .preview-panel .preview-paper-shell,
-  .template-workspace .preview-paper-shell {
-    width: 793px !important; /* natural A4 pixel width */
-    margin: 0 auto;
-    transform: scale(0.48); /* handler to fit ~375px viewport */
-    transform-origin: top center;
-    box-sizing: border-box;
-    flex-shrink: 0;
+    width: 349px !important; /* 793 * 0.44 */
   }
 
   .preview-panel .preview-paper,
   .template-workspace .preview-paper {
-    width: 100% !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .preview-panel .preview-paper-shell,
-  .template-workspace .preview-paper-shell {
-    transform: scale(0.44); /* handler for small screens */
-    transform-origin: top center;
+    transform: scale(0.44);
   }
 }
 
 @media (max-width: 480px) {
   .preview-panel .preview-paper-shell,
   .template-workspace .preview-paper-shell {
-    transform: scale(0.40); /* handler to do responsive paper */
-    transform-origin: top center;
+    width: 317px !important; /* 793 * 0.40 */
+  }
+
+  .preview-panel .preview-paper,
+  .template-workspace .preview-paper {
+    transform: scale(0.40);
   }
 }
