@@ -55,11 +55,12 @@ export default function App() {
             </div>
           </div>
         </div>
-      </header>
 
-      <LanguageSelector
-        className="language-fab no-print"
-      />
+        {/* Language selector inside header on mobile */}
+        <div className="topbar__language-mobile">
+          <LanguageSelector className="language-fab no-print" />
+        </div>
+      </header>
 
       <div className="editor-workspace">
         <div
