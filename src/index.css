@@ -1955,8 +1955,9 @@ a {
   }
 
   /* Bigger preview - fits screen */
+  /* Editor preview - same as template */
   .preview-panel .preview-paper-shell {
-    transform: scale(0.72);
+    transform: scale(0.85);
     transform-origin: top center;
     width: 210mm;
     margin: 0 auto;
@@ -2033,8 +2034,9 @@ a {
     height: calc(100vh - 52px);
   }
 
+  /* Editor preview - same as template */
   .preview-panel .preview-paper-shell {
-    transform: scale(0.62);
+    transform: scale(0.72);
     width: 210mm;
   }
 
@@ -2067,8 +2069,9 @@ a {
 
 /* Extra small */
 @media (max-width: 480px) {
+  /* Editor preview - same as template */
   .preview-panel .preview-paper-shell {
-    transform: scale(0.52);
+    transform: scale(0.62);
   }
 
   .editor-panel {
@@ -2231,13 +2234,13 @@ a {
   }
 
   .template-workspace .preview-paper-shell {
-    transform: scale(0.72);
+    transform: scale(0.85);
   }
 }
 
 @media (max-width: 480px) {
   .template-workspace .preview-paper-shell {
-    transform: scale(0.62);
+    transform: scale(0.72);
   }
 }
 
