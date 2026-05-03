@@ -135,6 +135,13 @@ export default function TemplateSelector() {
           </div>
         </aside>
 
+        {sidebarOpen && (
+          <div
+            className="sidebar-backdrop no-print"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
         <div className="preview-panel">
           <div className="preview-panel__inner">
     
