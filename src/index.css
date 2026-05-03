@@ -1689,7 +1689,7 @@ a {
   }
 }
 
-/* Mobile responsive sidebar */
+/* configs styles for mobile responsive sidebar */
 .mobile-sidebar-toggle {
   display: none;
 }
@@ -1816,7 +1816,7 @@ a {
   }
 }
 
-/* ===== MOBILE RESPONSIVE FIXES ===== */
+/* ===== handler for mobile responsive fixes ===== */
 
 /* Hide hamburger on desktop */
 .mobile-sidebar-toggle {
