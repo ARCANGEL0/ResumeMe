@@ -136,7 +136,9 @@ export default function LandingPage() {
       </div>
 
       <div className="landing-credit fade-up" style={{ animationDelay: '0.5s' }}>
-        {t(language, 'developedByArcangelo')}
+        <a href="https://arcangelo.net" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+          {t(language, 'developedByArcangelo')}
+        </a>
       </div>
     </div>
   );

@@ -69,7 +69,11 @@ export default function TemplateSelector() {
           <ResumeMark className="topbar__icon" />
           <div>
             <div className="topbar__title">{t(language, 'templatePicker')}</div>
-            <div className="topbar__subtitle topbar__subtitle--brand">{t(language, 'developedByArcangelo')}</div>
+            <div className="topbar__subtitle topbar__subtitle--brand">
+              <a href="https://arcangelo.net" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+                {t(language, 'developedByArcangelo')}
+              </a>
+            </div>
           </div>
         </div>
 
