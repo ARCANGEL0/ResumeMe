@@ -144,6 +144,13 @@ a {
   animation: fadeUp 0.7s ease forwards;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}
+
 .app-screen {
   min-height: 100vh;
   background: var(--clr-bg);
@@ -2527,5 +2534,49 @@ a {
   .preview-panel .preview-paper,
   .template-workspace .preview-paper {
     transform: scale(0.40);
+  }
+}
+
+/* ===== MOBILE BUTTON FIX ===== */
+@media (max-width: 1024px) {
+  .editor-next-fab {
+    position: fixed !important;
+    right: 16px !important;
+    bottom: 16px !important;
+    z-index: 99999 !important;
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .editor-next-fab {
+    right: 12px !important;
+    bottom: 12px !important;
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* ===== LANDING PAGE MOBILE FIX ===== */
+@media (max-width: 768px) {
+  .landing-wave-canvas {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  .landing-hero {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  .landing-title,
+  .landing-subtitle,
+  .landing-pills,
+  .landing-cta-group {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
