@@ -2580,3 +2580,21 @@ a {
     transform: none !important;
   }
 }
+
+
+/* ===== EMERGENCY BUTTON FIX ===== */
+.editor-next-fab {
+  position: fixed !important;
+  right: 16px !important;
+  bottom: 80px !important;
+  z-index: 2147483647 !important;
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: linear-gradient(135deg, #7c3aed, #a855f7) !important;
+  color: #ffffff !important;
+  border: 2px solid #FFD700 !important;
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.5) !important;
+  min-width: 80px !important;
+  min-height: 40px !important;
+}
