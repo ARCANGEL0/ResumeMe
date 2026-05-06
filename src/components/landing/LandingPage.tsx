@@ -105,16 +105,16 @@ export default function LandingPage() {
       <LanguageSelector className="landing-language no-print" />
 
       <div className="landing-hero">
-        <h1 className="landing-title fade-up" style={{ animationDelay: '0s' }}>
+        <h1 className="landing-title">
           <span className="landing-title__emoji" aria-hidden="true">📄</span>
           <span>Resume.Me</span>
         </h1>
 
-        <p className="landing-subtitle fade-up" style={{ animationDelay: '0.1s' }}>
+        <p className="landing-subtitle">
           {t(language, 'landingSubtitle')}
         </p>
 
-        <div className="landing-pills fade-up" style={{ animationDelay: '0.2s' }}>
+        <div className="landing-pills">
           {[t(language, 'fiveTemplates'), t(language, 'pdfExport'), t(language, 'livePreview')].map((pill) => (
             <span key={pill} className="landing-pill">
               {pill}
@@ -122,7 +122,7 @@ export default function LandingPage() {
           ))}
         </div>
 
-        <div className="landing-cta-group fade-up" style={{ animationDelay: '0.35s' }}>
+        <div className="landing-cta-group">
           <button
             type="button"
             onClick={() => setView('editor')}
@@ -135,7 +135,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      <div className="landing-credit fade-up" style={{ animationDelay: '0.5s' }}>
+      <div className="landing-credit">
         <a href="https://arcangelo.net" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
           {t(language, 'developedByArcangelo')}
         </a>

@@ -3,7 +3,7 @@ import { getTemplateDescription, getTemplateName, t } from '../../i18n';
 import { useCallback, useEffect, useState, type CSSProperties } from 'react';
 import { useCVStore } from '../../store/cvStore';
 import { TEMPLATES, type TemplateId, type TemplateLayoutState } from '../../types/cv';
-import { exportToPDF } from '../../utils/pdfExport';
+import { exportToPDF } from '../../utils/pdfExportMobile';
 import TemplateDocument from './TemplateDocument';
 import { createDefaultTemplateLayout, ensureTemplateLayout, moveLayoutSection } from './templateLayout';
 import { TEMPLATE_THEMES } from './templateCatalog';
