@@ -1908,7 +1908,7 @@ a {
 
 @media (max-width: 1024px) {
   .editor-shell {
-    overflow: hidden;
+    overflow: visible !important;
   }
 
   .editor-workspace {
