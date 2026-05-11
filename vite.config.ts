@@ -12,6 +12,6 @@ export default defineConfig({
     // devices on the local network (e.g., testing on mobile, or within Docker).
     host: '0.0.0.0',
     port: 5173,
-    allowedHosts: ['localhost', '127.0.0.1', '.local'],
+    allowedHosts: ['localhost', 'arcangelo.net', 'pages.dev'],
   },
 });

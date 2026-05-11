@@ -590,6 +590,12 @@ a {
   background: var(--clr-bg);
 }
 
+.editor-sidebar-padding {
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
 .editor-next-fab {
   position: fixed;
   right: 24px;
@@ -2037,10 +2043,6 @@ a {
     justify-content: center;
   }
 
-  /* Bigger preview - fits screen */
-  /* Editor preview - same as template */
-
-
   /* Editor panel - 15% smaller fonts */
   .editor-panel {
     padding: 16px 12px;
@@ -2114,9 +2116,6 @@ a {
     overflow-x: auto; /* handler for small screens */
   }
 
-  /* Editor preview - same as template */
-
-
   .editor-panel {
     padding: 14px 10px;
     font-size: 12px;
@@ -2146,9 +2145,6 @@ a {
 
 /* Extra small */
 @media (max-width: 480px) {
-  /* Editor preview - same as template */
-
-
   .editor-panel {
     padding: 12px 8px;
   }

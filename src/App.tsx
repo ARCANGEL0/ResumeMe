@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import LandingPage from './components/landing/LandingPage';
 import EditorPanel from './components/editor/EditorPanel';
 import PreviewPanel from './components/preview/PreviewPanel';
@@ -11,13 +11,6 @@ import { ARCANGELO_URL } from './config';
 export default function App() {
   const { currentView, language, setView } = useCVStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const toggleSidebar = useCallback(() => {
-    setSidebarOpen(prev => !prev);
-  }, []);
-
-  const editorShellStyle = { position: 'relative' as const };
-  const editorSidebarPaddingStyle = { height: '100%', boxSizing: 'border-box' as const, overflow: 'hidden' };
 
   if (currentView === 'landing') {
     return (
@@ -36,13 +29,13 @@ export default function App() {
   }
 
   return (
-    <div className="editor-shell" style={editorShellStyle}>
+    <div className="editor-shell">
       {/* hamburger - only on mobile */}
       <button
         type="button"
-        onClick={toggleSidebar}
+        onClick={() => setSidebarOpen(prev => !prev)}
         className="mobile-sidebar-toggle no-print"
-        aria-label="Toggle editor"
+        aria-label={t(language, 'toggleEditor')}
       >
         {sidebarOpen ? '✕' : '☰'}
       </button>
@@ -75,7 +68,7 @@ export default function App() {
         <div
           className={`editor-sidebar mobile-sidebar ${sidebarOpen ? 'is-open' : ''}`}
         >
-          <div style={editorSidebarPaddingStyle}>
+          <div className="editor-sidebar-padding">
             <EditorPanel />
           </div>
         </div>
