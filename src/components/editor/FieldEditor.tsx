@@ -21,7 +21,13 @@ interface FieldEditorProps {
 const MAX_FIELD_LENGTH = 2000;
 
 function sanitizeInput(input: string): string {
-  const clean = DOMPurify.sanitize(input, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+  const clean = DOMPurify.sanitize(input, {
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
+    ALLOW_DATA_ATTR: false,
+    ALLOW_ARIA_ATTR: false,
+    FORBID_TAGS: ['style', 'script'],
+  });
   return clean.slice(0, MAX_FIELD_LENGTH);
 }
 

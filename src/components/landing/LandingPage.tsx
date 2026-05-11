@@ -4,11 +4,12 @@ import { useEffect, useRef } from 'react';
 import { useCVStore } from '../../store/cvStore';
 
 const PHASE_OFFSET = Math.PI * 0.66;
+const WAVE_STEP = 6;
 
 const WAVE_CONFIG = [
-  { amplitude: 60, frequency: 0.012, speed: 0.015, colorVar: '--wave-1', baseline: 0.68 },
-  { amplitude: 40, frequency: 0.018, speed: 0.022, colorVar: '--wave-2', baseline: 0.72 },
-  { amplitude: 25, frequency: 0.025, speed: 0.03, colorVar: '--wave-3', baseline: 0.76 },
+  { amplitude: 60, frequency: 0.012, speed: 0.015, baseline: 0.68, colorIdx: 0 },
+  { amplitude: 40, frequency: 0.018, speed: 0.022, baseline: 0.72, colorIdx: 1 },
+  { amplitude: 25, frequency: 0.025, speed: 0.03, baseline: 0.76, colorIdx: 2 },
 ];
 
 interface WaveState {
@@ -16,6 +17,7 @@ interface WaveState {
   tick: number;
   width: number;
   height: number;
+  colors: string[];
 }
 
 function drawWave(
@@ -31,12 +33,11 @@ function drawWave(
   context.beginPath();
   context.moveTo(0, height);
 
-  const startY = height * baseline + Math.sin(phase) * amplitude;
-  context.lineTo(0, startY);
+  const hb = height * baseline;
+  context.lineTo(0, hb + Math.sin(phase) * amplitude);
 
-  for (let x = 0; x <= width; x += 2) {
-    const y = height * baseline + Math.sin(x * frequency + phase) * amplitude;
-    context.lineTo(x, y);
+  for (let x = WAVE_STEP; x <= width; x += WAVE_STEP) {
+    context.lineTo(x, hb + Math.sin(x * frequency + phase) * amplitude);
   }
 
   context.lineTo(width, height);
@@ -48,14 +49,12 @@ function drawWave(
 function renderFrame(
   context: CanvasRenderingContext2D,
   state: WaveState,
-  styles: CSSStyleDeclaration,
 ) {
   context.clearRect(0, 0, state.width, state.height);
 
   WAVE_CONFIG.forEach((wave, index) => {
-    const fillStyle = styles.getPropertyValue(wave.colorVar).trim();
     const phase = state.tick * wave.speed + index * PHASE_OFFSET;
-    drawWave(context, state.width, state.height, wave.amplitude, wave.frequency, phase, wave.baseline, fillStyle);
+    drawWave(context, state.width, state.height, wave.amplitude, wave.frequency, phase, wave.baseline, state.colors[wave.colorIdx]);
   });
 }
 
@@ -89,21 +88,22 @@ export default function LandingPage() {
 
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const styles = getComputedStyle(document.documentElement);
-    const state: WaveState = { frameId: 0, tick: 0, width: window.innerWidth, height: window.innerHeight };
+    const colors = WAVE_CONFIG.map(w => styles.getPropertyValue(w.colorVar).trim());
+    const state: WaveState = { frameId: 0, tick: 0, width: window.innerWidth, height: window.innerHeight, colors };
 
     const animate = () => {
       state.tick += 1;
-      renderFrame(context, state, styles);
+      renderFrame(context, state);
       state.frameId = window.requestAnimationFrame(animate);
     };
 
     const handleResize = () => {
       resizeCanvas(canvas, context, state);
-      renderFrame(context, state, styles);
+      renderFrame(context, state);
     };
 
     resizeCanvas(canvas, context, state);
-    renderFrame(context, state, styles);
+    renderFrame(context, state);
 
     if (!mediaQuery.matches) {
       state.frameId = window.requestAnimationFrame(animate);

@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import LandingPage from './components/landing/LandingPage';
 import EditorPanel from './components/editor/EditorPanel';
 import PreviewPanel from './components/preview/PreviewPanel';
@@ -16,8 +16,8 @@ export default function App() {
     setSidebarOpen(prev => !prev);
   }, []);
 
-  const editorShellStyle = useMemo(() => ({ position: 'relative' as const }), []);
-  const editorSidebarPaddingStyle = useMemo(() => ({ height: '100%', boxSizing: 'border-box' as const, overflow: 'hidden' }), []);
+  const editorShellStyle = { position: 'relative' as const };
+  const editorSidebarPaddingStyle = { height: '100%', boxSizing: 'border-box' as const, overflow: 'hidden' };
 
   if (currentView === 'landing') {
     return (
