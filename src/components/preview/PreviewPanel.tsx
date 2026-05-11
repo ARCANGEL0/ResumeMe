@@ -1,14 +1,18 @@
+import { useMemo } from 'react';
 import { useCVStore } from '../../store/cvStore';
 import getTemplate from './getTemplate';
 
 export default function PreviewPanel() {
   const { personalInfo, sections, selectedTemplate, templateLayouts } = useCVStore();
-  const cvData = {
-    personalInfo,
-    sections,
-    selectedTemplate,
-    layoutOverride: templateLayouts[selectedTemplate],
-  };
+  const cvData = useMemo(
+    () => ({
+      personalInfo,
+      sections,
+      selectedTemplate,
+      layoutOverride: templateLayouts[selectedTemplate],
+    }),
+    [personalInfo, sections, selectedTemplate, templateLayouts]
+  );
   const Component = getTemplate(selectedTemplate);
 
   return (

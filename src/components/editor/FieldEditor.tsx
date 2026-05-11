@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useCallback, type ReactNode, type ChangeEvent } from 'react';
 
 interface FieldOption {
   label: string;
@@ -28,13 +28,30 @@ export default function FieldEditor({
 }: FieldEditorProps) {
   const fieldClassName = ['editor-field', className].filter(Boolean).join(' ');
 
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      onChange(event.target.value);
+    },
+    [onChange]
+  );
+
+  const handleMonthChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const dateValue = event.target.value;
+      if (dateValue) {
+        onChange(dateValue.substring(0, 7));
+      }
+    },
+    [onChange]
+  );
+
   if (type === 'textarea') {
     return (
       <div className={fieldClassName}>
         <label>{label}</label>
         <textarea
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={handleChange}
           placeholder={placeholder}
           rows={5}
           disabled={disabled}
@@ -44,19 +61,14 @@ export default function FieldEditor({
   }
 
   if (type === 'month') {
-    // use date picker internally but show MM/YYYY
-    // value stored as YYYY-MM-DD, displayed as MM/YYYY
-    const dateVal = value?.length === 7 ? `${value}-01` : value; // YYYY-MM -> YYYY-MM-01
+    const dateVal = value?.length === 7 ? `${value}-01` : value;
     return (
       <div className={fieldClassName}>
         <label>{label}</label>
         <input
           type="date"
           value={dateVal}
-          onChange={(e) => {
-            const d = e.target.value; // YYYY-MM-DD
-            if(d) onChange(d.substring(0,7)); // store as YYYY-MM only
-          }}
+          onChange={handleMonthChange}
           placeholder={placeholder}
           disabled={disabled}
         />
@@ -71,7 +83,7 @@ export default function FieldEditor({
         <input
           type="date"
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={handleChange}
           placeholder={placeholder}
           disabled={disabled}
         />
@@ -83,11 +95,7 @@ export default function FieldEditor({
     return (
       <div className={fieldClassName}>
         <label>{label}</label>
-        <select
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          disabled={disabled}
-        >
+        <select value={value} onChange={handleChange} disabled={disabled}>
           <option value="">{placeholder}</option>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -105,7 +113,7 @@ export default function FieldEditor({
       <input
         type={type}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={handleChange}
         placeholder={placeholder}
         disabled={disabled}
       />
