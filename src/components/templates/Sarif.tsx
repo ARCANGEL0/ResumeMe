@@ -1,12 +1,15 @@
-import { type CSSProperties } from 'react';
+import { Fragment, useState, type CSSProperties } from 'react';
 import { t, type UILanguage } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
 import type { CVData, CVSection, CVEntry } from '../../types/cv';
 import ContactIcon from '../../ui/ContactIcon';
 import { getContactItems, getEntryTitle, getEntryDate, getEntryDetailLines } from './templateUtils';
+import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
+import type { TemplateLayoutEditor } from './templateComponents';
 
 interface Props {
   data: CVData;
+  layoutEditor?: TemplateLayoutEditor;
 }
 
 const G = {
@@ -397,7 +400,6 @@ function EducationEntry({ entry }: { entry: CVEntry }) {
 }
 
 function SkillsSection({ entries }: { entries: CVEntry[] }) {
-  // Group skills by category if they have one
   const categorized: Record<string, string[]> = {};
   const uncategorized: string[] = [];
 
@@ -451,7 +453,7 @@ function CourseItem({ entry }: { entry: CVEntry }) {
   );
 }
 
-function renderSection(section: CVSection, language: UILanguage) {
+function renderSectionContent(section: CVSection, language: UILanguage) {
   const title = section.title || t(language, section.type);
 
   if (!section.entries || section.entries.length === 0) {
@@ -461,7 +463,7 @@ function renderSection(section: CVSection, language: UILanguage) {
   switch (section.type) {
     case 'experience':
       return (
-        <div key={section.id} style={S.section}>
+        <div style={S.section}>
           <SectionTitle title={title} />
           {section.entries.map((entry, i) => (
             <ExperienceEntry key={i} entry={entry} />
@@ -470,7 +472,7 @@ function renderSection(section: CVSection, language: UILanguage) {
       );
     case 'projects':
       return (
-        <div key={section.id} style={S.section}>
+        <div style={S.section}>
           <SectionTitle title={title} />
           {section.entries.map((entry, i) => (
             <ProjectEntry key={i} entry={entry} />
@@ -479,7 +481,7 @@ function renderSection(section: CVSection, language: UILanguage) {
       );
     case 'education':
       return (
-        <div key={section.id} style={S.section}>
+        <div style={S.section}>
           <SectionTitle title={title} />
           {section.entries.map((entry, i) => (
             <EducationEntry key={i} entry={entry} />
@@ -488,14 +490,14 @@ function renderSection(section: CVSection, language: UILanguage) {
       );
     case 'skills':
       return (
-        <div key={section.id} style={S.section}>
+        <div style={S.section}>
           <SectionTitle title={title} />
           <SkillsSection entries={section.entries} />
         </div>
       );
     case 'languages':
       return (
-        <div key={section.id} style={S.section}>
+        <div style={S.section}>
           <SectionTitle title={title} />
           <div style={S.langGrid}>
             {section.entries.map((entry, i) => (
@@ -506,7 +508,7 @@ function renderSection(section: CVSection, language: UILanguage) {
       );
     case 'certifications':
       return (
-        <div key={section.id} style={S.section}>
+        <div style={S.section}>
           <SectionTitle title={title} />
           {section.entries.map((entry, i) => (
             <CourseItem key={i} entry={entry} />
@@ -515,7 +517,7 @@ function renderSection(section: CVSection, language: UILanguage) {
       );
     case 'custom':
       return (
-        <div key={section.id} style={S.section}>
+        <div style={S.section}>
           <SectionTitle title={title} />
           {section.entries.map((entry, i) => (
             <div key={i} style={S.edu}>
@@ -530,7 +532,77 @@ function renderSection(section: CVSection, language: UILanguage) {
   }
 }
 
-export default function Sarif({ data }: Props) {
+function SarifDraggableSection({
+  layoutEditor,
+  section,
+  language,
+}: {
+  layoutEditor: TemplateLayoutEditor;
+  section: CVSection;
+  language: UILanguage;
+}) {
+  const isSource =
+    layoutEditor.dragState?.regionKey === 'main' &&
+    layoutEditor.dragState?.sectionId === section.id;
+
+  return (
+    <div
+      draggable
+      className={`template-preview-section ${isSource ? 'is-source' : ''}`}
+      onDragStart={(event) => {
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text/template-region', 'main');
+        event.dataTransfer.setData('text/template-section-id', section.id);
+        layoutEditor.onDragStart('main', section.id);
+      }}
+      onDragEnd={() => layoutEditor.onDragEnd()}
+    >
+      {renderSectionContent(section, language)}
+    </div>
+  );
+}
+
+function SarifDropZone({
+  empty = false,
+  layoutEditor,
+  targetIndex,
+}: {
+  empty?: boolean;
+  layoutEditor: TemplateLayoutEditor;
+  targetIndex: number;
+}) {
+  const [isOver, setIsOver] = useState(false);
+  const isActive = Boolean(layoutEditor.dragState);
+
+  return (
+    <div
+      className={`template-preview-drop-zone ${empty ? 'is-empty' : ''} ${isActive ? 'is-active' : ''} ${isOver ? 'is-over' : ''}`}
+      onDragEnter={(event) => {
+        event.preventDefault();
+        if (layoutEditor.dragState) setIsOver(true);
+      }}
+      onDragLeave={() => setIsOver(false)}
+      onDragOver={(event) => {
+        if (!layoutEditor.dragState) return;
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'move';
+        setIsOver(true);
+      }}
+      onDrop={(event) => {
+        event.preventDefault();
+        const sourceRegion = event.dataTransfer.getData('text/template-region');
+        const sectionId = event.dataTransfer.getData('text/template-section-id');
+        if (sourceRegion && sectionId) {
+          layoutEditor.onDrop(sourceRegion, 'main', sectionId, targetIndex);
+        }
+        setIsOver(false);
+        layoutEditor.onDragEnd();
+      }}
+    />
+  );
+}
+
+export default function Sarif({ data, layoutEditor }: Props) {
   const language = useCVStore((state) => state.language);
   const { personalInfo, sections } = data;
   const displayName = personalInfo.fullName || t(language, 'fullName');
@@ -538,11 +610,8 @@ export default function Sarif({ data }: Props) {
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
-  // Order sections like original: experience, projects, education, skills, languages, certifications
-  const sectionOrder = ['experience', 'projects', 'education', 'skills', 'languages', 'certifications', 'custom'];
-  const orderedSections = sectionOrder.map(type => 
-    sections.find(s => s.type === type)
-  ).filter(Boolean) as CVSection[];
+  const layoutState = ensureTemplateLayout('sarif', data.layoutOverride, sections);
+  const mainSections = getSectionsForRegion(sections, layoutState, 'main');
 
   return (
     <div style={S.container}>
@@ -574,8 +643,31 @@ export default function Sarif({ data }: Props) {
           {summary && <div style={S.summary}>{summary}</div>}
         </div>
 
-        {/* Single Column Layout - All sections stacked */}
-        {orderedSections.map((section) => renderSection(section, language))}
+        {/* Sections with drag-and-drop support */}
+        {layoutEditor ? (
+          <div
+            className={`template-preview-region-stack ${layoutEditor.dragState ? 'is-drag-active' : ''}`}
+            style={{ display: 'flex', flexDirection: 'column', gap: '0' }}
+          >
+            <SarifDropZone layoutEditor={layoutEditor} targetIndex={0} empty={mainSections.length === 0} />
+            {mainSections.map((section, index) => (
+              <Fragment key={section.id}>
+                <SarifDraggableSection
+                  layoutEditor={layoutEditor}
+                  section={section}
+                  language={language}
+                />
+                <SarifDropZone layoutEditor={layoutEditor} targetIndex={index + 1} />
+              </Fragment>
+            ))}
+          </div>
+        ) : (
+          mainSections.map((section) => (
+            <div key={section.id}>
+              {renderSectionContent(section, language)}
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
