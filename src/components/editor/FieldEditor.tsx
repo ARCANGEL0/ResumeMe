@@ -1,4 +1,5 @@
 import { useCallback, type ReactNode, type ChangeEvent } from 'react';
+import DOMPurify from 'dompurify';
 
 interface FieldOption {
   label: string;
@@ -20,7 +21,8 @@ interface FieldEditorProps {
 const MAX_FIELD_LENGTH = 2000;
 
 function sanitizeInput(input: string): string {
-  return input.replace(/[<>]/g, '').slice(0, MAX_FIELD_LENGTH);
+  const clean = DOMPurify.sanitize(input, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+  return clean.slice(0, MAX_FIELD_LENGTH);
 }
 
 export default function FieldEditor({
