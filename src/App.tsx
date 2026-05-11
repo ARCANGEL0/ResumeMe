@@ -17,7 +17,7 @@ export default function App() {
   }, []);
 
   const editorShellStyle = useMemo(() => ({ position: 'relative' as const }), []);
-  const editorSidebarPaddingStyle = useMemo(() => ({ paddingTop: '60px', height: '100%', boxSizing: 'border-box' as const, overflow: 'hidden' }), []);
+  const editorSidebarPaddingStyle = useMemo(() => ({ height: '100%', boxSizing: 'border-box' as const, overflow: 'hidden' }), []);
 
   if (currentView === 'landing') {
     return (
