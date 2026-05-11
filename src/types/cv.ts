@@ -64,6 +64,7 @@ export type TemplateId =
   | 'professional'
   | 'executive'
   | 'slate'
+  | 'sarif'
   | 'ivory'
   | 'summit'
   | 'studio'
@@ -119,6 +120,7 @@ export const TEMPLATES: TemplateInfo[] = [
   { id: 'professional', name: 'Professional', description: 'Structured corporate layout for ATS-friendly resumes' },
   { id: 'executive', name: 'Executive', description: 'Premium leadership profile with a dark header band' },
   { id: 'slate', name: 'Slate', description: 'Cool editorial resume with a right-hand rail' },
+  { id: 'sarif', name: 'Sarif', description: 'Dark sidebar on the left with clean main content' },
   { id: 'ivory', name: 'Ivory', description: 'Warm serif layout with soft dividers' },
   { id: 'summit', name: 'Summit', description: 'Confident two-column layout with skill meters' },
   { id: 'studio', name: 'Studio', description: 'Modern designer resume with colorful cards' },

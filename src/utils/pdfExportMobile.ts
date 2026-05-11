@@ -17,6 +17,8 @@ export async function exportToPDF(elementId: string, fileName: string = 'curricu
   try {
     // Use html2canvas approach or create a printable view
     const html2pdf = await import('html2pdf.js');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const html2pdfInstance = (html2pdf as any).default ?? html2pdf;
     const opt = {
       margin: 0,
       filename: fileName,
@@ -25,7 +27,7 @@ export async function exportToPDF(elementId: string, fileName: string = 'curricu
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
     
-    await html2pdf.default().set(opt).from(element).save();
+    await html2pdfInstance().set(opt).from(element).save();
   } catch (err) {
     console.error('Mobile PDF export failed:', err);
     // Fallback: try desktop method

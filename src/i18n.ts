@@ -348,6 +348,7 @@ const DEFAULT_TEMPLATE_NAMES: Record<TemplateId, string> = {
   professional: 'Professional',
   executive: 'Executive',
   slate: 'Slate',
+  sarif: 'Sarif',
   ivory: 'Ivory',
   summit: 'Summit',
   studio: 'Studio',

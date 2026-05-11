@@ -1,3 +1,4 @@
+import { useMemo, useState, useCallback } from 'react';
 import LandingPage from './components/landing/LandingPage';
 import EditorPanel from './components/editor/EditorPanel';
 import PreviewPanel from './components/preview/PreviewPanel';
@@ -5,7 +6,7 @@ import TemplateSelector from './components/templates/TemplateSelector';
 import LanguageSelector from './ui/LanguageSelector';
 import { t } from './i18n';
 import { useCVStore } from './store/cvStore';
-import { useState, useCallback } from 'react';
+import { ARCANGELO_URL } from './config';
 
 export default function App() {
   const { currentView, language, setView } = useCVStore();
@@ -14,6 +15,9 @@ export default function App() {
   const toggleSidebar = useCallback(() => {
     setSidebarOpen(prev => !prev);
   }, []);
+
+  const editorShellStyle = useMemo(() => ({ position: 'relative' as const }), []);
+  const editorSidebarPaddingStyle = useMemo(() => ({ paddingTop: '60px' }), []);
 
   if (currentView === 'landing') {
     return (
@@ -32,7 +36,7 @@ export default function App() {
   }
 
   return (
-    <div className="editor-shell" style={{ position: 'relative' }}>
+    <div className="editor-shell" style={editorShellStyle}>
       {/* hamburger - only on mobile */}
       <button
         type="button"
@@ -49,7 +53,12 @@ export default function App() {
           <div>
             <div className="topbar__title">Resume.Me</div>
             <div className="topbar__subtitle topbar__subtitle--brand">
-              <a href="https://arcangelo.net" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <a
+                href={ARCANGELO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="brand-link"
+              >
                 {t(language, 'developedByArcangelo')}
               </a>
             </div>
@@ -66,7 +75,7 @@ export default function App() {
         <div
           className={`editor-sidebar mobile-sidebar ${sidebarOpen ? 'is-open' : ''}`}
         >
-          <div style={{ paddingTop: '60px' }}>
+          <div style={editorSidebarPaddingStyle}>
             <EditorPanel />
           </div>
         </div>

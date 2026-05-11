@@ -8,6 +8,8 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
+    // Intentionally bind to 0.0.0.0 for development to allow access from other
+    // devices on the local network (e.g., testing on mobile, or within Docker).
     host: '0.0.0.0',
     port: 5173,
     allowedHosts: ['localhost', '127.0.0.1', '.local'],

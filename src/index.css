@@ -2582,6 +2582,12 @@ a {
 }
 
 
+/* Brand link styling */
+.brand-link {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* ===== EMERGENCY BUTTON FIX ===== */
 .editor-next-fab {
   position: fixed !important;

@@ -12,6 +12,7 @@ import Minimal from '../templates/Minimal';
 import Modern from '../templates/Modern';
 import North from '../templates/North';
 import Professional from '../templates/Professional';
+import Sarif from '../templates/Sarif';
 import Slate from '../templates/Slate';
 import Studio from '../templates/Studio';
 import Summit from '../templates/Summit';
@@ -34,6 +35,7 @@ const TEMPLATE_MAP: Record<TemplateId, ComponentType<TemplateProps>> = {
   modern: Modern,
   north: North,
   professional: Professional,
+  sarif: Sarif,
   slate: Slate,
   studio: Studio,
   summit: Summit,

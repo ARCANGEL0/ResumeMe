@@ -1,4 +1,5 @@
 import LanguageSelector from '../../ui/LanguageSelector';
+import { ARCANGELO_URL } from '../../config';
 import { getTemplateDescription, getTemplateName, t } from '../../i18n';
 import { useCallback, useEffect, useState, type CSSProperties } from 'react';
 import { useCVStore } from '../../store/cvStore';
@@ -81,7 +82,7 @@ export default function TemplateSelector() {
           <div>
             <div className="topbar__title">{t(language, 'templatePicker')}</div>
             <div className="topbar__subtitle topbar__subtitle--brand">
-              <a href="https://arcangelo.net" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <a href={ARCANGELO_URL} target="_blank" rel="noopener noreferrer" className="brand-link">
                 {t(language, 'developedByArcangelo')}
               </a>
             </div>
@@ -334,6 +335,19 @@ function renderMiniTemplate(id: TemplateId) {
             className="template-mini__sidebar"
             style={{ inset: '0 0 0 auto', left: 'auto', right: 0 }}
           />
+        </>
+      );
+    case 'sarif':
+      return (
+        <>
+          <div
+            className="template-mini__sidebar"
+            style={{ inset: '0 auto 0 0', left: 0, right: 'auto' }}
+          />
+          <div className="template-mini__content" style={{ marginLeft: '35%' }}>
+            <div className="template-mini__header" />
+            <MiniLineStack />
+          </div>
         </>
       );
     case 'ivory':
