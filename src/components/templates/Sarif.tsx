@@ -1,256 +1,582 @@
-import { useMemo, type CSSProperties } from 'react';
-import { t } from '../../i18n';
+import { type CSSProperties } from 'react';
+import { t, type UILanguage } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
-import type { CVData, CVEntry, CVSection } from '../../types/cv';
-import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
-import { getContactItems, getEntryDate, getEntryDetailLines, getEntrySubtitle, getEntryTitle, getSkillLevelScore } from './templateUtils';
+import type { CVData, CVSection, CVEntry } from '../../types/cv';
+import ContactIcon from '../../ui/ContactIcon';
+import { getContactItems, getEntryTitle, getEntryDate, getEntryDetailLines } from './templateUtils';
 
 interface Props {
   data: CVData;
 }
 
-export default function Sarif({ data }: Props) {
-  const language = useCVStore((state) => state.language);
-  const { personalInfo, sections } = data;
-  const layoutState = ensureTemplateLayout('sarif', data.layoutOverride, sections);
-  const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
-  const summary = personalInfo.summary.trim();
-  const mainSections = getSectionsForRegion(sections, layoutState, 'main');
+const G = {
+  gold: '#C9A84C',
+  goldBright: '#E8C547',
+  goldDim: '#9A7B2C',
+  goldDark: '#8B6914',
+  black: '#0A0A0A',
+  blackPanel: '#151515',
+  grey: '#1E1E1E',
+  greyLight: '#2A2A2A',
+  text: '#B8B8B8',
+  textDim: '#666666',
+  textBright: '#E0E0E0',
+};
 
-  const pageStyle = useMemo<CSSProperties>(
-    () => ({
-      fontFamily: "'Electrolize', 'Segoe UI', sans-serif",
-      fontSize: '12px',
-      lineHeight: '1.65',
-      color: '#e0e0e0',
-      background: '#0d0d0d',
-      minHeight: '297mm',
-      position: 'relative',
-      overflow: 'hidden',
-    }),
-    [],
-  );
+const darkHex = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23202020' stroke-width='0.5' viewBox='0 0 100 169.5'%3E%3Cpolygon fill='%230a0a0a' fill-opacity='0.2' points='50,34.75 93.5,59.75 93.5,109.75 50,134.75 6.5,109.75 6.5,59.75'/%3E%3Cpolygon fill='%230a0a0a' fill-opacity='0.2' points='0,-50 43.5,-25 43.5,25 0,50 -43.5,25 -43.5,-25'/%3E%3Cpolygon fill='%230a0a0a' fill-opacity='0.2' points='100,-50 143.5,-25 143.5,25 100,50 56.5,25 56.5,-25'/%3E%3Cpolygon fill='%230a0a0a' fill-opacity='0.2' points='0,119.5 43.5,144.5 43.5,194.5 0,219.5 -43.5,194.5 -43.5,144.5'/%3E%3Cpolygon fill='%230a0a0a' fill-opacity='0.2' points='100,119.5 143.5,144.5 143.5,194.5 100,219.5 56.5,194.5 56.5,144.5'/%3E%3C/svg%3E")`;
 
+const goldHex = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23B8952E' stroke-width='0.4' viewBox='0 0 100 169.5'%3E%3Cpolygon points='50,34.75 93.5,59.75 93.5,109.75 50,134.75 6.5,109.75 6.5,59.75'/%3E%3Cpolygon points='0,-50 43.5,-25 43.5,25 0,50 -43.5,25 -43.5,-25'/%3E%3Cpolygon points='100,-50 143.5,-25 143.5,25 100,50 56.5,25 56.5,-25'/%3E%3Cpolygon points='0,119.5 43.5,144.5 43.5,194.5 0,219.5 -43.5,194.5 -43.5,144.5'/%3E%3Cpolygon points='100,119.5 143.5,144.5 143.5,194.5 100,219.5 56.5,194.5 56.5,144.5'/%3E%3C/svg%3E")`;
+
+const S: Record<string, CSSProperties> = {
+  container: {
+    fontFamily: "'Orbitron', 'Rajdhani', 'Arial Narrow', 'Arial', sans-serif",
+    fontSize: '10px',
+    lineHeight: '1.5',
+    color: G.text,
+    background: G.black,
+    minHeight: '297mm',
+    position: 'relative' as const,
+    overflow: 'hidden',
+    padding: '40px 50px',
+    border: `1px solid rgba(201, 168, 76, 0.15)`,
+  },
+  bgDark: {
+    position: 'absolute',
+    top: 0, left: 0, right: 0, bottom: 0,
+    backgroundImage: darkHex,
+    backgroundSize: '40px',
+    pointerEvents: 'none',
+    zIndex: 0,
+  },
+  bgGold: {
+    position: 'absolute',
+    top: 0, right: 0,
+    width: '100%', height: '100%',
+    backgroundImage: goldHex,
+    backgroundSize: '40px',
+    pointerEvents: 'none',
+    zIndex: 1,
+    WebkitMaskImage: 'radial-gradient(ellipse 25% 20% at 96% 4%, black 0%, black 10%, rgba(0,0,0,0.4) 25%, transparent 40%)',
+    maskImage: 'radial-gradient(ellipse 25% 20% at 96% 4%, black 0%, black 10%, rgba(0,0,0,0.4) 25%, transparent 40%)',
+  },
+  content: {
+    position: 'relative',
+    zIndex: 2,
+  },
+  header: {
+    textAlign: 'center' as const,
+    marginBottom: '24px',
+    paddingBottom: '20px',
+    borderBottom: `1px solid rgba(201, 168, 76, 0.2)`,
+    position: 'relative' as const,
+  },
+  headerLine: {
+    position: 'absolute' as const,
+    bottom: '-1px',
+    left: '25%',
+    width: '50%',
+    height: '1px',
+    background: `linear-gradient(90deg, transparent, ${G.gold}, transparent)`,
+  },
+  name: {
+    fontFamily: "'Orbitron', 'Rajdhani', 'Arial Black', 'Arial', sans-serif",
+    fontSize: '30px',
+    fontWeight: 900,
+    color: G.gold,
+    letterSpacing: '6px',
+    textTransform: 'uppercase' as const,
+  },
+  title: {
+    fontFamily: "'Orbitron', 'Rajdhani', 'Arial Narrow', Arial, sans-serif",
+    fontSize: '9px',
+    color: G.goldDim,
+    textTransform: 'uppercase' as const,
+    letterSpacing: '8px',
+    marginTop: '4px',
+    marginBottom: '16px',
+    fontWeight: 600,
+  },
+  contacts: {
+    display: 'flex',
+    flexWrap: 'wrap' as const,
+    justifyContent: 'center',
+    gap: '6px 12px',
+    fontSize: '9px',
+  },
+  contactPill: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '5px',
+    padding: '5px 12px',
+    background: G.blackPanel,
+    border: `1px solid rgba(201, 168, 76, 0.1)`,
+    clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
+    color: G.textDim,
+    fontFamily: "'Rajdhani', 'Orbitron', 'Arial Narrow', Arial, sans-serif",
+    fontWeight: 600,
+    letterSpacing: '1px',
+  },
+  summary: {
+    fontSize: '9px',
+    color: G.text,
+    lineHeight: '1.7',
+    textAlign: 'left' as const,
+    marginTop: '16px',
+  },
+  section: {
+    marginBottom: '14px',
+  },
+  sectionTitle: {
+    fontFamily: "'Orbitron', 'Rajdhani', 'Arial Black', 'Arial', sans-serif",
+    fontSize: '9px',
+    fontWeight: 800,
+    textTransform: 'uppercase' as const,
+    letterSpacing: '6px',
+    color: G.gold,
+    marginBottom: '12px',
+    paddingBottom: '6px',
+    borderBottom: `1px solid rgba(201, 168, 76, 0.1)`,
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
+  diamond: {
+    width: '7px',
+    height: '7px',
+    background: G.goldDim,
+    transform: 'rotate(45deg)',
+    opacity: 0.7,
+    boxShadow: '0 0 6px rgba(201, 168, 76, 0.3)',
+  },
+  entry: {
+    marginBottom: '10px',
+    padding: '10px 12px',
+    background: G.blackPanel,
+    border: `1px solid rgba(201, 168, 76, 0.06)`,
+    borderLeft: `2px solid ${G.goldDim}`,
+    borderRadius: '0 2px 2px 0',
+    position: 'relative' as const,
+  },
+  entryTopLine: {
+    position: 'absolute' as const,
+    top: 0, left: 0,
+    width: '30px',
+    height: '1px',
+    background: `linear-gradient(90deg, ${G.goldDim}, transparent)`,
+  },
+  entryRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    marginBottom: '2px',
+  },
+  entryTitle: {
+    fontFamily: "'Rajdhani', 'Orbitron', 'Arial Black', 'Arial', sans-serif",
+    fontSize: '13px',
+    fontWeight: 700,
+    color: G.textBright,
+    letterSpacing: '1px',
+  },
+  entryDate: {
+    fontFamily: "'Rajdhani', 'Orbitron', 'Arial Narrow', Arial, sans-serif",
+    fontSize: '10px',
+    color: G.goldDim,
+    whiteSpace: 'nowrap' as const,
+    fontWeight: 600,
+    letterSpacing: '2px',
+  },
+  entryCompany: {
+    fontSize: '11px',
+    color: G.textDim,
+    marginBottom: '4px',
+  },
+  entryDesc: {
+    fontSize: '11px',
+    color: G.text,
+    paddingLeft: '10px',
+    borderLeft: `1px solid rgba(201, 168, 76, 0.1)`,
+    marginTop: '4px',
+  },
+  entryDescLi: {
+    marginBottom: '2px',
+    listStyle: 'none' as const,
+  },
+  project: {
+    marginBottom: '8px',
+    padding: '10px 12px',
+    background: G.blackPanel,
+    border: `1px solid rgba(201, 168, 76, 0.06)`,
+    position: 'relative' as const,
+    clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))',
+  },
+  projectTitle: {
+    fontFamily: "'Rajdhani', 'Orbitron', 'Arial Black', 'Arial', sans-serif",
+    fontSize: '13px',
+    fontWeight: 700,
+    color: G.textBright,
+    letterSpacing: '1px',
+  },
+  projectLink: {
+    color: G.gold,
+    textDecoration: 'none',
+  },
+  projectDesc: {
+    fontSize: '11px',
+    color: G.text,
+    lineHeight: '1.6',
+  },
+  projectStack: {
+    fontFamily: "'Rajdhani', 'Orbitron', 'Arial Narrow', Arial, sans-serif",
+    fontSize: '10px',
+    color: G.textDim,
+    marginTop: '4px',
+    fontWeight: 600,
+  },
+  edu: {
+    marginBottom: '6px',
+    padding: '8px 10px',
+    background: G.blackPanel,
+    border: `1px solid rgba(201, 168, 76, 0.06)`,
+    clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
+  },
+  eduTitle: {
+    fontFamily: "'Rajdhani', 'Orbitron', 'Arial Black', 'Arial', sans-serif",
+    fontSize: '12px',
+    fontWeight: 700,
+    color: G.textBright,
+    letterSpacing: '1px',
+  },
+  eduSchool: {
+    fontSize: '11px',
+    color: G.textDim,
+  },
+  eduDate: {
+    fontFamily: "'Segoe UI', 'Arial Narrow', Arial, sans-serif",
+    fontSize: '10px',
+    color: G.goldDim,
+    fontWeight: 500,
+  },
+  skillRow: {
+    display: 'flex',
+    marginBottom: '8px',
+    fontSize: '10px',
+    lineHeight: '1.6',
+  },
+  skillLabel: {
+    fontWeight: 700,
+    color: G.textBright,
+    marginRight: '8px',
+    whiteSpace: 'nowrap' as const,
+    minWidth: '120px',
+    fontFamily: "'Rajdhani', 'Orbitron', 'Arial', sans-serif",
+  },
+  skillValues: {
+    color: G.text,
+  },
+  skillsDivider: {
+    height: '1px',
+    background: `linear-gradient(90deg, ${G.goldDim}, transparent)`,
+    margin: '8px 0',
+    opacity: 0.3,
+  },
+  langGrid: {
+    display: 'flex',
+    gap: '12px',
+    flexWrap: 'wrap' as const,
+  },
+  langItem: {
+    fontSize: '9px',
+    padding: '6px 14px',
+    background: G.blackPanel,
+    border: `1px solid rgba(201, 168, 76, 0.08)`,
+    clipPath: 'polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)',
+    display: 'inline-flex',
+    gap: '8px',
+  },
+  langName: {
+    fontWeight: 700,
+    color: G.textBright,
+    fontFamily: "'Rajdhani', 'Orbitron', 'Arial', sans-serif",
+  },
+  langLevel: {
+    color: G.textDim,
+  },
+  course: {
+    fontSize: '11px',
+    color: G.text,
+    marginBottom: '3px',
+    padding: '3px 10px',
+    background: 'rgba(21, 21, 21, 0.5)',
+    borderLeft: `2px solid rgba(201, 168, 76, 0.08)`,
+  },
+  courseName: {
+    color: '#bbb',
+    fontWeight: 600,
+    fontFamily: "'Rajdhani', 'Orbitron', 'Arial', sans-serif",
+  },
+  courseOrg: {
+    color: G.textDim,
+  },
+};
+
+function SectionTitle({ title }: { title: string }) {
   return (
-    <div style={pageStyle}>
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          opacity: 0.03,
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill='none' stroke='%23c9a227' stroke-width='1'/%3E%3C/svg%3E")`,
-          backgroundSize: '40px 40px',
-          pointerEvents: 'none',
-        }}
-      />
-
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: '720px', margin: '0 auto', padding: '40px 48px 48px' }}>
-        <header style={{ textAlign: 'center', marginBottom: '28px' }}>
-          <h1
-            style={{
-              margin: '0 0 16px 0',
-              fontFamily: "'Oxanium', 'Cinzel', serif",
-              fontSize: '36px',
-              fontWeight: 700,
-              color: '#d4af37',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              lineHeight: 1.1,
-              textShadow: '0 0 40px rgba(212,175,55,0.2)',
-            }}
-          >
-            {displayName}
-          </h1>
-
-          <div
-            style={{
-              width: '60%',
-              height: '2px',
-              margin: '0 auto 20px',
-              background: 'linear-gradient(90deg, transparent, #c9a227, #9b59b6, #c9a227, transparent)',
-              borderRadius: '1px',
-            }}
-          />
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px' }}>
-            {contactItems.map((item) => (
-              <span
-                key={item.key}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '5px 12px',
-                  borderRadius: '999px',
-                  background: 'rgba(201,162,39,0.08)',
-                  border: '1px solid rgba(201,162,39,0.25)',
-                  color: '#c9a227',
-                  fontSize: '10px',
-                  fontWeight: 500,
-                  letterSpacing: '0.04em',
-                }}
-              >
-                {item.value}
-              </span>
-            ))}
-          </div>
-        </header>
-
-        {summary && (
-          <section style={{ marginBottom: '28px' }}>
-            <SarifSectionHeading title={t(language, 'profile')} />
-            <p style={{ margin: 0, color: '#b0b0b0', lineHeight: 1.7, fontSize: '12px' }}>{summary}</p>
-          </section>
-        )}
-
-        {mainSections.map((section) => (
-          <section key={section.id} style={{ marginBottom: '28px' }}>
-            <SarifSectionHeading title={section.title} />
-            {section.type === 'skills' ? (
-              <SarifSkillsSection section={section} />
-            ) : section.type === 'languages' ? (
-              <SarifLanguagesSection section={section} />
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {section.entries.map((entry) => (
-                  <SarifEntryCard key={entry.id} entry={entry} />
-                ))}
-              </div>
-            )}
-          </section>
-        ))}
-      </div>
+    <div style={S.sectionTitle}>
+      <div style={S.diamond} />
+      {title}
     </div>
   );
 }
 
-function SarifSectionHeading({ title }: { title: string }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
-      <span style={{ color: '#c9a227', fontSize: '8px' }}>◆</span>
-      <span style={{ color: '#c9a227', fontSize: '10px', fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase' }}>
-        {title}
-      </span>
-      <span style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(201,162,39,0.4), transparent)' }} />
-    </div>
-  );
-}
-
-function SarifEntryCard({ entry }: { entry: CVEntry }) {
-  const language = useCVStore((s) => s.language);
+function ExperienceEntry({ entry }: { entry: CVEntry }) {
   const lines = getEntryDetailLines(entry);
-  const subtitle = getEntrySubtitle(entry);
-  const date = getEntryDate(entry, language);
-  const title = getEntryTitle(entry);
-
   return (
-    <div
-      style={{
-        position: 'relative',
-        padding: '16px 18px',
-        background: 'rgba(26,26,26,0.6)',
-        borderRadius: '6px',
-        borderLeft: '3px solid #c9a227',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-      }}
-    >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '16px' }}>
-        <span style={{ color: '#e0e0e0', fontWeight: 700, fontSize: '13px' }}>{title}</span>
-        {date && <span style={{ color: '#c9a227', fontSize: '10px', fontWeight: 500, whiteSpace: 'nowrap' }}>{date}</span>}
+    <div style={S.entry}>
+      <div style={S.entryTopLine} />
+      <div style={S.entryRow}>
+        <span style={S.entryTitle}>{getEntryTitle(entry)}</span>
+        <span style={S.entryDate}>{getEntryDate(entry)}</span>
       </div>
-      {subtitle && <div style={{ marginTop: '3px', color: '#888', fontSize: '11px' }}>{subtitle}</div>}
+      <div style={S.entryCompany}>
+        {entry.fields.company || entry.fields.institution || ''}
+        {entry.fields.location ? ` | ${entry.fields.location}` : ''}
+      </div>
       {lines.length > 0 && (
-        <ul style={{ margin: '10px 0 0 0', padding: 0, listStyle: 'none' }}>
-          {lines.map((line) => (
-            <li
-              key={line}
-              style={{ color: '#a0a0a0', fontSize: '11px', lineHeight: 1.6, marginBottom: '4px', paddingLeft: '14px', position: 'relative' }}
-            >
-              <span style={{ position: 'absolute', left: 0, color: '#c9a227', fontSize: '9px' }}>▸</span>
-              {line}
+        <ul style={{ ...S.entryDesc, padding: 0, margin: 0 }}>
+          {lines.map((desc, i) => (
+            <li key={i} style={S.entryDescLi}>
+              <span style={{ color: G.goldDim, fontWeight: 700 }}>› </span>
+              {desc}
             </li>
           ))}
         </ul>
       )}
-      {entry.fields.technologies && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '10px' }}>
-          {entry.fields.technologies.split(',').map((tech) => (
-            <span
-              key={tech}
-              style={{
-                padding: '3px 8px', borderRadius: '4px', background: 'rgba(201,162,39,0.1)',
-                border: '1px solid rgba(201,162,39,0.2)', color: '#c9a227', fontSize: '9.5px', fontWeight: 500,
-              }}
-            >
-              {tech.trim()}
-            </span>
-          ))}
+    </div>
+  );
+}
+
+function ProjectEntry({ entry }: { entry: CVEntry }) {
+  const platform = (entry.fields.platform || 'custom') as string;
+  const iconName = platform === 'custom' ? 'website' : platform;
+  
+  return (
+    <div style={S.project}>
+      <div style={S.entryTopLine} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ width: '16px', height: '16px', color: G.gold, flexShrink: 0 }}>
+          {platform === 'custom' ? (
+            <div style={{ width: '7px', height: '7px', background: G.goldDim, transform: 'rotate(45deg)', opacity: 0.7 }} />
+          ) : (
+            <ContactIcon name={iconName as any} width={16} height={16} />
+          )}
+        </div>
+        <div style={S.projectTitle}>
+          {entry.fields.url ? (
+            <a href={entry.fields.url} style={S.projectLink} target="_blank" rel="noopener noreferrer">
+              {entry.fields.name || entry.fields.title}
+            </a>
+          ) : (
+            entry.fields.name || entry.fields.title
+          )}
+        </div>
+      </div>
+      <div style={S.projectDesc}>{entry.fields.description}</div>
+      {entry.fields.technologies && <div style={S.projectStack}>{entry.fields.technologies}</div>}
+    </div>
+  );
+}
+
+function EducationEntry({ entry }: { entry: CVEntry }) {
+  return (
+    <div style={S.edu}>
+      <div style={S.eduTitle}>{entry.fields.degree}</div>
+      <div style={S.eduSchool}>{entry.fields.institution}</div>
+      <div style={S.eduDate}>{getEntryDate(entry)}</div>
+    </div>
+  );
+}
+
+function SkillsSection({ entries }: { entries: CVEntry[] }) {
+  // Group skills by category if they have one
+  const categorized: Record<string, string[]> = {};
+  const uncategorized: string[] = [];
+
+  entries.forEach((entry) => {
+    const category = entry.fields.category || '';
+    const name = entry.fields.name || '';
+    if (category) {
+      if (!categorized[category]) categorized[category] = [];
+      categorized[category].push(name);
+    } else {
+      uncategorized.push(name);
+    }
+  });
+
+  return (
+    <>
+      {Object.entries(categorized).map(([category, skills], i) => (
+        <div key={i}>
+          <div style={S.skillRow}>
+            <span style={S.skillLabel}>{category}:</span>
+            <span style={S.skillValues}>{skills.join(', ')}</span>
+          </div>
+          {i < Object.keys(categorized).length - 1 && <div style={S.skillsDivider} />}
+        </div>
+      ))}
+      {uncategorized.length > 0 && (
+        <div style={S.skillRow}>
+          <span style={S.skillValues}>{uncategorized.join(', ')}</span>
         </div>
       )}
+    </>
+  );
+}
+
+function LangItem({ entry }: { entry: CVEntry }) {
+  return (
+    <span style={S.langItem}>
+      <span style={S.langName}>{entry.fields.language}</span>
+      <span style={S.langLevel}>{entry.fields.proficiency}</span>
+    </span>
+  );
+}
+
+function CourseItem({ entry }: { entry: CVEntry }) {
+  return (
+    <div style={S.course}>
+      <span style={S.courseName}>{entry.fields.name || entry.fields.degree}</span>
+      {' — '}
+      <span style={S.courseOrg}>{entry.fields.institution || entry.fields.issuer}</span>
     </div>
   );
 }
 
-function SarifSkillsSection({ section }: { section: CVSection }) {
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '12px' }}>
-      {section.entries.map((entry) => {
-        const score = getSkillLevelScore(entry.fields.level || '');
-        const name = entry.fields.name || entry.fields.title;
-        return (
-          <div
-            key={entry.id}
-            style={{
-              position: 'relative', padding: '10px 12px',
-              border: '1px solid rgba(201,162,39,0.2)', borderRadius: '4px',
-              background: 'rgba(0,0,0,0.3)', overflow: 'hidden',
-            }}
-          >
-            <span style={{ position: 'absolute', top: 0, left: 0, width: '8px', height: '8px', borderTop: '2px solid #c9a227', borderLeft: '2px solid #c9a227' }} />
-            <span style={{ position: 'absolute', top: 0, right: 0, width: '8px', height: '8px', borderTop: '2px solid #c9a227', borderRight: '2px solid #c9a227' }} />
-            <span style={{ position: 'absolute', bottom: 0, left: 0, width: '8px', height: '8px', borderBottom: '2px solid #c9a227', borderLeft: '2px solid #c9a227' }} />
-            <span style={{ position: 'absolute', bottom: 0, right: 0, width: '8px', height: '8px', borderBottom: '2px solid #c9a227', borderRight: '2px solid #c9a227' }} />
-            <div style={{ fontFamily: "'Oxanium', sans-serif", fontSize: '11px', fontWeight: 600, color: '#e0e0e0', letterSpacing: '0.06em', marginBottom: '6px', textTransform: 'uppercase' }}>
-              {name}
+function renderSection(section: CVSection, language: UILanguage) {
+  const title = section.title || t(language, section.type);
+
+  if (!section.entries || section.entries.length === 0) {
+    return null;
+  }
+
+  switch (section.type) {
+    case 'experience':
+      return (
+        <div key={section.id} style={S.section}>
+          <SectionTitle title={title} />
+          {section.entries.map((entry, i) => (
+            <ExperienceEntry key={i} entry={entry} />
+          ))}
+        </div>
+      );
+    case 'projects':
+      return (
+        <div key={section.id} style={S.section}>
+          <SectionTitle title={title} />
+          {section.entries.map((entry, i) => (
+            <ProjectEntry key={i} entry={entry} />
+          ))}
+        </div>
+      );
+    case 'education':
+      return (
+        <div key={section.id} style={S.section}>
+          <SectionTitle title={title} />
+          {section.entries.map((entry, i) => (
+            <EducationEntry key={i} entry={entry} />
+          ))}
+        </div>
+      );
+    case 'skills':
+      return (
+        <div key={section.id} style={S.section}>
+          <SectionTitle title={title} />
+          <SkillsSection entries={section.entries} />
+        </div>
+      );
+    case 'languages':
+      return (
+        <div key={section.id} style={S.section}>
+          <SectionTitle title={title} />
+          <div style={S.langGrid}>
+            {section.entries.map((entry, i) => (
+              <LangItem key={i} entry={entry} />
+            ))}
+          </div>
+        </div>
+      );
+    case 'certifications':
+      return (
+        <div key={section.id} style={S.section}>
+          <SectionTitle title={title} />
+          {section.entries.map((entry, i) => (
+            <CourseItem key={i} entry={entry} />
+          ))}
+        </div>
+      );
+    case 'custom':
+      return (
+        <div key={section.id} style={S.section}>
+          <SectionTitle title={title} />
+          {section.entries.map((entry, i) => (
+            <div key={i} style={S.edu}>
+              <div style={S.eduTitle}>{entry.fields.title || entry.fields.name || ''}</div>
+              <div style={{ ...S.eduSchool, lineHeight: '1.7' }}>{entry.fields.description || entry.fields.content || ''}</div>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{ flex: 1, height: '4px', background: 'rgba(255,255,255,0.08)', borderRadius: '2px', overflow: 'hidden' }}>
-                <div style={{ width: `${(score / 5) * 100}%`, height: '100%', background: 'linear-gradient(90deg, #c9a227, #d4af37)', borderRadius: '2px' }} />
+          ))}
+        </div>
+      );
+    default:
+      return null;
+  }
+}
+
+export default function Sarif({ data }: Props) {
+  const language = useCVStore((state) => state.language);
+  const { personalInfo, sections } = data;
+  const displayName = personalInfo.fullName || t(language, 'fullName');
+  const contactItems = getContactItems(personalInfo);
+  const summary = personalInfo.summary.trim();
+  const leadRole = '';
+
+  // Order sections like original: experience, projects, education, skills, languages, certifications
+  const sectionOrder = ['experience', 'projects', 'education', 'skills', 'languages', 'certifications', 'custom'];
+  const orderedSections = sectionOrder.map(type => 
+    sections.find(s => s.type === type)
+  ).filter(Boolean) as CVSection[];
+
+  return (
+    <div style={S.container}>
+      <div style={S.bgDark} />
+      <div style={S.bgGold} />
+
+      <div style={S.content}>
+        {/* Header */}
+        <div style={S.header}>
+          <div style={S.headerLine} />
+
+          <div style={S.name}>{displayName}</div>
+
+          {leadRole && (
+            <div style={S.title}>{leadRole}</div>
+          )}
+
+          <div style={S.contacts}>
+            {contactItems.map((item, i) => (
+              <div key={i} style={{ ...S.contactPill, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <ContactIcon name={item.icon} style={{ width: '12px', height: '12px', color: G.gold }} />
+                <a href={item.value} style={{ color: G.textDim, textDecoration: 'none' }}>
+                  {item.value}
+                </a>
               </div>
-              <span style={{ fontFamily: "'Oxanium', sans-serif", fontSize: '9px', fontWeight: 700, color: '#c9a227', letterSpacing: '0.08em', minWidth: '20px', textAlign: 'right' }}>
-                {score}/5
-              </span>
-            </div>
+            ))}
           </div>
-        );
-      })}
-    </div>
-  );
-}
 
-function SarifLanguagesSection({ section }: { section: CVSection }) {
-  return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-      {section.entries.map((entry) => {
-        const name = entry.fields.language || entry.fields.name || entry.fields.title;
-        const cefr = entry.fields.proficiency || '';
-        return (
-          <div
-            key={entry.id}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '8px',
-              padding: '6px 12px', borderRadius: '999px',
-              background: 'rgba(201,162,39,0.08)', border: '1px solid rgba(201,162,39,0.2)',
-            }}
-          >
-            <span style={{ color: '#e0e0e0', fontSize: '11px', fontWeight: 500 }}>{name}</span>
-            <span style={{ padding: '2px 6px', borderRadius: '4px', background: 'rgba(201,162,39,0.15)', color: '#c9a227', fontSize: '9px', fontWeight: 700, letterSpacing: '0.08em' }}>
-              {cefr}
-            </span>
-          </div>
-        );
-      })}
+          {summary && <div style={S.summary}>{summary}</div>}
+        </div>
+
+        {/* Single Column Layout - All sections stacked */}
+        {orderedSections.map((section) => renderSection(section, language))}
+      </div>
     </div>
   );
 }
