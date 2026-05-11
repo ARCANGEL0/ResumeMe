@@ -14,6 +14,13 @@ interface FieldEditorProps {
   className?: string;
   options?: FieldOption[];
   disabled?: boolean;
+  maxLength?: number;
+}
+
+const MAX_FIELD_LENGTH = 2000;
+
+function sanitizeInput(input: string): string {
+  return input.replace(/[<>]/g, '').slice(0, MAX_FIELD_LENGTH);
 }
 
 export default function FieldEditor({
@@ -25,12 +32,14 @@ export default function FieldEditor({
   className = '',
   options,
   disabled = false,
+  maxLength = MAX_FIELD_LENGTH,
 }: FieldEditorProps) {
   const fieldClassName = ['editor-field', className].filter(Boolean).join(' ');
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-      onChange(event.target.value);
+      const sanitized = sanitizeInput(event.target.value);
+      onChange(sanitized);
     },
     [onChange]
   );
@@ -55,6 +64,7 @@ export default function FieldEditor({
           placeholder={placeholder}
           rows={5}
           disabled={disabled}
+          maxLength={maxLength}
         />
       </div>
     );
@@ -71,6 +81,7 @@ export default function FieldEditor({
           onChange={handleMonthChange}
           placeholder={placeholder}
           disabled={disabled}
+          maxLength={maxLength}
         />
       </div>
     );
@@ -86,6 +97,7 @@ export default function FieldEditor({
           onChange={handleChange}
           placeholder={placeholder}
           disabled={disabled}
+          maxLength={maxLength}
         />
       </div>
     );
@@ -116,6 +128,7 @@ export default function FieldEditor({
         onChange={handleChange}
         placeholder={placeholder}
         disabled={disabled}
+        maxLength={maxLength}
       />
     </div>
   );
