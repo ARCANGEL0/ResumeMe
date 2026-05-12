@@ -34,7 +34,7 @@ const goldHex = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
 
 const S: Record<string, CSSProperties> = {
   container: {
-    fontFamily: "'Orbitron', 'Rajdhani', 'Arial Narrow', 'Arial', sans-serif",
+    fontFamily: "'Play', sans-serif",
     fontSize: '10px',
     lineHeight: '1.5',
     color: G.text,
@@ -84,7 +84,7 @@ const S: Record<string, CSSProperties> = {
     background: `linear-gradient(90deg, transparent, ${G.gold}, transparent)`,
   },
   name: {
-    fontFamily: "'Orbitron', 'Rajdhani', 'Arial Black', 'Arial', sans-serif",
+    fontFamily: "'Electrolize', sans-serif",
     fontSize: '30px',
     fontWeight: 900,
     color: G.gold,
@@ -92,7 +92,7 @@ const S: Record<string, CSSProperties> = {
     textTransform: 'uppercase' as const,
   },
   title: {
-    fontFamily: "'Orbitron', 'Rajdhani', 'Arial Narrow', Arial, sans-serif",
+    fontFamily: "'Electrolize', sans-serif",
     fontSize: '9px',
     color: G.goldDim,
     textTransform: 'uppercase' as const,
@@ -117,7 +117,7 @@ const S: Record<string, CSSProperties> = {
     border: `1px solid rgba(201, 168, 76, 0.1)`,
     clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
     color: G.textDim,
-    fontFamily: "'Rajdhani', 'Orbitron', 'Arial Narrow', Arial, sans-serif",
+    fontFamily: "'Play', sans-serif",
     fontWeight: 600,
     letterSpacing: '1px',
   },
@@ -132,7 +132,7 @@ const S: Record<string, CSSProperties> = {
     marginBottom: '14px',
   },
   sectionTitle: {
-    fontFamily: "'Orbitron', 'Rajdhani', 'Arial Black', 'Arial', sans-serif",
+    fontFamily: "'Electrolize', sans-serif",
     fontSize: '9px',
     fontWeight: 800,
     textTransform: 'uppercase' as const,
@@ -176,14 +176,14 @@ const S: Record<string, CSSProperties> = {
     marginBottom: '2px',
   },
   entryTitle: {
-    fontFamily: "'Rajdhani', 'Orbitron', 'Arial Black', 'Arial', sans-serif",
+    fontFamily: "'Electrolize', sans-serif",
     fontSize: '13px',
     fontWeight: 700,
     color: G.textBright,
     letterSpacing: '1px',
   },
   entryDate: {
-    fontFamily: "'Rajdhani', 'Orbitron', 'Arial Narrow', Arial, sans-serif",
+    fontFamily: "'Play', sans-serif",
     fontSize: '10px',
     color: G.goldDim,
     whiteSpace: 'nowrap' as const,
@@ -215,7 +215,7 @@ const S: Record<string, CSSProperties> = {
     clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))',
   },
   projectTitle: {
-    fontFamily: "'Rajdhani', 'Orbitron', 'Arial Black', 'Arial', sans-serif",
+    fontFamily: "'Electrolize', sans-serif",
     fontSize: '13px',
     fontWeight: 700,
     color: G.textBright,
@@ -231,7 +231,7 @@ const S: Record<string, CSSProperties> = {
     lineHeight: '1.6',
   },
   projectStack: {
-    fontFamily: "'Rajdhani', 'Orbitron', 'Arial Narrow', Arial, sans-serif",
+    fontFamily: "'Play', sans-serif",
     fontSize: '10px',
     color: G.textDim,
     marginTop: '4px',
@@ -245,7 +245,7 @@ const S: Record<string, CSSProperties> = {
     clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
   },
   eduTitle: {
-    fontFamily: "'Rajdhani', 'Orbitron', 'Arial Black', 'Arial', sans-serif",
+    fontFamily: "'Electrolize', sans-serif",
     fontSize: '12px',
     fontWeight: 700,
     color: G.textBright,
@@ -273,7 +273,7 @@ const S: Record<string, CSSProperties> = {
     marginRight: '8px',
     whiteSpace: 'nowrap' as const,
     minWidth: '120px',
-    fontFamily: "'Rajdhani', 'Orbitron', 'Arial', sans-serif",
+    fontFamily: "'Electrolize', sans-serif",
   },
   skillValues: {
     color: G.text,
@@ -301,7 +301,7 @@ const S: Record<string, CSSProperties> = {
   langName: {
     fontWeight: 700,
     color: G.textBright,
-    fontFamily: "'Rajdhani', 'Orbitron', 'Arial', sans-serif",
+    fontFamily: "'Electrolize', sans-serif",
   },
   langLevel: {
     color: G.textDim,
@@ -317,7 +317,7 @@ const S: Record<string, CSSProperties> = {
   courseName: {
     color: '#bbb',
     fontWeight: 600,
-    fontFamily: "'Rajdhani', 'Orbitron', 'Arial', sans-serif",
+    fontFamily: "'Electrolize', sans-serif",
   },
   courseOrg: {
     color: G.textDim,

@@ -681,7 +681,7 @@ function SkillsSection({
               {/* Skill name */}
               <div
                 style={{
-                  fontFamily: "'Oxanium', sans-serif",
+                  fontFamily: "'Electrolize', sans-serif",
                   fontSize: '11px',
                   fontWeight: 600,
                   color: onDark ? '#f8fafc' : '#1f2937',
@@ -716,7 +716,7 @@ function SkillsSection({
                 </div>
                 <span
                   style={{
-                    fontFamily: "'Oxanium', sans-serif",
+                    fontFamily: "'Play', sans-serif",
                     fontSize: '9px',
                     fontWeight: 700,
                     color: '#c8a84b',
