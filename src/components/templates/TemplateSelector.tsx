@@ -24,8 +24,12 @@ export default function TemplateSelector() {
     sections,
   );
 
-  const handleExport = () => {
-    exportToPDF('cv-preview', `${personalInfo.fullName || 'CV'}.pdf`);
+  const handleExport = async () => {
+    try {
+      await exportToPDF('cv-preview', `${personalInfo.fullName || 'CV'}.pdf`);
+    } catch (err) {
+      console.error('Export failed:', err);
+    }
   };
 
   const updateActiveLayout = useCallback(
