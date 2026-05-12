@@ -68,7 +68,7 @@ export const TEMPLATE_THEMES: Record<TemplateId, TemplateTheme> = {
   classic: {
     family: 'single',
     thumbLayout: 'single',
-    fontFamily: "'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif",
+    fontFamily: "'Crimson Pro', Georgia, serif",
     page: '#fffdf8',
     text: '#1e1b18',
     muted: '#6b6157',
@@ -230,7 +230,7 @@ export const TEMPLATE_THEMES: Record<TemplateId, TemplateTheme> = {
   ivory: {
     family: 'single',
     thumbLayout: 'single',
-    fontFamily: "'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif",
+    fontFamily: "'Crimson Pro', Georgia, serif",
     page: '#fffdfa',
     text: '#33261d',
     muted: '#857467',
@@ -389,7 +389,7 @@ export const TEMPLATE_THEMES: Record<TemplateId, TemplateTheme> = {
   editorial: {
     family: 'split',
     thumbLayout: 'split',
-    fontFamily: "'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif",
+    fontFamily: "'Crimson Pro', Georgia, serif",
     page: '#fffdfb',
     text: '#231711',
     muted: '#6d584f',
