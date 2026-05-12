@@ -246,9 +246,9 @@ export const useCVStore = create<CVStore>()(
   }
 ));
 
-export const usePersonalInfo = () => useCVStore((state) => state.personalInfo);
-export const useSections = () => useCVStore((state) => state.sections);
-export const useSelectedTemplate = () => useCVStore((state) => state.selectedTemplate);
-export const useTemplateLayouts = () => useCVStore((state) => state.templateLayouts);
-export const useLanguage = () => useCVStore((state) => state.language);
-export const useCurrentView = () => useCVStore((state) => state.currentView);
+export const usePersonalInfo = () => useCVStore(useShallow((state) => state.personalInfo));
+export const useSections = () => useCVStore(useShallow((state) => state.sections));
+export const useSelectedTemplate = () => useCVStore(useShallow((state) => state.selectedTemplate));
+export const useTemplateLayouts = () => useCVStore(useShallow((state) => state.templateLayouts));
+export const useLanguage = () => useCVStore(useShallow((state) => state.language));
+export const useCurrentView = () => useCVStore(useShallow((state) => state.currentView));

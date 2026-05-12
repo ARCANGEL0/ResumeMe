@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { t } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
 import { LANGUAGE_PROFICIENCY_OPTIONS, type CVSection, SECTION_FIELDS } from '../../types/cv';
@@ -127,7 +127,7 @@ interface FieldCellProps {
   updateEntry: (sectionId: string, entryId: string, field: string, value: string) => void;
 }
 
-function FieldCell({ entry, entryId, fieldKey, language, section, updateEntry }: FieldCellProps) {
+const FieldCell = memo(function FieldCell({ entry, entryId, fieldKey, language, section, updateEntry }: FieldCellProps) {
   const fieldType = useMemo(() => getFieldType(fieldKey), [fieldKey]);
   const fieldValue = entry.fields[fieldKey] || '';
   const endDateBackup = useRef('');
@@ -238,9 +238,16 @@ function FieldCell({ entry, entryId, fieldKey, language, section, updateEntry }:
       )}
     </div>
   );
-}
+}, (prevProps, nextProps) => {
+  return prevProps.entryId === nextProps.entryId &&
+    prevProps.fieldKey === nextProps.fieldKey &&
+    prevProps.language === nextProps.language &&
+    prevProps.entry.fields[prevProps.fieldKey] === nextProps.entry.fields[nextProps.fieldKey] &&
+    prevProps.section.id === nextProps.section.id &&
+    prevProps.section.type === nextProps.section.type;
+});
 
-export default function SectionEditor({ section, index, totalSections }: SectionEditorProps) {
+const SectionEditor = memo(function SectionEditor({ section, index, totalSections }: SectionEditorProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const {
@@ -401,4 +408,12 @@ export default function SectionEditor({ section, index, totalSections }: Section
       </div>
     </div>
   );
-}
+}, (prevProps, nextProps) => {
+  return prevProps.section.id === nextProps.section.id &&
+    prevProps.section.title === nextProps.section.title &&
+    prevProps.section.entries.length === nextProps.section.entries.length &&
+    prevProps.index === nextProps.index &&
+    prevProps.totalSections === nextProps.totalSections;
+});
+
+export default SectionEditor;

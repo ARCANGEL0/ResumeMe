@@ -36,8 +36,11 @@ function drawWave(
   const hb = height * baseline;
   context.lineTo(0, hb + Math.sin(phase) * amplitude);
 
-  for (let x = WAVE_STEP; x <= width; x += WAVE_STEP) {
-    context.lineTo(x, hb + Math.sin(x * frequency + phase) * amplitude);
+  for (let x = WAVE_STEP * 2; x <= width; x += WAVE_STEP * 2) {
+    const midX = x - WAVE_STEP;
+    const midY = hb + Math.sin(midX * frequency + phase) * amplitude;
+    const endY = hb + Math.sin(x * frequency + phase) * amplitude;
+    context.quadraticCurveTo(midX, midY, x, endY);
   }
 
   context.lineTo(width, height);
@@ -109,9 +112,24 @@ export default function LandingPage() {
       state.frameId = window.requestAnimationFrame(animate);
     }
 
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (state.frameId) {
+          window.cancelAnimationFrame(state.frameId);
+          state.frameId = 0;
+        }
+      } else {
+        if (!mediaQuery.matches && !state.frameId) {
+          state.frameId = window.requestAnimationFrame(animate);
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('resize', handleResize);
 
     return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('resize', handleResize);
       if (state.frameId) {
         window.cancelAnimationFrame(state.frameId);

@@ -40,6 +40,7 @@ export async function exportToPDF(elementId: string, fileName: string = 'curricu
     }
 
     const cleanup = () => {
+      // 300ms delay to allow print dialog to close before removing iframe
       window.setTimeout(() => {
         iframe.remove();
       }, 300);

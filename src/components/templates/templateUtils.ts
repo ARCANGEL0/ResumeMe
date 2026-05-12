@@ -69,14 +69,6 @@ export function getContactItems(personalInfo: PersonalInfo): ContactItem[] {
   return items;
 }
 
-export function createEmptySocialLink(id: string): SocialLink {
-  return {
-    id,
-    platform: 'custom',
-    value: '',
-  };
-}
-
 const LANGUAGE_LEVEL_MAP: Record<LanguageProficiency, string> = {
   A1: 'beginner',
   A2: 'beginner',

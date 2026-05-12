@@ -1,3 +1,4 @@
+import { useShallow } from 'zustand/react/shallow';
 import { t } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
 import AddSectionMenu from './AddSectionMenu';
@@ -5,7 +6,9 @@ import PersonalInfoEditor from './PersonalInfoEditor';
 import SectionEditor from './SectionEditor';
 
 export default function EditorPanel() {
-  const { language, sections } = useCVStore();
+  const { language, sections } = useCVStore(
+    useShallow((state) => ({ language: state.language, sections: state.sections })),
+  );
 
   return (
     <div className="editor-panel">
