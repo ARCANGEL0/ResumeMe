@@ -30,7 +30,6 @@
   --wave-1: rgba(139,92,246,0.18);
   --wave-2: rgba(167,139,250,0.12);
   --wave-3: rgba(196,181,253,0.08);
-  --preview-scale: 0.735;
 }
 
 * {
@@ -565,7 +564,6 @@ a {
   font-size: 9px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  animation: templateMiniFloat 5.8s ease-in-out infinite;
 }
 
 .editor-shell {
