@@ -1,3 +1,5 @@
+import DOMPurify from 'dompurify';
+
 const A4_WIDTH_MM = '210mm';
 const A4_HEIGHT_MM = '297mm';
 const EXPORT_ROOT_ATTR = 'data-pdf-export-root';
@@ -117,7 +119,7 @@ function buildPrintDocument(element: HTMLElement, fileName: string, printScale: 
     </style>
   </head>
   <body>
-    ${clone.outerHTML}
+    ${DOMPurify.sanitize(clone.outerHTML)}
     <script>
       (async function () {
         try {
@@ -142,6 +144,7 @@ function buildPrintDocument(element: HTMLElement, fileName: string, printScale: 
 
 function collectDocumentStyles(): string {
   return Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'))
+    .filter((node) => document.head.contains(node))
     .map((node) => node.outerHTML)
     .join('\n');
 }

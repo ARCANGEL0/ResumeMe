@@ -62,12 +62,14 @@ export default function FieldEditor({
     [onChange]
   );
 
+  const safeValue = sanitizeInput(value);
+
   if (type === 'textarea') {
     return (
       <div className={fieldClassName}>
         <label>{label}</label>
         <textarea
-          value={value}
+          value={safeValue}
           onChange={handleChange}
           placeholder={placeholder}
           rows={5}
@@ -79,7 +81,7 @@ export default function FieldEditor({
   }
 
   if (type === 'month') {
-    const dateVal = value?.length === 7 ? `${value}-01` : value;
+    const dateVal = safeValue?.length === 7 ? `${safeValue}-01` : safeValue;
     return (
       <div className={fieldClassName}>
         <label>{label}</label>
@@ -101,7 +103,7 @@ export default function FieldEditor({
         <label>{label}</label>
         <input
           type="date"
-          value={value}
+          value={safeValue}
           onChange={handleChange}
           placeholder={placeholder}
           disabled={disabled}
@@ -115,7 +117,7 @@ export default function FieldEditor({
     return (
       <div className={fieldClassName}>
         <label>{label}</label>
-        <select value={value} onChange={handleChange} disabled={disabled}>
+        <select value={safeValue} onChange={handleChange} disabled={disabled}>
           <option value="">{placeholder}</option>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -132,7 +134,7 @@ export default function FieldEditor({
       <label>{label}</label>
       <input
         type={type}
-        value={value}
+        value={safeValue}
         onChange={handleChange}
         placeholder={placeholder}
         disabled={disabled}
