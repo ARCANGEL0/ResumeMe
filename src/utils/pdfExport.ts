@@ -56,7 +56,9 @@ function buildPrintDocument(element: HTMLElement, fileName: string, printScale: 
   clone.removeAttribute('id');
   clone.setAttribute(EXPORT_ROOT_ATTR, 'true');
 
-  clone.querySelectorAll('.no-print').forEach((node) => node.remove());
+  if (clone) {
+    clone.querySelectorAll('.no-print').forEach((node) => node.remove());
+  }
 
   const baseName = fileName.replace(/\.pdf$/i, '');
   const title = escapeHtml(baseName);

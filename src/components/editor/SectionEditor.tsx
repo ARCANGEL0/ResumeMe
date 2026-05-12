@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { t } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
 import { LANGUAGE_PROFICIENCY_OPTIONS, type CVSection, SECTION_FIELDS } from '../../types/cv';
@@ -56,7 +56,7 @@ function getFieldOptions(key: string, value: string) {
 }
 
 function isChecked(value: string | undefined) {
-  return value === 'true';
+  return value === true || value === 'true';
 }
 
 interface EntryCardProps {
@@ -130,6 +130,8 @@ interface FieldCellProps {
 function FieldCell({ entry, entryId, fieldKey, language, section, updateEntry }: FieldCellProps) {
   const fieldType = useMemo(() => getFieldType(fieldKey), [fieldKey]);
   const fieldValue = entry.fields[fieldKey] || '';
+  const endDateBackup = useRef('');
+  const startDateBackup = useRef('');
 
   const isCurrent = useMemo(
     () => section.type === 'experience' && isChecked(entry.fields.isCurrent),
@@ -164,10 +166,13 @@ function FieldCell({ entry, entryId, fieldKey, language, section, updateEntry }:
       const checked = event.target.checked;
       updateEntry(section.id, entryId, 'isCurrent', checked ? 'true' : 'false');
       if (checked) {
+        endDateBackup.current = entry.fields.endDate || '';
         updateEntry(section.id, entryId, 'endDate', '');
+      } else {
+        updateEntry(section.id, entryId, 'endDate', endDateBackup.current);
       }
     },
-    [updateEntry, section.id, entryId]
+    [updateEntry, section.id, entryId, entry.fields.endDate]
   );
 
   const handleStartOnlyToggle = useCallback(
@@ -175,11 +180,14 @@ function FieldCell({ entry, entryId, fieldKey, language, section, updateEntry }:
       const checked = event.target.checked;
       updateEntry(section.id, entryId, 'showStartOnly', checked ? 'true' : 'false');
       if (checked) {
+        endDateBackup.current = entry.fields.endDate || '';
         updateEntry(section.id, entryId, 'showEndOnly', 'false');
         updateEntry(section.id, entryId, 'endDate', '');
+      } else {
+        updateEntry(section.id, entryId, 'endDate', endDateBackup.current);
       }
     },
-    [updateEntry, section.id, entryId]
+    [updateEntry, section.id, entryId, entry.fields.endDate]
   );
 
   const handleEndOnlyToggle = useCallback(
@@ -187,11 +195,14 @@ function FieldCell({ entry, entryId, fieldKey, language, section, updateEntry }:
       const checked = event.target.checked;
       updateEntry(section.id, entryId, 'showEndOnly', checked ? 'true' : 'false');
       if (checked) {
+        startDateBackup.current = entry.fields.startDate || '';
         updateEntry(section.id, entryId, 'showStartOnly', 'false');
         updateEntry(section.id, entryId, 'startDate', '');
+      } else {
+        updateEntry(section.id, entryId, 'startDate', startDateBackup.current);
       }
     },
-    [updateEntry, section.id, entryId]
+    [updateEntry, section.id, entryId, entry.fields.startDate]
   );
 
   return (

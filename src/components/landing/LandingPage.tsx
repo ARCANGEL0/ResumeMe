@@ -88,7 +88,7 @@ export default function LandingPage() {
 
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const styles = getComputedStyle(document.documentElement);
-    const colors = WAVE_CONFIG.map(w => styles.getPropertyValue(w.colorVar).trim());
+    const colors = WAVE_CONFIG.map(w => styles.getPropertyValue(['--wave-1', '--wave-2', '--wave-3'][w.colorIdx]).trim());
     const state: WaveState = { frameId: 0, tick: 0, width: window.innerWidth, height: window.innerHeight, colors };
 
     const animate = () => {
