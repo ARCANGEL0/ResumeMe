@@ -166,8 +166,8 @@ function loadPrintFrame(iframe: HTMLIFrameElement, markup: string): Promise<void
   });
 }
 
-function sanitizePdfFileName(fileName: string): string {
-  const trimmed = fileName.trim() || 'curriculum.pdf';
+function sanitizePdfFileName(fileName: string | null | undefined): string {
+  const trimmed = (fileName ?? '').trim() || 'curriculum.pdf';
   const withExtension = trimmed.toLowerCase().endsWith('.pdf') ? trimmed : `${trimmed}.pdf`;
 
   return withExtension.replace(/[<>:"/\\|?*\u0000-\u001f]+/g, '-');
@@ -192,5 +192,6 @@ function escapeHtml(value: string): string {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/'/g, '&#39;')
+    .replace(/`/g, '&#96;');
 }
