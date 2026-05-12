@@ -1,7 +1,7 @@
 import { Fragment, useState, type CSSProperties } from 'react';
 import { t, type UILanguage } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
-import type { CVData, CVSection, CVEntry } from '../../types/cv';
+import type { CVData, CVSection, CVEntry, SocialPlatform } from '../../types/cv';
 import ContactIcon from '../../ui/ContactIcon';
 import { getContactItems, getEntryTitle, getEntryDate, getEntryDetailLines } from './templateUtils';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
@@ -360,7 +360,7 @@ function ExperienceEntry({ entry }: { entry: CVEntry }) {
 
 function ProjectEntry({ entry }: { entry: CVEntry }) {
   const platform = (entry.fields.platform || 'custom') as string;
-  const iconName = platform === 'custom' ? 'website' : platform;
+  const iconName = platform === 'custom' ? 'website' : platform as SocialPlatform;
   
   return (
     <div style={S.project}>
@@ -370,7 +370,7 @@ function ProjectEntry({ entry }: { entry: CVEntry }) {
           {platform === 'custom' ? (
             <div style={{ width: '7px', height: '7px', background: G.goldDim, transform: 'rotate(45deg)', opacity: 0.7 }} />
           ) : (
-            <ContactIcon name={iconName as any} width={16} height={16} />
+            <ContactIcon name={iconName} width={16} height={16} />
           )}
         </div>
         <div style={S.projectTitle}>

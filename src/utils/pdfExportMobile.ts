@@ -15,10 +15,8 @@ export async function exportToPDF(elementId: string, fileName: string = 'curricu
   }
 
   try {
-    // Use html2canvas approach or create a printable view
-    const html2pdf = await import('html2pdf.js');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const html2pdfInstance = (html2pdf as any).default ?? html2pdf;
+    const html2pdfModule = await import('html2pdf.js');
+    const html2pdfInstance = html2pdfModule.default;
     const opt = {
       margin: 0,
       filename: fileName,

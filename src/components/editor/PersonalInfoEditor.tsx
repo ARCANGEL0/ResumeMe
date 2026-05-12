@@ -117,7 +117,10 @@ export default function PersonalInfoEditor() {
               </span>
               <select
                 value={draftPlatform}
-                onChange={(event) => setDraftPlatform(event.target.value as SocialPlatform)}
+                onChange={(event) => {
+                  const platform = SOCIAL_PLATFORM_OPTIONS.find(o => o.id === event.target.value);
+                  if (platform) setDraftPlatform(platform.id);
+                }}
               >
                 {SOCIAL_PLATFORM_OPTIONS.map((option) => (
                   <option key={option.id} value={option.id}>

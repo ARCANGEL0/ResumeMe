@@ -98,12 +98,16 @@ const LANGUAGE_ALIASES: Record<string, LanguageProficiency> = {
   bilingual: 'C2',
 };
 
+function isLanguageProficiency(value: string): value is LanguageProficiency {
+  return LANGUAGE_PROFICIENCY_OPTIONS.includes(value as LanguageProficiency);
+}
+
 export function normalizeLanguageProficiency(value: string): LanguageProficiency | '' {
   const normalized = value.trim().toUpperCase();
 
   if (!normalized) return '';
-  if (LANGUAGE_PROFICIENCY_OPTIONS.includes(normalized as LanguageProficiency)) {
-    return normalized as LanguageProficiency;
+  if (isLanguageProficiency(normalized)) {
+    return normalized;
   }
 
   return LANGUAGE_ALIASES[value.trim().toLowerCase()] ?? '';
