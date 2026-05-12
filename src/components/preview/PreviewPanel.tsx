@@ -1,4 +1,5 @@
-import { useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { useCVStore } from '../../store/cvStore';
 import { TEMPLATES, type TemplateId } from '../../types/cv';
 import getTemplate from './getTemplate';
@@ -10,7 +11,14 @@ function isValidTemplateId(id: string): id is TemplateId {
 }
 
 export default function PreviewPanel() {
-  const { personalInfo, sections, selectedTemplate, templateLayouts } = useCVStore();
+  const { personalInfo, sections, selectedTemplate, templateLayouts } = useCVStore(
+    useShallow((state) => ({
+      personalInfo: state.personalInfo,
+      sections: state.sections,
+      selectedTemplate: state.selectedTemplate,
+      templateLayouts: state.templateLayouts,
+    }))
+  );
   const safeTemplate = isValidTemplateId(selectedTemplate) ? selectedTemplate : 'minimal';
   const cvData = useMemo(
     () => ({
@@ -28,7 +36,9 @@ export default function PreviewPanel() {
       <div className="preview-paper-shell">
         <div className="preview-paper">
           <div id="cv-preview">
-            <Component data={cvData} />
+            <Suspense fallback={<div className="preview-loading">Loading...</div>}>
+              <Component data={cvData} />
+            </Suspense>
           </div>
         </div>
       </div>
