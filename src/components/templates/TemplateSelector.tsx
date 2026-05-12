@@ -9,6 +9,7 @@ import { exportToPDF } from '../../utils/pdfExportMobile';
 import TemplateDocument from './TemplateDocument';
 import { createDefaultTemplateLayout, ensureTemplateLayout, moveLayoutSection } from './templateLayout';
 import { TEMPLATE_THEMES } from './templateCatalog';
+import ZoomablePreview from '../preview/ZoomablePreview';
 
 export default function TemplateSelector() {
   const { language, personalInfo, sections, selectedTemplate, setTemplate, setTemplateLayout, setView, templateLayouts } =
@@ -152,19 +153,17 @@ export default function TemplateSelector() {
         <div className="preview-panel">
           <div className="preview-panel__inner">
     
-            <div className="preview-paper-shell">
-              <div className="preview-paper preview-paper--a4">
-                <div id="cv-preview">
-                  <TemplatePreview
-                    layoutOverride={activeLayout}
-                    dragState={dragState}
-                    onDragStart={(regionKey, sectionId) => setDragState({ regionKey, sectionId })}
-                    onDragEnd={() => setDragState(null)}
-                    onDropSection={updateActiveLayout}
-                  />
-                </div>
+            <ZoomablePreview className="preview-paper preview-paper--a4">
+              <div id="cv-preview">
+                <TemplatePreview
+                  layoutOverride={activeLayout}
+                  dragState={dragState}
+                  onDragStart={(regionKey, sectionId) => setDragState({ regionKey, sectionId })}
+                  onDragEnd={() => setDragState(null)}
+                  onDropSection={updateActiveLayout}
+                />
               </div>
-            </div>
+            </ZoomablePreview>
           </div>
         </div>
       </div>

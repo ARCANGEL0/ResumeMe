@@ -1960,8 +1960,7 @@ a {
 
   .preview-paper {
     width: 793px;
-    transform: scale(calc((100vw - 40px) / 793));
-    transform-origin: top center;
+    transform-origin: top left;
     min-height: auto;
   }
 
