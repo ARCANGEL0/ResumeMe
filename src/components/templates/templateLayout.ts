@@ -72,6 +72,13 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> =
       sidebar: ['skills', 'languages'],
     },
   },
+  sarif: {
+    regions: [{ key: 'sidebar', label: 'Sidebar' }, { key: 'main', label: 'Main' }],
+    defaultLayout: {
+      sidebar: ['skills', 'languages'],
+      main: ['experience', 'projects', 'education', 'custom'],
+    },
+  },
   ivory: {
     regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Side' }],
     defaultLayout: {

@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react';
+import { useCallback, type ReactNode, type ChangeEvent } from 'react';
+import DOMPurify from 'dompurify';
 
 interface FieldOption {
   label: string;
@@ -14,6 +15,20 @@ interface FieldEditorProps {
   className?: string;
   options?: FieldOption[];
   disabled?: boolean;
+  maxLength?: number;
+}
+
+const MAX_FIELD_LENGTH = 2000;
+
+function sanitizeInput(input: string): string {
+  const clean = DOMPurify.sanitize(input, {
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
+    ALLOW_DATA_ATTR: false,
+    ALLOW_ARIA_ATTR: false,
+    FORBID_TAGS: ['style', 'script'],
+  });
+  return clean.slice(0, MAX_FIELD_LENGTH);
 }
 
 export default function FieldEditor({
@@ -25,40 +40,58 @@ export default function FieldEditor({
   className = '',
   options,
   disabled = false,
+  maxLength = MAX_FIELD_LENGTH,
 }: FieldEditorProps) {
   const fieldClassName = ['editor-field', className].filter(Boolean).join(' ');
+
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      const sanitized = sanitizeInput(event.target.value);
+      onChange(sanitized);
+    },
+    [onChange]
+  );
+
+  const handleMonthChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const dateValue = event.target.value;
+      if (dateValue) {
+        onChange(dateValue.substring(0, 7));
+      }
+    },
+    [onChange]
+  );
+
+  const safeValue = sanitizeInput(value);
 
   if (type === 'textarea') {
     return (
       <div className={fieldClassName}>
         <label>{label}</label>
         <textarea
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
+          value={safeValue}
+          onChange={handleChange}
           placeholder={placeholder}
           rows={5}
           disabled={disabled}
+          maxLength={maxLength}
         />
       </div>
     );
   }
 
   if (type === 'month') {
-    // use date picker internally but show MM/YYYY
-    // value stored as YYYY-MM-DD, displayed as MM/YYYY
-    const dateVal = value?.length === 7 ? `${value}-01` : value; // YYYY-MM -> YYYY-MM-01
+    const dateVal = safeValue?.length === 7 ? `${safeValue}-01` : safeValue;
     return (
       <div className={fieldClassName}>
         <label>{label}</label>
         <input
           type="date"
           value={dateVal}
-          onChange={(e) => {
-            const d = e.target.value; // YYYY-MM-DD
-            if(d) onChange(d.substring(0,7)); // store as YYYY-MM only
-          }}
+          onChange={handleMonthChange}
           placeholder={placeholder}
           disabled={disabled}
+          maxLength={maxLength}
         />
       </div>
     );
@@ -70,10 +103,11 @@ export default function FieldEditor({
         <label>{label}</label>
         <input
           type="date"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
+          value={safeValue}
+          onChange={handleChange}
           placeholder={placeholder}
           disabled={disabled}
+          maxLength={maxLength}
         />
       </div>
     );
@@ -83,11 +117,7 @@ export default function FieldEditor({
     return (
       <div className={fieldClassName}>
         <label>{label}</label>
-        <select
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          disabled={disabled}
-        >
+        <select value={safeValue} onChange={handleChange} disabled={disabled}>
           <option value="">{placeholder}</option>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -104,10 +134,11 @@ export default function FieldEditor({
       <label>{label}</label>
       <input
         type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
+        value={safeValue}
+        onChange={handleChange}
         placeholder={placeholder}
         disabled={disabled}
+        maxLength={maxLength}
       />
     </div>
   );

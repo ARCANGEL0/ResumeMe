@@ -1,3 +1,5 @@
+import DOMPurify from 'dompurify';
+
 const A4_WIDTH_MM = '210mm';
 const A4_HEIGHT_MM = '297mm';
 const EXPORT_ROOT_ATTR = 'data-pdf-export-root';
@@ -38,6 +40,7 @@ export async function exportToPDF(elementId: string, fileName: string = 'curricu
     }
 
     const cleanup = () => {
+      // 300ms delay to allow print dialog to close before removing iframe
       window.setTimeout(() => {
         iframe.remove();
       }, 300);
@@ -56,7 +59,9 @@ function buildPrintDocument(element: HTMLElement, fileName: string, printScale: 
   clone.removeAttribute('id');
   clone.setAttribute(EXPORT_ROOT_ATTR, 'true');
 
-  clone.querySelectorAll('.no-print').forEach((node) => node.remove());
+  if (clone) {
+    clone.querySelectorAll('.no-print').forEach((node) => node.remove());
+  }
 
   const baseName = fileName.replace(/\.pdf$/i, '');
   const title = escapeHtml(baseName);
@@ -115,7 +120,7 @@ function buildPrintDocument(element: HTMLElement, fileName: string, printScale: 
     </style>
   </head>
   <body>
-    ${clone.outerHTML}
+    ${DOMPurify.sanitize(clone.outerHTML)}
     <script>
       (async function () {
         try {
@@ -140,6 +145,7 @@ function buildPrintDocument(element: HTMLElement, fileName: string, printScale: 
 
 function collectDocumentStyles(): string {
   return Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'))
+    .filter((node) => document.head.contains(node))
     .map((node) => node.outerHTML)
     .join('\n');
 }
@@ -166,8 +172,8 @@ function loadPrintFrame(iframe: HTMLIFrameElement, markup: string): Promise<void
   });
 }
 
-function sanitizePdfFileName(fileName: string): string {
-  const trimmed = fileName.trim() || 'curriculum.pdf';
+function sanitizePdfFileName(fileName: string | null | undefined): string {
+  const trimmed = (fileName ?? '').trim() || 'curriculum.pdf';
   const withExtension = trimmed.toLowerCase().endsWith('.pdf') ? trimmed : `${trimmed}.pdf`;
 
   return withExtension.replace(/[<>:"/\\|?*\u0000-\u001f]+/g, '-');
@@ -192,5 +198,6 @@ function escapeHtml(value: string): string {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/'/g, '&#39;')
+    .replace(/`/g, '&#96;');
 }

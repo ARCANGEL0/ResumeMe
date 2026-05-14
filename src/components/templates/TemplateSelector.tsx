@@ -1,12 +1,15 @@
 import LanguageSelector from '../../ui/LanguageSelector';
+import ResumeMark from '../../ui/ResumeMark';
+import { ARCANGELO_URL } from '../../config';
 import { getTemplateDescription, getTemplateName, t } from '../../i18n';
 import { useCallback, useEffect, useState, type CSSProperties } from 'react';
 import { useCVStore } from '../../store/cvStore';
 import { TEMPLATES, type TemplateId, type TemplateLayoutState } from '../../types/cv';
-import { exportToPDF } from '../../utils/pdfExport';
+import { exportToPDF } from '../../utils/pdfExportMobile';
 import TemplateDocument from './TemplateDocument';
 import { createDefaultTemplateLayout, ensureTemplateLayout, moveLayoutSection } from './templateLayout';
 import { TEMPLATE_THEMES } from './templateCatalog';
+import ZoomablePreview from '../preview/ZoomablePreview';
 
 export default function TemplateSelector() {
   const { language, personalInfo, sections, selectedTemplate, setTemplate, setTemplateLayout, setView, templateLayouts } =
@@ -23,16 +26,21 @@ export default function TemplateSelector() {
     sections,
   );
 
-  const handleExport = () => {
-    exportToPDF('cv-preview', `${personalInfo.fullName || 'CV'}.pdf`);
+  const handleExport = async () => {
+    try {
+      await exportToPDF('cv-preview', `${personalInfo.fullName || 'CV'}.pdf`);
+    } catch (err) {
+      console.error('Export failed:', err);
+    }
   };
 
   const updateActiveLayout = useCallback(
     (sourceRegion: string, targetRegion: string, sectionId: string, targetIndex: number) => {
+      const { activeLayout } = useCVStore.getState();
       const nextLayout = moveLayoutSection(activeLayout, sourceRegion, targetRegion, sectionId, targetIndex);
       setTemplateLayout(selectedTemplate, nextLayout);
     },
-    [activeLayout, selectedTemplate, setTemplateLayout],
+    [selectedTemplate, setTemplateLayout],
   );
 
   const goToTemplate = useCallback((index: number) => {
@@ -81,7 +89,7 @@ export default function TemplateSelector() {
           <div>
             <div className="topbar__title">{t(language, 'templatePicker')}</div>
             <div className="topbar__subtitle topbar__subtitle--brand">
-              <a href="https://arcangelo.net" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <a href={ARCANGELO_URL} target="_blank" rel="noopener noreferrer" className="brand-link">
                 {t(language, 'developedByArcangelo')}
               </a>
             </div>
@@ -145,19 +153,17 @@ export default function TemplateSelector() {
         <div className="preview-panel">
           <div className="preview-panel__inner">
     
-            <div className="preview-paper-shell">
-              <div className="preview-paper preview-paper--a4">
-                <div id="cv-preview">
-                  <TemplatePreview
-                    layoutOverride={activeLayout}
-                    dragState={dragState}
-                    onDragStart={(regionKey, sectionId) => setDragState({ regionKey, sectionId })}
-                    onDragEnd={() => setDragState(null)}
-                    onDropSection={updateActiveLayout}
-                  />
-                </div>
+            <ZoomablePreview className="preview-paper preview-paper--a4">
+              <div id="cv-preview">
+                <TemplatePreview
+                  layoutOverride={activeLayout}
+                  dragState={dragState}
+                  onDragStart={(regionKey, sectionId) => setDragState({ regionKey, sectionId })}
+                  onDragEnd={() => setDragState(null)}
+                  onDropSection={updateActiveLayout}
+                />
               </div>
-            </div>
+            </ZoomablePreview>
           </div>
         </div>
       </div>
@@ -179,34 +185,6 @@ export default function TemplateSelector() {
         </button>
       </div>
     </div>
-  );
-}
-
-function ResumeMark({ className }: { className?: string }) {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className={className}>
-      <path
-        d="M7 3.5h7.4L19 8.1V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M14.2 3.5V8h4.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9 11h6M9 14.5h6M9 18h4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-    </svg>
   );
 }
 
@@ -334,6 +312,19 @@ function renderMiniTemplate(id: TemplateId) {
             className="template-mini__sidebar"
             style={{ inset: '0 0 0 auto', left: 'auto', right: 0 }}
           />
+        </>
+      );
+    case 'sarif':
+      return (
+        <>
+          <div
+            className="template-mini__sidebar"
+            style={{ inset: '0 auto 0 0', left: 0, right: 'auto' }}
+          />
+          <div className="template-mini__content" style={{ marginLeft: '35%' }}>
+            <div className="template-mini__header" />
+            <MiniLineStack />
+          </div>
         </>
       );
     case 'ivory':

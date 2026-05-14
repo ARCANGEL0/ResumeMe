@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware'; // middleware for persistance, the previous commit did not had this which would cause data loss if page were refreshed
+import { persist } from 'zustand/middleware';
+import { useShallow } from 'zustand/react/shallow';
 import { DEFAULT_LANGUAGE, getSectionTitle, type UILanguage } from '../i18n';
 import {
   type CVData,
@@ -244,3 +245,10 @@ export const useCVStore = create<CVStore>()(
     name: 'cv-storage',
   }
 ));
+
+export const usePersonalInfo = () => useCVStore(useShallow((state) => state.personalInfo));
+export const useSections = () => useCVStore(useShallow((state) => state.sections));
+export const useSelectedTemplate = () => useCVStore(useShallow((state) => state.selectedTemplate));
+export const useTemplateLayouts = () => useCVStore(useShallow((state) => state.templateLayouts));
+export const useLanguage = () => useCVStore(useShallow((state) => state.language));
+export const useCurrentView = () => useCVStore(useShallow((state) => state.currentView));

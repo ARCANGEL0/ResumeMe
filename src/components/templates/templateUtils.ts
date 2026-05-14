@@ -69,14 +69,6 @@ export function getContactItems(personalInfo: PersonalInfo): ContactItem[] {
   return items;
 }
 
-export function createEmptySocialLink(id: string): SocialLink {
-  return {
-    id,
-    platform: 'custom',
-    value: '',
-  };
-}
-
 const LANGUAGE_LEVEL_MAP: Record<LanguageProficiency, string> = {
   A1: 'beginner',
   A2: 'beginner',
@@ -98,12 +90,16 @@ const LANGUAGE_ALIASES: Record<string, LanguageProficiency> = {
   bilingual: 'C2',
 };
 
+function isLanguageProficiency(value: string): value is LanguageProficiency {
+  return LANGUAGE_PROFICIENCY_OPTIONS.includes(value as LanguageProficiency);
+}
+
 export function normalizeLanguageProficiency(value: string): LanguageProficiency | '' {
   const normalized = value.trim().toUpperCase();
 
   if (!normalized) return '';
-  if (LANGUAGE_PROFICIENCY_OPTIONS.includes(normalized as LanguageProficiency)) {
-    return normalized as LanguageProficiency;
+  if (isLanguageProficiency(normalized)) {
+    return normalized;
   }
 
   return LANGUAGE_ALIASES[value.trim().toLowerCase()] ?? '';

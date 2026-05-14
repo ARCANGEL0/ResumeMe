@@ -4,7 +4,7 @@ export type TemplateFamily = 'sidebar' | 'split' | 'single' | 'band';
 export type SectionHeadingStyle = 'rule' | 'pill' | 'bar' | 'label';
 export type ContactStyle = 'stack' | 'inline' | 'pills';
 export type EntryStyle = 'timeline' | 'card' | 'plain' | 'bordered';
-export type SkillStyle = 'bars' | 'chips' | 'list' | 'inline' | 'dots';
+export type SkillStyle = 'bars' | 'chips' | 'list' | 'inline' | 'dots' | 'sarif';
 export type LanguageStyle = 'bars' | 'cefr' | 'words' | 'dots';
 export type SummaryStyle = 'plain' | 'card' | 'quote';
 export type ThumbLayout = 'sidebar' | 'split' | 'single' | 'band';
@@ -68,7 +68,7 @@ export const TEMPLATE_THEMES: Record<TemplateId, TemplateTheme> = {
   classic: {
     family: 'single',
     thumbLayout: 'single',
-    fontFamily: "'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif",
+    fontFamily: "'Crimson Pro', Georgia, serif",
     page: '#fffdf8',
     text: '#1e1b18',
     muted: '#6b6157',
@@ -203,10 +203,34 @@ export const TEMPLATE_THEMES: Record<TemplateId, TemplateTheme> = {
     summaryStyle: 'card',
     sidebarSections: ['skills', 'languages'],
   },
+  sarif: {
+    family: 'sidebar',
+    thumbLayout: 'sidebar',
+    sidebarPosition: 'left',
+    fontFamily: "'Electrolize', 'Arial', sans-serif",
+    page: '#ffffff',
+    text: '#1f2937',
+    muted: '#64748b',
+    line: '#d6dde7',
+    accent: '#c8a84b',
+    accentAlt: '#ffd700',
+    accentSoft: 'rgba(200,168,75,0.12)',
+    accentDark: '#1e293b',
+    sidebarBg: 'linear-gradient(180deg, #0f172a, #1e293b 52%, #334155)',
+    sidebarText: '#f8fafc',
+    headerAlign: 'left',
+    sectionHeading: 'rule',
+    contactStyle: 'stack',
+    entryStyle: 'bordered',
+    skillStyle: 'sarif',
+    languageStyle: 'cefr',
+    summaryStyle: 'card',
+    sidebarSections: ['skills', 'languages'],
+  },
   ivory: {
     family: 'single',
     thumbLayout: 'single',
-    fontFamily: "'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif",
+    fontFamily: "'Crimson Pro', Georgia, serif",
     page: '#fffdfa',
     text: '#33261d',
     muted: '#857467',
@@ -365,7 +389,7 @@ export const TEMPLATE_THEMES: Record<TemplateId, TemplateTheme> = {
   editorial: {
     family: 'split',
     thumbLayout: 'split',
-    fontFamily: "'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif",
+    fontFamily: "'Crimson Pro', Georgia, serif",
     page: '#fffdfb',
     text: '#231711',
     muted: '#6d584f',

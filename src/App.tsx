@@ -1,19 +1,17 @@
+import { useState } from 'react';
 import LandingPage from './components/landing/LandingPage';
 import EditorPanel from './components/editor/EditorPanel';
 import PreviewPanel from './components/preview/PreviewPanel';
+import ResumeMark from './ui/ResumeMark';
 import TemplateSelector from './components/templates/TemplateSelector';
 import LanguageSelector from './ui/LanguageSelector';
 import { t } from './i18n';
 import { useCVStore } from './store/cvStore';
-import { useState, useCallback } from 'react';
+import { ARCANGELO_URL } from './config';
 
 export default function App() {
   const { currentView, language, setView } = useCVStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const toggleSidebar = useCallback(() => {
-    setSidebarOpen(prev => !prev);
-  }, []);
 
   if (currentView === 'landing') {
     return (
@@ -32,13 +30,13 @@ export default function App() {
   }
 
   return (
-    <div className="editor-shell" style={{ position: 'relative' }}>
+    <div className="editor-shell">
       {/* hamburger - only on mobile */}
       <button
         type="button"
-        onClick={toggleSidebar}
+        onClick={() => setSidebarOpen(prev => !prev)}
         className="mobile-sidebar-toggle no-print"
-        aria-label="Toggle editor"
+        aria-label={t(language, 'toggleEditor')}
       >
         {sidebarOpen ? '✕' : '☰'}
       </button>
@@ -49,7 +47,12 @@ export default function App() {
           <div>
             <div className="topbar__title">Resume.Me</div>
             <div className="topbar__subtitle topbar__subtitle--brand">
-              <a href="https://arcangelo.net" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <a
+                href={ARCANGELO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="brand-link"
+              >
                 {t(language, 'developedByArcangelo')}
               </a>
             </div>
@@ -66,7 +69,7 @@ export default function App() {
         <div
           className={`editor-sidebar mobile-sidebar ${sidebarOpen ? 'is-open' : ''}`}
         >
-          <div style={{ paddingTop: '60px' }}>
+          <div className="editor-sidebar-padding">
             <EditorPanel />
           </div>
         </div>
@@ -94,34 +97,4 @@ export default function App() {
   );
 }
 
-function ResumeMark({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      className={className}
-    >
-      <path
-        d="M7 3.5h7.4L19 8.1V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M14.2 3.5V8h4.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9 11h6M9 14.5h6M9 18h4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
+

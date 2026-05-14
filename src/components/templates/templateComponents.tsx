@@ -654,6 +654,87 @@ function SkillsSection({
     );
   }
 
+  if (theme.skillStyle === 'sarif') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {section.entries.map((entry) => {
+          const score = getSkillLevelScore(entry.fields.level || '');
+          const name = entry.fields.name || entry.fields.title;
+          return (
+            <div
+              key={entry.id}
+              style={{
+                position: 'relative',
+                padding: '10px 12px',
+                border: '1px solid rgba(200,168,75,0.3)',
+                borderRadius: '4px',
+                background: onDark ? 'rgba(0,0,0,0.3)' : 'rgba(200,168,75,0.04)',
+                overflow: 'hidden',
+              }}
+            >
+              {/* Sarif corner accents */}
+              <span style={{ position: 'absolute', top: 0, left: 0, width: '8px', height: '8px', borderTop: '2px solid #c8a84b', borderLeft: '2px solid #c8a84b' }} />
+              <span style={{ position: 'absolute', top: 0, right: 0, width: '8px', height: '8px', borderTop: '2px solid #c8a84b', borderRight: '2px solid #c8a84b' }} />
+              <span style={{ position: 'absolute', bottom: 0, left: 0, width: '8px', height: '8px', borderBottom: '2px solid #c8a84b', borderLeft: '2px solid #c8a84b' }} />
+              <span style={{ position: 'absolute', bottom: 0, right: 0, width: '8px', height: '8px', borderBottom: '2px solid #c8a84b', borderRight: '2px solid #c8a84b' }} />
+              
+              {/* Skill name */}
+              <div
+                style={{
+                  fontFamily: "'Electrolize', sans-serif",
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  color: onDark ? '#f8fafc' : '#1f2937',
+                  letterSpacing: '0.06em',
+                  marginBottom: '6px',
+                  textTransform: 'uppercase',
+                }}
+              >
+                {name}
+              </div>
+              
+              {/* Gold progress bar */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div
+                  style={{
+                    flex: 1,
+                    height: '4px',
+                    background: onDark ? 'rgba(255,255,255,0.1)' : '#e5e7eb',
+                    borderRadius: '2px',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: `${(score / 5) * 100}%`,
+                      height: '100%',
+                      background: 'linear-gradient(90deg, #c8a84b, #ffd700)',
+                      borderRadius: '2px',
+                      transition: 'width 0.6s ease-out',
+                    }}
+                  />
+                </div>
+                <span
+                  style={{
+                    fontFamily: "'Play', sans-serif",
+                    fontSize: '9px',
+                    fontWeight: 700,
+                    color: '#c8a84b',
+                    letterSpacing: '0.08em',
+                    minWidth: '20px',
+                    textAlign: 'right',
+                  }}
+                >
+                  {score}/5
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', color: textColor }}>
       {section.entries.map((entry) => (

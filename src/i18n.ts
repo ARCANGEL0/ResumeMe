@@ -60,7 +60,7 @@ import hi from './locale/hi/locale.json';
 import fa from './locale/fa/locale.json';
 
 // Convert JSON to TranslationSet
-function jsonToTranslationSet(json: any): TranslationSet {
+function jsonToTranslationSet(json: Record<string, unknown>): TranslationSet {
   return {
     labels: json.labels || {},
     sectionTitles: json.sectionTitles || {},
@@ -348,6 +348,7 @@ const DEFAULT_TEMPLATE_NAMES: Record<TemplateId, string> = {
   professional: 'Professional',
   executive: 'Executive',
   slate: 'Slate',
+  sarif: 'Sarif',
   ivory: 'Ivory',
   summit: 'Summit',
   studio: 'Studio',
