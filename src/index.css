@@ -1730,7 +1730,7 @@ a {
   }
 
   .sidebar-backdrop {
-    display: block;
+    display: none;
   }
 
   .preview-panel {
