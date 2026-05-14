@@ -46,10 +46,11 @@ export default function FieldEditor({
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      console.log('FieldEditor handleChange:', event.target.value, 'type:', type);
       const sanitized = sanitizeInput(event.target.value);
       onChange(sanitized);
     },
-    [onChange]
+    [onChange, type]
   );
 
   const handleMonthChange = useCallback(

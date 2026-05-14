@@ -218,7 +218,8 @@ export const useCVStore = create<CVStore>()(
       ),
     })),
 
-  updateEntry: (sectionId, entryId, field, value) =>
+  updateEntry: (sectionId, entryId, field, value) => {
+    console.log('updateEntry called:', sectionId, entryId, field, value);
     set((state) => ({
       sections: state.sections.map((s) =>
         s.id === sectionId
@@ -230,7 +231,8 @@ export const useCVStore = create<CVStore>()(
             }
           : s
       ),
-    })),
+    }));
+  },
 
   setTemplate: (templateId) => set({ selectedTemplate: templateId }),
   setTemplateLayout: (templateId, layout) =>

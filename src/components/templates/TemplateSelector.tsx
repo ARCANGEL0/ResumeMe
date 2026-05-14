@@ -1,6 +1,6 @@
 import LanguageSelector from '../../ui/LanguageSelector';
 import ResumeMark from '../../ui/ResumeMark';
-import { ARCANGELO_URL } from '../../config';
+
 import { getTemplateDescription, getTemplateName, t } from '../../i18n';
 import { useCallback, useEffect, useState, type CSSProperties } from 'react';
 import { useCVStore } from '../../store/cvStore';
@@ -89,7 +89,7 @@ export default function TemplateSelector() {
           <div>
             <div className="topbar__title">{t(language, 'templatePicker')}</div>
             <div className="topbar__subtitle topbar__subtitle--brand">
-              <a href={ARCANGELO_URL} target="_blank" rel="noopener noreferrer" className="brand-link">
+              <a href="https://arcangelo.net" target="_blank" rel="noopener noreferrer" className="brand-link">
                 {t(language, 'developedByArcangelo')}
               </a>
             </div>

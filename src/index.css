@@ -581,6 +581,7 @@ a {
   min-width: 420px;
   border-right: 1px solid var(--clr-border);
   background: var(--clr-bg);
+  overflow-y: auto;
 }
 
 .editor-next-fab {
@@ -1932,6 +1933,7 @@ a {
 
   /* Backdrop */
   .sidebar-backdrop {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;

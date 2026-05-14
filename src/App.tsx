@@ -7,7 +7,7 @@ import TemplateSelector from './components/templates/TemplateSelector';
 import LanguageSelector from './ui/LanguageSelector';
 import { t } from './i18n';
 import { useCVStore } from './store/cvStore';
-import { ARCANGELO_URL } from './config';
+
 
 export default function App() {
   const { currentView, language, setView } = useCVStore();
@@ -48,7 +48,7 @@ export default function App() {
             <div className="topbar__title">Resume.Me</div>
             <div className="topbar__subtitle topbar__subtitle--brand">
               <a
-                href={ARCANGELO_URL}
+                href="https://arcangelo.net"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="brand-link"

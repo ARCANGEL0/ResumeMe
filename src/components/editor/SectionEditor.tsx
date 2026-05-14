@@ -127,9 +127,10 @@ interface FieldCellProps {
   updateEntry: (sectionId: string, entryId: string, field: string, value: string) => void;
 }
 
-const FieldCell = memo(function FieldCell({ entry, entryId, fieldKey, language, section, updateEntry }: FieldCellProps) {
+const FieldCell = function FieldCell({ entry, entryId, fieldKey, language, section, updateEntry }: FieldCellProps) {
   const fieldType = useMemo(() => getFieldType(fieldKey), [fieldKey]);
   const fieldValue = entry.fields[fieldKey] || '';
+  console.log('FieldCell render:', fieldKey, 'value:', fieldValue, 'entryId:', entryId);
   const endDateBackup = useRef('');
   const startDateBackup = useRef('');
 
@@ -238,16 +239,9 @@ const FieldCell = memo(function FieldCell({ entry, entryId, fieldKey, language, 
       )}
     </div>
   );
-}, (prevProps, nextProps) => {
-  return prevProps.entryId === nextProps.entryId &&
-    prevProps.fieldKey === nextProps.fieldKey &&
-    prevProps.language === nextProps.language &&
-    prevProps.entry.fields[prevProps.fieldKey] === nextProps.entry.fields[nextProps.fieldKey] &&
-    prevProps.section.id === nextProps.section.id &&
-    prevProps.section.type === nextProps.section.type;
-});
+};
 
-const SectionEditor = memo(function SectionEditor({ section, index, totalSections }: SectionEditorProps) {
+const SectionEditor = function SectionEditor({ section, index, totalSections }: SectionEditorProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const {
@@ -408,12 +402,6 @@ const SectionEditor = memo(function SectionEditor({ section, index, totalSection
       </div>
     </div>
   );
-}, (prevProps, nextProps) => {
-  return prevProps.section.id === nextProps.section.id &&
-    prevProps.section.title === nextProps.section.title &&
-    prevProps.section.entries.length === nextProps.section.entries.length &&
-    prevProps.index === nextProps.index &&
-    prevProps.totalSections === nextProps.totalSections;
-});
+};
 
 export default SectionEditor;
