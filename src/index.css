@@ -1126,6 +1126,25 @@ a {
   justify-content: center;
 }
 
+.preview-stage {
+  position: relative;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.preview-viewport {
+  display: flex;
+  min-width: 100%;
+  min-height: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  cursor: grab;
+}
+
+.preview-viewport.is-panning {
+  cursor: grabbing;
+}
+
 .preview-paper-shell {
   width: max-content;
   max-width: none;
@@ -1144,6 +1163,32 @@ a {
   border-radius: calc(var(--radius-lg) - 4px);
   background: var(--clr-paper);
   box-shadow: 0 0 0 1px rgba(13,11,26,0.05);
+}
+
+.preview-zoom-controls {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 90;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.preview-zoom-controls button {
+  min-width: 42px;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--clr-border);
+  border-radius: 999px;
+  background: rgba(20, 16, 43, 0.88);
+  color: var(--clr-paper);
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(7, 4, 18, 0.24);
+}
+
+.preview-zoom-controls button:hover {
+  border-color: var(--clr-accent);
 }
 
 .template-shell {
@@ -1173,6 +1218,10 @@ a {
 
 .template-workspace .preview-panel__inner {
   width: 100%;
+  justify-content: flex-start;
+}
+
+.template-workspace .preview-viewport {
   justify-content: flex-start;
 }
 
@@ -2452,5 +2501,23 @@ a {
   .preview-panel .preview-paper,
   .template-workspace .preview-paper {
     transform: scale(0.40);
+  }
+}
+
+@media (max-width: 1024px) {
+  .editor-shell .editor-next-fab {
+    position: fixed;
+    right: calc(12px + env(safe-area-inset-right));
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    z-index: 120;
+  }
+
+  .editor-shell .preview-panel {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+
+  .preview-zoom-controls {
+    left: calc(12px + env(safe-area-inset-left));
+    bottom: calc(12px + env(safe-area-inset-bottom));
   }
 }
