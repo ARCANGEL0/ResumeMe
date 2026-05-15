@@ -22,17 +22,16 @@
 
 ResumeMe is a small, web app that helps you build a clean resume fast and easily, with some features such as:
 
-- 🌍 **48+ Languages** — Multilingual provider that allows you to swap multiple languages for your resume.
-- 🎨 **15+ Premium Templates** — Modern, Classic, Minimal, Creative, Professional, Executive, and more. All print-ready A4 format (More to be added futurely).
-- ⚡ **Live Preview** — Type on the left, see your CV update in real-time on the right. No refresh needed.
-- 🧩 **Smart Sections** — Add, remove, and reorder sections with drag-and-drop. Customize every part of your CV.
-- 📄 **One-Click PDF Export** — Download a print-ready A4 PDF in seconds. No watermarks, no paywalls, it generates HTML to PDF directly.
-- 💾 **Auto-Save** — Your CV is saved automatically in your browser. Never lose your work.
-- 🎯 **Zero Backend** — No signup, no database, no tracking. Your data stays on your device.
+- 🌍 **Lang support** > Multiple languages available in entire page and resumee using i18n with over 40+ different langs.
+- 🎨 **Multiple Templates** > Modern, Classic, Minimal, Creative, Professional, Executive, and etc. All print-ready A4 format, each template is a separate .tsx file, custom templates can be added.
+- ⚡ **Live Preview** > Type on the left, see your CV update in real-time on the right. No refresh needed.
+- 🧩 **Smart Sections** > Add, remove, and reorder sections with drag-and-drop. Customize every part of your CV.
+- 📄 **One-Click PDF Export** > Download a print-ready A4 PDF in seconds by converting HTML to PDF directly.
+- 💾 **Auto-Save** > CV is saved in Browser's localStorage, so data will remain and persist after refresh.
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 > Prerequisites: [Node.js 18+](https://nodejs.org) installed on your machine.
 
@@ -89,6 +88,7 @@ ResumeMe/
 │   │   │   ├── Editorial.tsx
 │   │   │   ├── Executive.tsx
 │   │   │   ├── Ivory.tsx
+│   │   │   ├── Sarif.tsx
 │   │   │   ├── Minimal.tsx
 │   │   │   ├── Modern.tsx
 │   │   │   ├── North.tsx
@@ -96,7 +96,7 @@ ResumeMe/
 │   │   │   ├── Slate.tsx
 │   │   │   ├── Studio.tsx
 │   │   │   ├── Summit.tsx
-│   │   │   └── Zenith.tsx
+│   │   │   └── .... # more to add
 │   │   │
 │   │   ├── landing/           # 🚀 Landing page 
 │   │   │   └── LandingPage.tsx
