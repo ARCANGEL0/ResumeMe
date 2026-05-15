@@ -356,19 +356,23 @@ function SectionRegionStack({
   }
 
   return (
-    <div className={`template-preview-region-stack ${layoutEditor.dragState ? 'is-drag-active' : ''}`} style={{ display: 'flex', flexDirection: 'column', gap }}>
-      <SectionDropZone layoutEditor={layoutEditor} regionKey={regionKey} targetIndex={0} empty={sections.length === 0} />
+    <div className={`template-preview-region-stack ${layoutEditor?.dragState ? 'is-drag-active' : ''}`} style={{ display: 'flex', flexDirection: 'column', gap }}>
+      {layoutEditor && <SectionDropZone layoutEditor={layoutEditor} regionKey={regionKey} targetIndex={0} empty={sections.length === 0} />}
       {sections.map((section, index) => (
         <Fragment key={section.id}>
-          <DraggableSection
-            layoutEditor={layoutEditor}
-            onDark={onDark}
-            regionKey={regionKey}
-            section={section}
-            shellStyle={shellStyle}
-            theme={theme}
-          />
-          <SectionDropZone layoutEditor={layoutEditor} regionKey={regionKey} targetIndex={index + 1} />
+          {layoutEditor ? (
+            <DraggableSection
+              layoutEditor={layoutEditor}
+              onDark={onDark}
+              regionKey={regionKey}
+              section={section}
+              shellStyle={shellStyle}
+              theme={theme}
+            />
+          ) : (
+            <div>{section.title}</div>
+          )}
+          {layoutEditor && <SectionDropZone layoutEditor={layoutEditor} regionKey={regionKey} targetIndex={index + 1} />}
         </Fragment>
       ))}
     </div>
@@ -395,17 +399,18 @@ function SectionDropZone({
       className={`template-preview-drop-zone ${empty ? 'is-empty' : ''} ${isActive ? 'is-active' : ''} ${isOver ? 'is-over' : ''}`}
       onDragEnter={(event) => {
         event.preventDefault();
-        if (layoutEditor.dragState) setIsOver(true);
+        if (layoutEditor?.dragState) setIsOver(true);
       }}
       onDragLeave={() => setIsOver(false)}
       onDragOver={(event) => {
-        if (!layoutEditor.dragState) return;
+        if (!layoutEditor?.dragState) return;
         event.preventDefault();
         event.dataTransfer.dropEffect = 'move';
         setIsOver(true);
       }}
       onDrop={(event) => {
         event.preventDefault();
+        if (!layoutEditor) return;
         const sourceRegion = event.dataTransfer.getData('text/template-region');
         const sectionId = event.dataTransfer.getData('text/template-section-id');
         if (sourceRegion && sectionId) {
@@ -436,7 +441,7 @@ function DraggableSection({
   theme: TemplateTheme;
 }) {
   const isSource =
-    layoutEditor.dragState?.regionKey === regionKey && layoutEditor.dragState.sectionId === section.id;
+    layoutEditor?.dragState?.regionKey === regionKey && layoutEditor?.dragState?.sectionId === section.id;
 
   return (
     <div
@@ -446,9 +451,9 @@ function DraggableSection({
         event.dataTransfer.effectAllowed = 'move';
         event.dataTransfer.setData('text/template-region', regionKey);
         event.dataTransfer.setData('text/template-section-id', section.id);
-        layoutEditor.onDragStart(regionKey, section.id);
+        layoutEditor?.onDragStart(regionKey, section.id);
       }}
-      onDragEnd={() => layoutEditor.onDragEnd()}
+      onDragEnd={() => layoutEditor?.onDragEnd()}
     >
       <div style={shellStyle}>
         <SectionBlock section={section} theme={theme} onDark={onDark} />

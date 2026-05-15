@@ -281,8 +281,72 @@ const S: Record<string, CSSProperties> = {
   skillsDivider: {
     height: '1px',
     background: `linear-gradient(90deg, ${G.goldDim}, transparent)`,
-    margin: '8px 0',
+    margin: '12px 0',
     opacity: 0.3,
+  },
+  skillCategoryLabel: {
+    fontWeight: 700,
+    color: G.goldDim,
+    fontSize: '9px',
+    textTransform: 'uppercase' as const,
+    letterSpacing: '3px',
+    marginBottom: '10px',
+    fontFamily: "'Electrolize', sans-serif",
+    borderBottom: `1px solid rgba(201, 168, 76, 0.15)`,
+    paddingBottom: '4px',
+  },
+  skillBarsGrid: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '10px',
+    marginBottom: '8px',
+  },
+  skillBarContainer: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '4px',
+  },
+  skillBarHeader: {
+    display: 'flex',
+    justifyContent: 'space-between' as const,
+    alignItems: 'center',
+  },
+  skillBarName: {
+    fontSize: '9px',
+    color: G.textBright,
+    fontWeight: 600,
+    fontFamily: "'Electrolize', sans-serif",
+    letterSpacing: '0.5px',
+  },
+  skillBarLevel: {
+    fontSize: '8px',
+    color: G.goldDim,
+    fontFamily: "'Orbitron', monospace",
+  },
+  skillBarTrack: {
+    height: '4px',
+    background: 'rgba(201, 168, 76, 0.1)',
+    borderRadius: '2px',
+    overflow: 'hidden' as const,
+    position: 'relative' as const,
+    border: `1px solid rgba(201, 168, 76, 0.08)`,
+  },
+  skillBarFill: {
+    height: '100%',
+    background: `linear-gradient(90deg, ${G.goldDark}, ${G.gold} 60%, ${G.goldBright})`,
+    borderRadius: '1px',
+    transition: 'width 0.6s ease',
+    position: 'relative' as const,
+    boxShadow: `0 0 8px rgba(201, 168, 76, 0.3)`,
+  },
+  skillBarGlow: {
+    position: 'absolute' as const,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    width: '20px',
+    background: `linear-gradient(90deg, transparent, rgba(232, 197, 71, 0.4))`,
+    borderRadius: '0 1px 1px 0',
   },
   langGrid: {
     display: 'flex',
@@ -305,6 +369,10 @@ const S: Record<string, CSSProperties> = {
   },
   langLevel: {
     color: G.textDim,
+    fontFamily: "'Electrolize', sans-serif",
+    fontSize: '9px',
+    fontWeight: 500,
+    letterSpacing: '1px',
   },
   course: {
     fontSize: '11px',
@@ -401,18 +469,38 @@ function EducationEntry({ entry }: { entry: CVEntry }) {
   );
 }
 
+function SkillBar({ name, level }: { name: string; level: string }) {
+  const levelNum = Math.min(5, Math.max(1, parseInt(level) || 3));
+  const percentage = (levelNum / 5) * 100;
+  
+  return (
+    <div style={S.skillBarContainer}>
+      <div style={S.skillBarHeader}>
+        <span style={S.skillBarName}>{name}</span>
+        <span style={S.skillBarLevel}>{levelNum}/5</span>
+      </div>
+      <div style={S.skillBarTrack}>
+        <div style={{...S.skillBarFill, width: `${percentage}%`}}>
+          <div style={S.skillBarGlow} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function SkillsSection({ entries }: { entries: CVEntry[] }) {
-  const categorized: Record<string, string[]> = {};
-  const uncategorized: string[] = [];
+  const categorized: Record<string, {name: string; level: string}[]> = {};
+  const uncategorized: {name: string; level: string}[] = [];
 
   entries.forEach((entry) => {
     const category = entry.fields.category || '';
     const name = entry.fields.name || '';
+    const level = entry.fields.level || '3';
     if (category) {
       if (!categorized[category]) categorized[category] = [];
-      categorized[category].push(name);
+      categorized[category].push({name, level});
     } else {
-      uncategorized.push(name);
+      uncategorized.push({name, level});
     }
   });
 
@@ -420,16 +508,20 @@ function SkillsSection({ entries }: { entries: CVEntry[] }) {
     <>
       {Object.entries(categorized).map(([category, skills], i) => (
         <div key={i}>
-          <div style={S.skillRow}>
-            <span style={S.skillLabel}>{category}:</span>
-            <span style={S.skillValues}>{skills.join(', ')}</span>
+          <div style={S.skillCategoryLabel}>{category}</div>
+          <div style={S.skillBarsGrid}>
+            {skills.map((skill, j) => (
+              <SkillBar key={j} name={skill.name} level={skill.level} />
+            ))}
           </div>
           {i < Object.keys(categorized).length - 1 && <div style={S.skillsDivider} />}
         </div>
       ))}
       {uncategorized.length > 0 && (
-        <div style={S.skillRow}>
-          <span style={S.skillValues}>{uncategorized.join(', ')}</span>
+        <div style={S.skillBarsGrid}>
+          {uncategorized.map((skill, i) => (
+            <SkillBar key={i} name={skill.name} level={skill.level} />
+          ))}
         </div>
       )}
     </>
@@ -544,8 +636,8 @@ function SarifDraggableSection({
   language: UILanguage;
 }) {
   const isSource =
-    layoutEditor.dragState?.regionKey === 'main' &&
-    layoutEditor.dragState?.sectionId === section.id;
+    layoutEditor?.dragState?.regionKey === 'main' &&
+    layoutEditor?.dragState?.sectionId === section.id;
 
   return (
     <div
@@ -574,24 +666,25 @@ function SarifDropZone({
   targetIndex: number;
 }) {
   const [isOver, setIsOver] = useState(false);
-  const isActive = Boolean(layoutEditor.dragState);
+  const isActive = Boolean(layoutEditor?.dragState);
 
   return (
     <div
       className={`template-preview-drop-zone ${empty ? 'is-empty' : ''} ${isActive ? 'is-active' : ''} ${isOver ? 'is-over' : ''}`}
       onDragEnter={(event) => {
         event.preventDefault();
-        if (layoutEditor.dragState) setIsOver(true);
+        if (layoutEditor?.dragState) setIsOver(true);
       }}
       onDragLeave={() => setIsOver(false)}
       onDragOver={(event) => {
-        if (!layoutEditor.dragState) return;
+        if (!layoutEditor?.dragState) return;
         event.preventDefault();
         event.dataTransfer.dropEffect = 'move';
         setIsOver(true);
       }}
       onDrop={(event) => {
         event.preventDefault();
+        if (!layoutEditor) return;
         const sourceRegion = event.dataTransfer.getData('text/template-region');
         const sectionId = event.dataTransfer.getData('text/template-section-id');
         if (sourceRegion && sectionId) {
