@@ -226,12 +226,16 @@ export function ensureTemplateLayout(
 }
 
 export function moveLayoutSection(
-  layout: TemplateLayoutState,
+  layout: TemplateLayoutState | undefined,
   sourceRegion: string,
   targetRegion: string,
   sectionId: string,
   targetIndex: number,
-): TemplateLayoutState {
+): TemplateLayoutState | undefined {
+  if (!layout) {
+    console.log('moveLayoutSection: layout is undefined');
+    return undefined;
+  }
   const nextLayout = Object.fromEntries(
     Object.entries(layout).map(([key, value]) => [key, [...(value ?? [])]]),
   ) as TemplateLayoutState;

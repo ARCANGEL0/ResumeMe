@@ -36,9 +36,16 @@ export default function TemplateSelector() {
 
   const updateActiveLayout = useCallback(
     (sourceRegion: string, targetRegion: string, sectionId: string, targetIndex: number) => {
-      const { activeLayout } = useCVStore.getState();
+      const state = useCVStore.getState();
+      const activeLayout = ensureTemplateLayout(
+        selectedTemplate,
+        state.templateLayouts?.[selectedTemplate] ?? createDefaultTemplateLayout(selectedTemplate, state.sections),
+        state.sections,
+      );
       const nextLayout = moveLayoutSection(activeLayout, sourceRegion, targetRegion, sectionId, targetIndex);
-      setTemplateLayout(selectedTemplate, nextLayout);
+      if (nextLayout) {
+        setTemplateLayout(selectedTemplate, nextLayout);
+      }
     },
     [selectedTemplate, setTemplateLayout],
   );

@@ -683,15 +683,27 @@ function SarifDropZone({
         setIsOver(true);
       }}
       onDrop={(event) => {
-        event.preventDefault();
-        if (!layoutEditor) return;
-        const sourceRegion = event.dataTransfer.getData('text/template-region');
-        const sectionId = event.dataTransfer.getData('text/template-section-id');
-        if (sourceRegion && sectionId) {
-          layoutEditor.onDrop(sourceRegion, 'main', sectionId, targetIndex);
+        try {
+          event.preventDefault();
+          if (!layoutEditor) {
+            console.log('Sarif onDrop: layoutEditor is undefined');
+            return;
+          }
+          const sourceRegion = event.dataTransfer?.getData('text/template-region');
+          const sectionId = event.dataTransfer?.getData('text/template-section-id');
+          console.log('Sarif onDrop:', { sourceRegion, sectionId, targetIndex });
+          if (sourceRegion && sectionId && layoutEditor.onDrop) {
+            layoutEditor.onDrop(sourceRegion, 'main', sectionId, targetIndex);
+          } else {
+            console.log('Sarif onDrop: missing data', { sourceRegion, sectionId, hasOnDrop: !!layoutEditor.onDrop });
+          }
+          setIsOver(false);
+          if (layoutEditor.onDragEnd) {
+            layoutEditor.onDragEnd();
+          }
+        } catch (error) {
+          console.error('Sarif onDrop error:', error);
         }
-        setIsOver(false);
-        layoutEditor.onDragEnd();
       }}
     />
   );

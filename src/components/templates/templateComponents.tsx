@@ -409,15 +409,27 @@ function SectionDropZone({
         setIsOver(true);
       }}
       onDrop={(event) => {
-        event.preventDefault();
-        if (!layoutEditor) return;
-        const sourceRegion = event.dataTransfer.getData('text/template-region');
-        const sectionId = event.dataTransfer.getData('text/template-section-id');
-        if (sourceRegion && sectionId) {
-          layoutEditor.onDrop(sourceRegion, regionKey, sectionId, targetIndex);
+        try {
+          event.preventDefault();
+          if (!layoutEditor) {
+            console.log('onDrop: layoutEditor is undefined');
+            return;
+          }
+          const sourceRegion = event.dataTransfer?.getData('text/template-region');
+          const sectionId = event.dataTransfer?.getData('text/template-section-id');
+          console.log('onDrop called:', { sourceRegion, sectionId, targetIndex });
+          if (sourceRegion && sectionId && layoutEditor.onDrop) {
+            layoutEditor.onDrop(sourceRegion, regionKey, sectionId, targetIndex);
+          } else {
+            console.log('onDrop: missing data or onDrop handler', { sourceRegion, sectionId, hasOnDrop: !!layoutEditor.onDrop });
+          }
+          setIsOver(false);
+          if (layoutEditor.onDragEnd) {
+            layoutEditor.onDragEnd();
+          }
+        } catch (error) {
+          console.error('onDrop error:', error);
         }
-        setIsOver(false);
-        layoutEditor.onDragEnd();
       }}
     >
       {empty ? getDropSectionLabel(language) : ''}
