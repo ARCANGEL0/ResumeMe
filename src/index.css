@@ -99,7 +99,7 @@ a {
 }
 
 .sr-only {
-  position: absolute;
+  position: fixed;
   width: 1px;
   height: 1px;
   padding: 0;
@@ -210,7 +210,7 @@ a {
 }
 
 .language-fab {
-  position: absolute;
+  position: fixed;
   top: 18px;
   right: 24px;
   z-index: 45;
@@ -241,7 +241,7 @@ a {
 }
 
 .language-selector__glow {
-  position: absolute;
+  position: fixed;
   inset: auto -26px -22px auto;
   width: 92px;
   height: 92px;
@@ -314,7 +314,7 @@ a {
 }
 
 .language-selector__menu {
-  position: absolute;
+  position: fixed;
   top: calc(100% + 10px);
   right: 0;
   z-index: 40;
@@ -478,7 +478,7 @@ a {
 }
 
 .landing-wave-canvas {
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 0;
   width: 100%;
@@ -487,7 +487,7 @@ a {
 }
 
 .landing-language {
-  position: absolute;
+  position: fixed;
   top: 22px;
   right: 24px;
   z-index: 45;
@@ -550,7 +550,7 @@ a {
 }
 
 .landing-credit {
-  position: absolute;
+  position: fixed;
   right: 18px;
   bottom: 12px;
   z-index: 1;
@@ -585,7 +585,7 @@ a {
 }
 
 .editor-next-fab {
-  position: absolute;
+  position: fixed;
   right: 24px;
   bottom: 24px;
   z-index: 30;
@@ -806,7 +806,7 @@ a {
 }
 
 .editor-social-create__platform-icon {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 14px;
   z-index: 1;
@@ -876,7 +876,7 @@ a {
 
 .editor-checkbox input::after {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 1px;
   left: 4px;
   width: 4px;
@@ -1166,7 +1166,7 @@ a {
 }
 
 .preview-zoom-controls {
-  position: absolute;
+  position: fixed;
   left: 16px;
   bottom: 16px;
   z-index: 90;
@@ -1317,7 +1317,7 @@ a {
 }
 
 .template-actions-fab {
-  position: absolute;
+  position: fixed;
   right: 24px;
   bottom: 24px;
   z-index: 30;
@@ -1460,7 +1460,7 @@ a {
 }
 
 .template-mini__sidebar {
-  position: absolute;
+  position: fixed;
   inset: 0 auto 0 0;
   width: 30%;
   border-radius: calc(var(--radius-md) - 2px);
