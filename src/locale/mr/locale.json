@@ -91,7 +91,13 @@
     "native": "मातृभाषा",
     "fluent": "प्रवाही",
     "intermediate": "मध्यम",
-    "beginner": "प्रारंभिक"
+    "beginner": "प्रारंभिक",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "येथे सोडा",
+    "dateOfBirth": "जन्मतारीख",
+    "born": "जन्म"
   },
   "sectionTitles": {
     "experience": "अनुभव",

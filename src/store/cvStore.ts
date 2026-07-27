@@ -23,6 +23,8 @@ const defaultPersonalInfo: PersonalInfo = {
   phone: '',
   location: '',
   summary: '',
+  photo: '',
+  dateOfBirth: '',
   socials: [],
 };
 

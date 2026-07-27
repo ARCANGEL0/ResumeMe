@@ -40,15 +40,9 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> =
     },
   },
   creative: {
-    regions: [
-      { key: 'utility', label: 'Utility' },
-      { key: 'storyLeft', label: 'Story Left' },
-      { key: 'storyRight', label: 'Story Right' },
-    ],
+    regions: [{ key: 'main', label: 'Main' }],
     defaultLayout: {
-      utility: ['skills', 'languages'],
-      storyLeft: ['experience', 'education', 'custom'],
-      storyRight: ['projects', 'certifications'],
+      main: ['experience', 'education', 'projects', 'certifications', 'custom', 'skills', 'languages'],
     },
   },
   professional: {
@@ -137,6 +131,176 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> =
       left: ['custom', 'skills', 'languages'],
       middle: ['experience', 'projects'],
       right: ['education', 'certifications'],
+    },
+  },
+  meridian: {
+    regions: [{ key: 'meta', label: 'Meta' }, { key: 'main', label: 'Main' }],
+    defaultLayout: {
+      meta: ['skills', 'languages', 'certifications'],
+      main: ['experience', 'projects', 'education', 'custom'],
+    },
+  },
+  vertex: {
+    regions: [
+      { key: 'main', label: 'Main' },
+      { key: 'supportLeft', label: 'Support Left' },
+      { key: 'supportRight', label: 'Support Right' },
+    ],
+    defaultLayout: {
+      main: ['experience', 'projects', 'custom'],
+      supportLeft: ['education', 'certifications'],
+      supportRight: ['skills', 'languages'],
+    },
+  },
+  harbor: {
+    regions: [{ key: 'sidebar', label: 'Sidebar' }, { key: 'main', label: 'Main' }],
+    defaultLayout: {
+      sidebar: ['skills', 'languages', 'certifications'],
+      main: ['experience', 'projects', 'education', 'custom'],
+    },
+  },
+  beacon: {
+    regions: [{ key: 'main', label: 'Main' }],
+    defaultLayout: {
+      main: ['experience', 'education', 'projects', 'skills', 'languages', 'certifications', 'custom'],
+    },
+  },
+  quartz: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Side' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'education', 'custom'],
+      side: ['skills', 'languages', 'certifications'],
+    },
+  },
+  retro95: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'sidebar', label: 'Sidebar' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'education', 'custom'],
+      sidebar: ['skills', 'languages', 'certifications'],
+    },
+  },
+  windows: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'sidebar', label: 'Sidebar' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'education', 'custom'],
+      sidebar: ['skills', 'languages', 'certifications'],
+    },
+  },
+  cobalt: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'aside', label: 'Aside' }],
+    defaultLayout: {
+      main: ['experience', 'education', 'projects'],
+      aside: ['skills', 'languages', 'certifications', 'custom'],
+    },
+  },
+  linen: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'sidebar', label: 'Sidebar' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'certifications', 'custom'],
+      sidebar: ['education', 'skills', 'languages'],
+    },
+  },
+  praxis: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Side' }],
+    defaultLayout: {
+      main: ['experience', 'education', 'projects'],
+      side: ['skills', 'languages', 'certifications', 'custom'],
+    },
+  },
+  vellum: {
+    regions: [{ key: 'left', label: 'Left' }, { key: 'right', label: 'Right' }],
+    defaultLayout: {
+      left: ['experience', 'projects', 'custom'],
+      right: ['education', 'skills', 'languages', 'certifications'],
+    },
+  },
+  toon: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Side' }],
+    defaultLayout: {
+      main: ['experience', 'education', 'projects'],
+      side: ['skills', 'languages', 'certifications', 'custom'],
+    },
+  },
+  hexon: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'sidebar', label: 'Sidebar' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'education', 'custom'],
+      sidebar: ['skills', 'languages', 'certifications'],
+    },
+  },
+  lagoon: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'sidebar', label: 'Sidebar' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'custom'],
+      sidebar: ['education', 'skills', 'languages', 'certifications'],
+    },
+  },
+  scribe: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'aside', label: 'Aside' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'custom'],
+      aside: ['education', 'skills', 'languages', 'certifications'],
+    },
+  },
+  portrait: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Side' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'education', 'custom'],
+      side: ['skills', 'languages', 'certifications'],
+    },
+  },
+  insignia: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'sidebar', label: 'Sidebar' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'education', 'custom'],
+      sidebar: ['skills', 'languages', 'certifications'],
+    },
+  },
+  bulletin: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Side' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'education'],
+      side: ['skills', 'languages', 'certifications', 'custom'],
+    },
+  },
+  verso: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Side' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'education', 'custom'],
+      side: ['skills', 'languages', 'certifications'],
+    },
+  },
+  granite: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'footer', label: 'Footer' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'education', 'custom'],
+      footer: ['skills', 'languages', 'certifications'],
+    },
+  },
+  palladio: {
+    regions: [
+      { key: 'main', label: 'Main' },
+      { key: 'bottomLeft', label: 'Bottom Left' },
+      { key: 'bottomRight', label: 'Bottom Right' },
+    ],
+    defaultLayout: {
+      main: ['experience', 'education', 'projects'],
+      bottomLeft: ['skills', 'certifications'],
+      bottomRight: ['languages', 'custom'],
+    },
+  },
+  signal: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Side' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'custom'],
+      side: ['education', 'skills', 'languages', 'certifications'],
+    },
+  },
+  corvus: {
+    regions: [{ key: 'main', label: 'Main' }, { key: 'aside', label: 'Aside' }],
+    defaultLayout: {
+      main: ['experience', 'projects', 'education', 'custom'],
+      aside: ['skills', 'languages', 'certifications'],
     },
   },
 };

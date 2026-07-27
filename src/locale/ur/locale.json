@@ -91,7 +91,13 @@
     "native": "مادری",
     "fluent": "رواں",
     "intermediate": "درمیانہ",
-    "beginner": "مبتدی"
+    "beginner": "مبتدی",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "یہاں چھوڑیں",
+    "dateOfBirth": "تاریخ پیدائش",
+    "born": "پیدائش"
   },
   "sectionTitles": {
     "experience": "تجربہ",

@@ -90,7 +90,13 @@
     "native": "ネイティブ",
     "fluent": "流暢",
     "intermediate": "中級",
-    "beginner": "初級"
+    "beginner": "初級",
+    "photo": "写真",
+    "uploadPhoto": "写真をアップロード",
+    "removePhoto": "削除",
+    "dropHere": "ここにドロップ",
+    "dateOfBirth": "生年月日",
+    "born": "生年月日"
   },
   "sectionTitles": {
     "education": "学歴",

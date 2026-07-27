@@ -91,7 +91,13 @@
     "native": "മാതൃഭാഷ",
     "fluent": "പ്രവാഹി",
     "intermediate": "ഇടത്തരം",
-    "beginner": "തുടക്കക്കാരൻ"
+    "beginner": "തുടക്കക്കാരൻ",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "ഇവിടെ ഇടുക",
+    "dateOfBirth": "ജനനത്തീയതി",
+    "born": "ജനനം"
   },
   "sectionTitles": {
     "experience": "അനുഭവം",

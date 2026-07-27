@@ -91,7 +91,13 @@
     "native": "મૂળ",
     "fluent": "પ્રવાહી",
     "intermediate": "મધ્યવર્તી",
-    "beginner": "પ્રારંભિક"
+    "beginner": "પ્રારંભિક",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "અહીં મૂકો",
+    "dateOfBirth": "જન્મ તારીખ",
+    "born": "જન્મ"
   },
   "sectionTitles": {
     "experience": "અનુભવ",

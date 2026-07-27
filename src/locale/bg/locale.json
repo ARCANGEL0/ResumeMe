@@ -91,7 +91,13 @@
     "native": "Роден",
     "fluent": "Свободен",
     "intermediate": "Среден",
-    "beginner": "Начинаещ"
+    "beginner": "Начинаещ",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "Пуснете тук",
+    "dateOfBirth": "Дата на раждане",
+    "born": "Роден"
   },
   "sectionTitles": {
     "experience": "Опит",

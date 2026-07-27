@@ -91,7 +91,13 @@
     "native": "زبان مادری",
     "fluent": "روان",
     "intermediate": "متوسط",
-    "beginner": "مبتدی"
+    "beginner": "مبتدی",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "اینجا رها کنید",
+    "dateOfBirth": "تاریخ تولد",
+    "born": "متولد"
   },
   "sectionTitles": {
     "experience": "تجربه",

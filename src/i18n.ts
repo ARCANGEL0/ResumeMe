@@ -357,6 +357,29 @@ const DEFAULT_TEMPLATE_NAMES: Record<TemplateId, string> = {
   north: 'North',
   zenith: 'Zenith',
   editorial: 'Editorial',
+  meridian: 'Meridian',
+  vertex: 'Vertex',
+  harbor: 'Harbor',
+  beacon: 'Beacon',
+  quartz: 'Quartz',
+  retro95: 'Retro 95',
+  windows: 'Windows',
+  cobalt: 'Cobalt',
+  linen: 'Linen',
+  praxis: 'Praxis',
+  portrait: 'Portrait',
+  insignia: 'Insignia',
+  bulletin: 'Bulletin',
+  verso: 'Verso',
+  granite: 'Granite',
+  palladio: 'Palladio',
+  signal: 'Signal',
+  corvus: 'Corvus',
+  vellum: 'Vellum',
+  toon: 'Toon',
+  hexon: 'Hexon',
+  lagoon: 'Lagoon',
+  scribe: 'Scribe',
 };
 
 // Get translation for a language
@@ -397,6 +420,12 @@ export function getPlaceholder(language: UILanguage, field: string): string {
 // Get drop section label
 export function getDropSectionLabel(language: UILanguage): string {
   return DROP_SECTION_LABELS[language] || 'Drop a section here';
+}
+
+export function getRegionDropLabel(language: UILanguage, regionLabel: string): string {
+  const translation = getTranslation(language);
+  const prefix = translation.labels.dropHere || getTranslation(DEFAULT_LANGUAGE).labels.dropHere || 'Drop here';
+  return `${prefix}: ${regionLabel}`;
 }
 
 // Get developed by text

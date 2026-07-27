@@ -90,7 +90,13 @@
     "native": "母语",
     "fluent": "流利",
     "intermediate": "中级",
-    "beginner": "初级"
+    "beginner": "初级",
+    "photo": "照片",
+    "uploadPhoto": "上传照片",
+    "removePhoto": "移除",
+    "dropHere": "放到这里",
+    "dateOfBirth": "出生日期",
+    "born": "出生"
   },
   "sectionTitles": {
     "education": "教育",

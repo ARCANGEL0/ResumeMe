@@ -90,7 +90,13 @@
     "native": "Владение в совершенстве",
     "fluent": "Свободно",
     "intermediate": "Средний",
-    "beginner": "Начальный"
+    "beginner": "Начальный",
+    "photo": "Фото",
+    "uploadPhoto": "Загрузить фото",
+    "removePhoto": "Удалить",
+    "dropHere": "Поместить сюда",
+    "dateOfBirth": "Дата рождения",
+    "born": "Род."
   },
   "sectionTitles": {
     "education": "Образование",

@@ -19,7 +19,7 @@ export default function Modern({ data, layoutEditor }: Props) {
   const { personalInfo, sections } = data;
   const layoutState = ensureTemplateLayout('modern', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
@@ -39,6 +39,7 @@ export default function Modern({ data, layoutEditor }: Props) {
     <div style={{ ...baseStyle, display: 'grid', gridTemplateColumns: '230px minmax(0, 1fr)' }}>
       <aside style={{ padding: '34px 22px 30px', background: theme.sidebarBg, color: theme.text, borderRight: `1px solid ${theme.line}` }}>
         <HeaderBlock
+          photo={personalInfo.photo}
           displayName={displayName}
           subtitle={leadRole}
           summary={summary}

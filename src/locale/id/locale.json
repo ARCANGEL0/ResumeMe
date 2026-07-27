@@ -90,7 +90,13 @@
     "native": "Pribumi",
     "fluent": "Fasih",
     "intermediate": "Menengah",
-    "beginner": "Pemula"
+    "beginner": "Pemula",
+    "photo": "Foto",
+    "uploadPhoto": "Unggah foto",
+    "removePhoto": "Hapus",
+    "dropHere": "Letakkan di sini",
+    "dateOfBirth": "Tanggal lahir",
+    "born": "Lahir"
   },
   "sectionTitles": {
     "experience": "Pengalaman",

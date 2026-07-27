@@ -91,7 +91,13 @@
     "native": "Gimtoji",
     "fluent": "Sklandžiai",
     "intermediate": "Vidutiniškas",
-    "beginner": "Pradinukas"
+    "beginner": "Pradinukas",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "Numesti čia",
+    "dateOfBirth": "Gimimo data",
+    "born": "Gimė"
   },
   "sectionTitles": {
     "experience": "Patirtis",

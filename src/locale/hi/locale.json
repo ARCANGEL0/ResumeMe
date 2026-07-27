@@ -91,7 +91,13 @@
     "native": "मातृभाषा",
     "fluent": "प्रवाही",
     "intermediate": "मध्यवर्ती",
-    "beginner": "प्रारंभिक"
+    "beginner": "प्रारंभिक",
+    "photo": "फ़ोटो",
+    "uploadPhoto": "फ़ोटो अपलोड करें",
+    "removePhoto": "हटाएँ",
+    "dropHere": "यहाँ छोड़ें",
+    "dateOfBirth": "जन्म तिथि",
+    "born": "जन्म"
   },
   "sectionTitles": {
     "experience": "अनुभव",

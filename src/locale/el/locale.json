@@ -91,7 +91,13 @@
     "native": "Μητρική γλώσσα",
     "fluent": "Εκφραστικός",
     "intermediate": "Μεσαίος",
-    "beginner": "Αρχάριος"
+    "beginner": "Αρχάριος",
+    "photo": "Φωτογραφία",
+    "uploadPhoto": "Μεταφόρτωση φωτογραφίας",
+    "removePhoto": "Αφαίρεση",
+    "dropHere": "Απόθεση εδώ",
+    "dateOfBirth": "Ημερομηνία γέννησης",
+    "born": "Γεν."
   },
   "sectionTitles": {
     "experience": "Εμπειρία",

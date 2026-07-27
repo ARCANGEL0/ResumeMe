@@ -5,7 +5,7 @@ import type { CVData, CVSection, CVEntry, SocialPlatform } from '../../types/cv'
 import ContactIcon from '../../ui/ContactIcon';
 import { getContactItems, getEntryTitle, getEntryDate, getEntryDetailLines } from './templateUtils';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
-import type { TemplateLayoutEditor } from './templateComponents';
+import { LinkedText, type TemplateLayoutEditor } from './templateComponents';
 
 interface Props {
   data: CVData;
@@ -713,7 +713,7 @@ export default function Sarif({ data, layoutEditor }: Props) {
   const language = useCVStore((state) => state.language);
   const { personalInfo, sections } = data;
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
@@ -739,10 +739,10 @@ export default function Sarif({ data, layoutEditor }: Props) {
           <div style={S.contacts}>
             {contactItems.map((item, i) => (
               <div key={i} style={{ ...S.contactPill, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <ContactIcon name={item.icon} style={{ width: '12px', height: '12px', color: G.gold }} />
-                <a href={item.value} style={{ color: G.textDim, textDecoration: 'none' }}>
+                <ContactIcon name={item.icon} style={{ width: '14px', height: '14px', color: G.gold }} />
+                <LinkedText href={item.href} style={{ color: G.textDim }}>
                   {item.value}
-                </a>
+                </LinkedText>
               </div>
             ))}
           </div>

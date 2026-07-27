@@ -93,7 +93,13 @@
     "native": "Native",
     "fluent": "Fluent",
     "intermediate": "Intermediate",
-    "beginner": "Beginner"
+    "beginner": "Beginner",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "Drop here",
+    "dateOfBirth": "Date of birth",
+    "born": "Born"
   },
   "sectionTitles": {
     "education": "Education",

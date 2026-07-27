@@ -90,7 +90,13 @@
     "native": "Moedertaal",
     "fluent": "Vloeiend",
     "intermediate": "Gemiddeld",
-    "beginner": "Beginner"
+    "beginner": "Beginner",
+    "photo": "Foto",
+    "uploadPhoto": "Foto uploaden",
+    "removePhoto": "Verwijderen",
+    "dropHere": "Hier neerzetten",
+    "dateOfBirth": "Geboortedatum",
+    "born": "Geboren op"
   },
   "sectionTitles": {
     "education": "Opleiding",

@@ -90,7 +90,13 @@
     "native": "Ana dil",
     "fluent": "Akıcı",
     "intermediate": "Orta",
-    "beginner": "Başlangıç"
+    "beginner": "Başlangıç",
+    "photo": "Fotoğraf",
+    "uploadPhoto": "Fotoğraf yükle",
+    "removePhoto": "Kaldır",
+    "dropHere": "Buraya bırak",
+    "dateOfBirth": "Doğum tarihi",
+    "born": "Doğum"
   },
   "sectionTitles": {
     "education": "Eğitim",

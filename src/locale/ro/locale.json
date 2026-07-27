@@ -91,7 +91,13 @@
     "native": "Nativ",
     "fluent": "Fluent",
     "intermediate": "Intermediar",
-    "beginner": "Începător"
+    "beginner": "Începător",
+    "photo": "Fotografie",
+    "uploadPhoto": "Încarcă fotografia",
+    "removePhoto": "Elimină",
+    "dropHere": "Plasați aici",
+    "dateOfBirth": "Data nașterii",
+    "born": "Născut"
   },
   "sectionTitles": {
     "experience": "Experiență",

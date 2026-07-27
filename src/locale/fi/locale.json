@@ -91,7 +91,13 @@
     "native": "Äidinkieli",
     "fluent": "Sujuva",
     "intermediate": "Keskitaso",
-    "beginner": "Aloittelija"
+    "beginner": "Aloittelija",
+    "photo": "Valokuva",
+    "uploadPhoto": "Lataa valokuva",
+    "removePhoto": "Poista",
+    "dropHere": "Pudota tähän",
+    "dateOfBirth": "Syntymäaika",
+    "born": "Syntynyt"
   },
   "sectionTitles": {
     "experience": "Kokemus",

@@ -91,7 +91,13 @@
     "native": "Rodný",
     "fluent": "Plynulý",
     "intermediate": "Stredne pokročilý",
-    "beginner": "Začiatočník"
+    "beginner": "Začiatočník",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "Presunúť sem",
+    "dateOfBirth": "Dátum narodenia",
+    "born": "Nar."
   },
   "sectionTitles": {
     "experience": "Skúsenosti",

@@ -91,7 +91,13 @@
     "native": "Bản xứ",
     "fluent": "Thành thạo",
     "intermediate": "Trung cấp",
-    "beginner": "Cơ bản"
+    "beginner": "Cơ bản",
+    "photo": "Ảnh",
+    "uploadPhoto": "Tải ảnh lên",
+    "removePhoto": "Xóa",
+    "dropHere": "Thả vào đây",
+    "dateOfBirth": "Ngày sinh",
+    "born": "Sinh"
   },
   "sectionTitles": {
     "experience": "Kinh nghiệm",

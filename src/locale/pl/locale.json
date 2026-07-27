@@ -90,7 +90,13 @@
     "native": "Ojczysty",
     "fluent": "Biegły",
     "intermediate": "Średniozaawansowany",
-    "beginner": "Początkujący"
+    "beginner": "Początkujący",
+    "photo": "Zdjęcie",
+    "uploadPhoto": "Prześlij zdjęcie",
+    "removePhoto": "Usuń",
+    "dropHere": "Upuść tutaj",
+    "dateOfBirth": "Data urodzenia",
+    "born": "Ur."
   },
   "sectionTitles": {
     "education": "Wykształcenie",

@@ -91,7 +91,13 @@
     "native": "ಮಾತೃಭಾಷೆ",
     "fluent": "ನಿರರ್ಗಳ",
     "intermediate": "ಮಧ್ಯಮ",
-    "beginner": "ಆರಂಭಿಕ"
+    "beginner": "ಆರಂಭಿಕ",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "ಇಲ್ಲಿ ಬಿಡಿ",
+    "dateOfBirth": "ಹುಟ್ಟಿದ ದಿನಾಂಕ",
+    "born": "ಜನನ"
   },
   "sectionTitles": {
     "experience": "ಅನುಭವ",

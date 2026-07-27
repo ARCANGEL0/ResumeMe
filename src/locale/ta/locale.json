@@ -91,7 +91,13 @@
     "native": "தாய்மொழி",
     "fluent": "சரளமான",
     "intermediate": "இடைநிலை",
-    "beginner": "தொடக்கநிலை"
+    "beginner": "தொடக்கநிலை",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "இங்கே விடவும்",
+    "dateOfBirth": "பிறந்த தேதி",
+    "born": "பிறப்பு"
   },
   "sectionTitles": {
     "experience": "அனுபவம்",

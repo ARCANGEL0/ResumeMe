@@ -6,7 +6,7 @@ import type { CVData } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
-import { ContactPanel, HeaderBlock, SectionColumn, SectionEyebrow, type TemplateLayoutEditor } from './templateComponents';
+import { ContactPanel, HeaderBlock, SectionColumn, SectionEyebrow, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
 interface Props {
   data: CVData;
@@ -19,7 +19,7 @@ export default function Slate({ data, layoutEditor }: Props) {
   const { personalInfo, sections } = data;
   const layoutState = ensureTemplateLayout('slate', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
@@ -38,16 +38,31 @@ export default function Slate({ data, layoutEditor }: Props) {
   return (
     <div style={{ ...baseStyle, display: 'grid', gridTemplateColumns: 'minmax(0, 1.44fr) 224px' }}>
       <main style={{ padding: '34px 36px 36px' }}>
-        <HeaderBlock
-          displayName={displayName}
-          subtitle={leadRole}
-          summary={summary}
-          contactItems={[]}
-          theme={theme}
-          language={language}
-          titleSize="30px"
-          hideContact
-        />
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: summary ? 'minmax(0, 0.82fr) minmax(0, 1.18fr)' : '1fr',
+            gap: '30px',
+            alignItems: 'center',
+          }}
+        >
+          <HeaderBlock
+            photo={personalInfo.photo}
+            displayName={displayName}
+            subtitle={leadRole}
+            summary=""
+            contactItems={[]}
+            theme={theme}
+            language={language}
+            titleSize="30px"
+            hideContact
+          />
+          {summary && (
+            <div style={{ padding: '18px 20px', borderRadius: '14px', background: theme.accentSoft }}>
+              <SummaryBlock summary={summary} theme={theme} />
+            </div>
+          )}
+        </div>
         <div style={{ marginTop: '26px' }}>
           <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} />
         </div>

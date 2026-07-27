@@ -91,7 +91,13 @@
     "native": "మాతృభాష",
     "fluent": "నిష్ణాత",
     "intermediate": "మధ్యస్థ",
-    "beginner": "ప్రారంభ"
+    "beginner": "ప్రారంభ",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "ఇక్కడ వదలండి",
+    "dateOfBirth": "పుట్టిన తేదీ",
+    "born": "జననం"
   },
   "sectionTitles": {
     "experience": "అనుభవం",

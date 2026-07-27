@@ -19,7 +19,7 @@ export default function Ivory({ data, layoutEditor }: Props) {
   const { personalInfo, sections } = data;
   const layoutState = ensureTemplateLayout('ivory', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
@@ -41,6 +41,7 @@ export default function Ivory({ data, layoutEditor }: Props) {
       <div style={{ minHeight: 'calc(297mm - 44px)', border: `1px solid ${theme.line}`, padding: '28px 34px 30px', boxShadow: `inset 0 0 0 5px ${theme.accentSoft}` }}>
         <div style={{ textAlign: 'center', paddingBottom: '18px', borderBottom: `1px solid ${theme.line}` }}>
           <HeaderBlock
+          photo={personalInfo.photo}
             displayName={displayName}
             subtitle={leadRole}
             summary=""

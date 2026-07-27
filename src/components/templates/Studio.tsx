@@ -19,7 +19,7 @@ export default function Studio({ data, layoutEditor }: Props) {
   const { personalInfo, sections } = data;
   const layoutState = ensureTemplateLayout('studio', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
@@ -39,18 +39,32 @@ export default function Studio({ data, layoutEditor }: Props) {
     <div style={baseStyle}>
       <div style={{ padding: '30px 30px 32px' }}>
         <div style={{ padding: '26px 28px 24px', borderRadius: '28px', background: `linear-gradient(145deg, rgba(219,39,119,0.1), rgba(255,255,255,0.98) 45%, rgba(124,58,237,0.08))`, border: `1px solid ${theme.line}`, marginBottom: '22px' }}>
-          <HeaderBlock
-            displayName={displayName}
-            subtitle={leadRole}
-            summary=""
-            contactItems={contactItems}
-            theme={theme}
-            language={language}
-            contactStyle="pills"
-            titleSize="31px"
-            hideDivider
-          />
-          {summary && <div style={{ marginTop: '18px', maxWidth: '620px' }}><SummaryBlock summary={summary} theme={theme} /></div>}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: summary ? 'minmax(0, 0.92fr) minmax(0, 1.08fr)' : '1fr',
+              gap: '28px',
+              alignItems: 'center',
+            }}
+          >
+            <HeaderBlock
+              photo={personalInfo.photo}
+              displayName={displayName}
+              subtitle={leadRole}
+              summary=""
+              contactItems={contactItems}
+              theme={theme}
+              language={language}
+              contactStyle="pills"
+              titleSize="31px"
+              hideDivider
+            />
+            {summary && (
+              <div style={{ padding: '16px 18px', borderRadius: '18px', background: 'rgba(255,255,255,0.72)', border: `1px solid ${theme.line}` }}>
+                <SummaryBlock summary={summary} theme={theme} />
+              </div>
+            )}
+          </div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.28fr) 230px', gap: '22px' }}>
           <SectionPanels

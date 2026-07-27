@@ -1,7 +1,7 @@
 import type { SVGProps } from 'react';
 import type { SocialPlatform } from '../types/cv';
 
-export type ContactIconName = 'email' | 'phone' | 'location' | SocialPlatform;
+export type ContactIconName = 'email' | 'phone' | 'location' | 'birthday' | SocialPlatform;
 
 interface ContactIconProps extends SVGProps<SVGSVGElement> {
   name: ContactIconName;
@@ -27,6 +27,14 @@ export default function ContactIcon({ name, ...props }: ContactIconProps) {
       return (
         <svg {...baseProps} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <path d="M7.9 4.6c.6-.6 1.5-.8 2.2-.4l1.9 1.1c.7.4 1 1.3.8 2l-.6 2c-.1.4 0 .9.3 1.2l1.8 1.8c.3.3.8.4 1.2.3l2-.6c.8-.2 1.6.1 2 .8l1.1 1.9c.4.7.2 1.6-.4 2.2l-1.6 1.6c-.9.9-2.2 1.2-3.4.8-3.2-1-6.2-3.7-8.3-5.9-2.2-2.1-4.9-5.1-5.9-8.3-.4-1.2-.1-2.5.8-3.4Z" />
+        </svg>
+      );
+
+    case 'birthday':
+      return (
+        <svg {...baseProps} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3.4" y="5.4" width="17.2" height="15.2" rx="2.6" />
+          <path d="M3.4 10.1h17.2M8.2 3.4v3.6M15.8 3.4v3.6" />
         </svg>
       );
 
@@ -169,14 +177,8 @@ export default function ContactIcon({ name, ...props }: ContactIconProps) {
 
     case 'discord':
       return (
-        <svg {...baseProps} fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M7.1 6.8c2.7-1.2 7.1-1.2 9.8 0 .8 1.3 1.5 2.7 1.9 4.2-.7 1.8-1.8 3.6-3.3 5.2-1-.4-1.8-.8-2.3-1.2l.5-1" />
-          <path d="m16.8 15 1.6 1" />
-          <path d="M6 11c.4-1.5 1.1-2.9 1.9-4.2" />
-          <path d="m7.2 15-1.6 1c1.5 1.6 2.6 2 3.6 2.4l.5-1" />
-          <path d="M9.8 11.6h.01" />
-          <path d="M14.2 11.6h.01" />
-          <path d="M9 14.2c1.6.8 4.4.8 6 0" />
+        <svg {...baseProps} fill="currentColor" stroke="none">
+          <path d="M19.54 5.34a16.3 16.3 0 0 0-4.07-1.26.06.06 0 0 0-.07.03c-.17.31-.37.72-.51 1.04a15.1 15.1 0 0 0-4.53 0c-.14-.33-.35-.73-.53-1.04a.06.06 0 0 0-.06-.03c-1.42.24-2.78.67-4.07 1.26a.06.06 0 0 0-.03.02C2.08 9.22 1.37 12.98 1.72 16.7a.07.07 0 0 0 .03.05 16.4 16.4 0 0 0 4.95 2.5.06.06 0 0 0 .07-.02c.38-.52.72-1.07 1.01-1.65a.06.06 0 0 0-.03-.09c-.54-.2-1.05-.45-1.54-.74a.06.06 0 0 1 0-.1l.3-.24a.06.06 0 0 1 .07 0 11.7 11.7 0 0 0 9.96 0 .06.06 0 0 1 .07 0l.31.24a.06.06 0 0 1 0 .1c-.5.3-1.01.54-1.55.74a.06.06 0 0 0-.03.09c.3.58.63 1.13 1.01 1.65a.06.06 0 0 0 .07.02 16.35 16.35 0 0 0 4.96-2.5.06.06 0 0 0 .02-.04c.42-4.3-.68-8.03-2.87-11.35a.05.05 0 0 0-.02-.02ZM8.35 14.43c-.98 0-1.79-.9-1.79-2s.79-2 1.79-2c1 0 1.8.91 1.79 2 0 1.1-.79 2-1.79 2Zm6.61 0c-.98 0-1.79-.9-1.79-2s.79-2 1.79-2c1 0 1.8.91 1.79 2 0 1.1-.78 2-1.79 2Z" />
         </svg>
       );
 

@@ -19,7 +19,7 @@ export default function Minimal({ data, layoutEditor }: Props) {
   const { personalInfo, sections } = data;
   const layoutState = ensureTemplateLayout('minimal', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
@@ -42,6 +42,7 @@ export default function Minimal({ data, layoutEditor }: Props) {
       <div style={{ padding: '34px 42px 42px' }}>
         <div style={{ paddingBottom: '24px', borderBottom: `1px solid ${theme.line}` }}>
           <HeaderBlock
+          photo={personalInfo.photo} photoSize={96}
             displayName={displayName}
             subtitle={leadRole}
             summary={summary}

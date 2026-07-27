@@ -19,7 +19,7 @@ export default function Executive({ data, layoutEditor }: Props) {
   const { personalInfo, sections } = data;
   const layoutState = ensureTemplateLayout('executive', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
@@ -42,6 +42,7 @@ export default function Executive({ data, layoutEditor }: Props) {
           <div style={{ display: 'flex', justifyContent: 'space-between', gap: '24px', alignItems: 'flex-end' }}>
             <div style={{ flex: 1 }}>
               <HeaderBlock
+          photo={personalInfo.photo}
                 displayName={displayName}
                 subtitle={leadRole}
                 summary=""

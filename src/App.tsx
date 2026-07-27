@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LandingPage from './components/landing/LandingPage';
 import EditorPanel from './components/editor/EditorPanel';
 import PreviewPanel from './components/preview/PreviewPanel';
@@ -7,11 +7,28 @@ import TemplateSelector from './components/templates/TemplateSelector';
 import LanguageSelector from './ui/LanguageSelector';
 import { t } from './i18n';
 import { useCVStore } from './store/cvStore';
+import { createLoremDocument } from './utils/loremDocument';
 
+const LOREM_PATHS: Record<string, 'editor' | 'templates'> = {
+  '/lorem': 'editor',
+  '/lorem/templates': 'templates',
+};
+
+function normalizePath(pathname: string) {
+  const trimmed = pathname.replace(/\/+$/, '');
+  return trimmed === '' ? '/' : trimmed.toLowerCase();
+}
 
 export default function App() {
   const { currentView, language, setView } = useCVStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const loadDocument = useCVStore((state) => state.loadDocument);
+
+  useEffect(() => {
+    const view = LOREM_PATHS[normalizePath(window.location.pathname)];
+    if (!view) return;
+    loadDocument(createLoremDocument(), view);
+  }, [loadDocument]);
 
   if (currentView === 'landing') {
     return (

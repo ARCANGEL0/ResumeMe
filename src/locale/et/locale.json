@@ -91,7 +91,13 @@
     "native": "Emakeel",
     "fluent": "Sujuv",
     "intermediate": "Keskmine",
-    "beginner": "Algaja"
+    "beginner": "Algaja",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "Kukuta siia",
+    "dateOfBirth": "Sünnikuupäev",
+    "born": "Sündinud"
   },
   "sectionTitles": {
     "experience": "Kogemus",

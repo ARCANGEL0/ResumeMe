@@ -91,7 +91,13 @@
     "native": "Katutubo",
     "fluent": "Maalam",
     "intermediate": "Katamtaman",
-    "beginner": "Baguhan"
+    "beginner": "Baguhan",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "Ihulog dito",
+    "dateOfBirth": "Petsa ng kapanganakan",
+    "born": "Ipinanganak"
   },
   "sectionTitles": {
     "experience": "Karanasan",

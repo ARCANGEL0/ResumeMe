@@ -91,7 +91,13 @@
     "native": "Dzimtā",
     "fluent": "Brīvs",
     "intermediate": "Vidējs",
-    "beginner": "Iesācējs"
+    "beginner": "Iesācējs",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "Nomest šeit",
+    "dateOfBirth": "Dzimšanas datums",
+    "born": "Dzimis"
   },
   "sectionTitles": {
     "experience": "Pieredze",

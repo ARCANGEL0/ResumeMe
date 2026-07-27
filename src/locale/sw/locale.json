@@ -91,7 +91,13 @@
     "native": "Asili",
     "fluent": "Kirahisi",
     "intermediate": "Kati",
-    "beginner": "Mwanzo"
+    "beginner": "Mwanzo",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "Dondosha hapa",
+    "dateOfBirth": "Tarehe ya kuzaliwa",
+    "born": "Alizaliwa"
   },
   "sectionTitles": {
     "experience": "Uzoefu",

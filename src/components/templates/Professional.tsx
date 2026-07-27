@@ -19,7 +19,7 @@ export default function Professional({ data, layoutEditor }: Props) {
   const { personalInfo, sections } = data;
   const layoutState = ensureTemplateLayout('professional', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
@@ -39,8 +39,9 @@ export default function Professional({ data, layoutEditor }: Props) {
   return (
     <div style={baseStyle}>
       <div style={{ padding: '28px 38px 30px', background: theme.headerBg, color: theme.headerText }}>
-        <div style={{ display: 'grid', gridTemplateColumns: summary ? 'minmax(0, 1.3fr) minmax(220px, 0.9fr)' : '1fr', gap: '24px', alignItems: 'end' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: summary ? 'minmax(0, 1fr) minmax(280px, 1.05fr)' : '1fr', gap: '24px', alignItems: 'stretch' }}>
           <HeaderBlock
+            photo={personalInfo.photo}
             displayName={displayName}
             subtitle={leadRole}
             summary=""
@@ -52,7 +53,17 @@ export default function Professional({ data, layoutEditor }: Props) {
             titleSize="29px"
           />
           {summary && (
-            <div style={{ padding: '16px 18px', borderRadius: '18px', background: 'rgba(255,255,255,0.1)' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '22px 24px',
+                borderRadius: '18px',
+                background: 'rgba(255,255,255,0.1)',
+                fontSize: '12.6px',
+                lineHeight: '1.72',
+              }}
+            >
               <SummaryBlock summary={summary} theme={theme} onDark />
             </div>
           )}

@@ -6,7 +6,13 @@ import type { CVData } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
-import { ContactPanel, SectionColumn, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
+import {
+  ContactPanel,
+  PhotoFrame,
+  SectionColumn,
+  SummaryBlock,
+  type TemplateLayoutEditor,
+} from './templateComponents';
 
 interface Props {
   data: CVData;
@@ -19,7 +25,7 @@ export default function Dossier({ data, layoutEditor }: Props) {
   const { personalInfo, sections } = data;
   const layoutState = ensureTemplateLayout('dossier', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
@@ -39,13 +45,28 @@ export default function Dossier({ data, layoutEditor }: Props) {
   return (
     <div style={baseStyle}>
       <div style={{ padding: '28px 30px 28px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.12fr) minmax(240px, 0.88fr)', gap: '18px', marginBottom: '18px', padding: '18px 20px', border: `1px solid ${theme.line}`, background: '#ffffff' }}>
-          <div>
-            <h1 style={{ margin: 0, fontSize: '29px', lineHeight: 1.12, color: '#111111', fontWeight: 800 }}>{displayName}</h1>
-            {leadRole && <div style={{ marginTop: '6px', color: theme.accent }}>{leadRole}</div>}
-          </div>
-          <div>
-            <ContactPanel contactItems={contactItems} theme={theme} contactStyle="stack" />
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '24px',
+            marginBottom: '18px',
+            padding: '22px 24px',
+            border: `1px solid ${theme.line}`,
+            background: '#ffffff',
+          }}
+        >
+          {personalInfo.photo && (
+            <PhotoFrame photo={personalInfo.photo} size={132} radius="4px" border={`1px solid ${theme.line}`} />
+          )}
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <h1 style={{ margin: 0, fontSize: '44px', lineHeight: 1.04, color: '#111111', fontWeight: 800, letterSpacing: '-0.015em' }}>
+              {displayName}
+            </h1>
+            {leadRole && <div style={{ marginTop: '8px', color: theme.accent }}>{leadRole}</div>}
+            <div style={{ marginTop: '14px' }}>
+              <ContactPanel contactItems={contactItems} theme={theme} contactStyle="inline" />
+            </div>
           </div>
         </div>
         {summary && (

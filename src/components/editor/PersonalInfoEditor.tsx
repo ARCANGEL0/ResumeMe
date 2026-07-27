@@ -4,6 +4,7 @@ import { getSocialPlatformLabel, t } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
 import { SOCIAL_PLATFORM_OPTIONS, type SocialPlatform } from '../../types/cv';
 import FieldEditor from './FieldEditor';
+import PhotoField from './PhotoField';
 
 export default function PersonalInfoEditor() {
   const {
@@ -62,6 +63,19 @@ export default function PersonalInfoEditor() {
           value={personalInfo.location}
           onChange={(value) => updatePersonalInfo('location', value)}
           placeholder={t(language, 'locationPlaceholder')}
+        />
+        <FieldEditor
+          label={t(language, 'dateOfBirth')}
+          value={personalInfo.dateOfBirth || ''}
+          onChange={(value) => updatePersonalInfo('dateOfBirth', value)}
+          type="date"
+        />
+        <PhotoField
+          label={t(language, 'photo')}
+          value={personalInfo.photo || ''}
+          onChange={(value) => updatePersonalInfo('photo', value)}
+          uploadLabel={t(language, 'uploadPhoto')}
+          removeLabel={t(language, 'removePhoto')}
         />
         <FieldEditor
           label={t(language, 'professionalSummary')}

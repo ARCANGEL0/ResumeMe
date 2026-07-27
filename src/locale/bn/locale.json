@@ -91,7 +91,13 @@
     "native": "মাতৃভাষা",
     "fluent": "সাবলীল",
     "intermediate": "মধ্যম",
-    "beginner": "প্রাথমিক"
+    "beginner": "প্রাথমিক",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "এখানে ছাড়ুন",
+    "dateOfBirth": "জন্ম তারিখ",
+    "born": "জন্ম"
   },
   "sectionTitles": {
     "experience": "অভিজ্ঞতা",

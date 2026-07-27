@@ -91,7 +91,13 @@
     "native": "Anyanyelv",
     "fluent": "Folyékony",
     "intermediate": "Középhaladó",
-    "beginner": "Kezdő"
+    "beginner": "Kezdő",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "Ide húzza",
+    "dateOfBirth": "Születési dátum",
+    "born": "Szül."
   },
   "sectionTitles": {
     "experience": "Tapasztalat",

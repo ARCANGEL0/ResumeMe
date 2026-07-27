@@ -5,30 +5,33 @@ import type { CVData } from '../../types/cv';
 import ContactIcon from '../../ui/ContactIcon';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { getContactItems, getEntryDate, getLangScore } from './templateUtils';
-import type { TemplateLayoutEditor } from './templateComponents';
+import { CustomSectionRegion, LinkedText, PhotoFrame, type TemplateLayoutEditor } from './templateComponents';
+import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 
 interface Props {
   data: CVData;
   layoutEditor?: TemplateLayoutEditor;
 }
 
-export default function Creative({ data }: Props) {
+export default function Creative({ data, layoutEditor }: Props) {
   const language = useCVStore((state) => state.language);
   const theme = TEMPLATE_THEMES['creative'];
   const { personalInfo, sections } = data;
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
 
-  const skillSections = sections.filter((s) => s.type === 'skills');
-  const langSections = sections.filter((s) => s.type === 'languages');
-  const mainSections = sections.filter((s) => s.type !== 'skills' && s.type !== 'languages');
-  const allBands = [...mainSections, ...skillSections, ...langSections];
+  const layoutState = ensureTemplateLayout('creative', data.layoutOverride, sections);
+  const allBands = getSectionsForRegion(sections, layoutState, 'main');
 
   return (
     <div style={{ fontFamily: theme.fontFamily, fontSize: '11.2px', lineHeight: '1.65', color: theme.text, background: '#ffffff', minHeight: '297mm' }}>
       {/* Header */}
-      <div style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #2d1b69 100%)', padding: '32px 40px 28px' }}>
+      <div style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #2d1b69 100%)', padding: '32px 40px 28px', display: 'flex', alignItems: 'center', gap: '26px' }}>
+        {personalInfo.photo && (
+          <PhotoFrame photo={personalInfo.photo} size={132} border="4px solid rgba(255,255,255,0.28)" />
+        )}
+        <div style={{ minWidth: 0, flex: 1 }}>
         <h1 style={{ margin: 0, fontSize: '40px', fontWeight: 900, color: '#ffffff', lineHeight: 1, letterSpacing: '-0.02em' }}>
           {displayName}
         </h1>
@@ -40,8 +43,8 @@ export default function Creative({ data }: Props) {
                 key={item.key}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.1)', padding: '4px 10px', borderRadius: '999px', fontSize: '10px', color: 'rgba(255,255,255,0.9)' }}
               >
-                <ContactIcon name={item.icon} style={{ width: '11px', height: '11px' }} />
-                {item.value}
+                <ContactIcon name={item.icon} style={{ width: '13px', height: '13px' }} />
+                <LinkedText href={item.href}>{item.value}</LinkedText>
               </span>
             ))}
           </div>
@@ -51,13 +54,16 @@ export default function Creative({ data }: Props) {
             {summary}
           </p>
         )}
+        </div>
       </div>
 
       {/* Banded content — one row per section */}
-      <div>
-        {allBands.map((section, index) => (
+      <CustomSectionRegion
+        sections={allBands}
+        regionKey="main"
+        layoutEditor={layoutEditor}
+        renderSection={(section, index) => (
           <div
-            key={section.id}
             style={{ display: 'flex', borderBottom: index < allBands.length - 1 ? '1px solid #f0edf8' : 'none' }}
           >
             {/* Section label column */}
@@ -149,8 +155,8 @@ export default function Creative({ data }: Props) {
               )}
             </div>
           </div>
-        ))}
-      </div>
+        )}
+      />
     </div>
   );
 }

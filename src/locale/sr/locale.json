@@ -91,7 +91,13 @@
     "native": "Матерњи",
     "fluent": "Течан",
     "intermediate": "Средњи",
-    "beginner": "Почетник"
+    "beginner": "Почетник",
+    "photo": "Photo",
+    "uploadPhoto": "Upload photo",
+    "removePhoto": "Remove",
+    "dropHere": "Испусти овде",
+    "dateOfBirth": "Датум рођења",
+    "born": "Рођен"
   },
   "sectionTitles": {
     "experience": "Искуство",

@@ -91,7 +91,13 @@
     "native": "เจ้าของภาษา",
     "fluent": "คล่อง",
     "intermediate": "ระดับกลาง",
-    "beginner": "ระดับเริ่มต้น"
+    "beginner": "ระดับเริ่มต้น",
+    "photo": "รูปภาพ",
+    "uploadPhoto": "อัปโหลดรูปภาพ",
+    "removePhoto": "ลบ",
+    "dropHere": "วางที่นี่",
+    "dateOfBirth": "วันเกิด",
+    "born": "เกิด"
   },
   "sectionTitles": {
     "experience": "ประสบการณ์",

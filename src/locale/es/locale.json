@@ -96,7 +96,13 @@
     "native": "Nativo",
     "fluent": "Fluido",
     "intermediate": "Intermedio",
-    "beginner": "Principiante"
+    "beginner": "Principiante",
+    "photo": "Foto",
+    "uploadPhoto": "Subir foto",
+    "removePhoto": "Quitar",
+    "dropHere": "Soltar aquí",
+    "dateOfBirth": "Fecha de nacimiento",
+    "born": "Nacido el"
   },
   "sectionTitles": {
     "education": "Educación",

@@ -19,7 +19,7 @@ export default function Classic({ data, layoutEditor }: Props) {
   const { personalInfo, sections } = data;
   const layoutState = ensureTemplateLayout('classic', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
@@ -41,6 +41,7 @@ export default function Classic({ data, layoutEditor }: Props) {
       <div style={{ padding: '34px 48px 38px' }}>
         <div style={{ textAlign: 'center', paddingBottom: '20px', borderBottom: `1px solid ${theme.line}` }}>
           <HeaderBlock
+          photo={personalInfo.photo}
             displayName={displayName}
             subtitle={leadRole}
             summary=""

@@ -6,7 +6,14 @@ import type { CVData } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
-import { ContactPanel, SectionEyebrow, SectionPanels, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
+import {
+  ContactPanel,
+  PhotoFrame,
+  SectionEyebrow,
+  SectionPanels,
+  SummaryBlock,
+  type TemplateLayoutEditor,
+} from './templateComponents';
 
 interface Props {
   data: CVData;
@@ -19,7 +26,7 @@ export default function Summit({ data, layoutEditor }: Props) {
   const { personalInfo, sections } = data;
   const layoutState = ensureTemplateLayout('summit', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
@@ -41,16 +48,32 @@ export default function Summit({ data, layoutEditor }: Props) {
       <div style={{ padding: '26px 30px 32px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.08fr) minmax(220px, 0.92fr)', gap: '20px', marginBottom: '24px' }}>
           <div style={{ padding: '22px 24px', borderRadius: '24px', background: '#ffffff', border: `1px solid ${theme.line}` }}>
-            <h1 style={{ margin: 0, fontSize: '30px', lineHeight: 1.08, color: theme.accentDark }}>{displayName}</h1>
-            {leadRole && <div style={{ marginTop: '8px', color: theme.muted }}>{leadRole}</div>}
-            <div style={{ marginTop: '18px' }}>
+            <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+              {personalInfo.photo && <PhotoFrame photo={personalInfo.photo} size={104} border={`3px solid ${theme.accentSoft}`} />}
+              <div style={{ minWidth: 0, flex: 1 }}>
+                <h1 style={{ margin: 0, fontSize: '30px', lineHeight: 1.08, color: theme.accentDark }}>{displayName}</h1>
+                {leadRole && <div style={{ marginTop: '8px', color: theme.muted }}>{leadRole}</div>}
+              </div>
+            </div>
+            <div style={{ marginTop: '16px' }}>
               <ContactPanel contactItems={contactItems} theme={theme} contactStyle="pills" />
             </div>
           </div>
           {summary && (
-            <div style={{ padding: '20px 20px 18px', borderRadius: '24px', background: `linear-gradient(180deg, ${theme.accentSoft}, rgba(255,255,255,0.96))`, border: `1px solid ${theme.line}` }}>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '20px 20px 18px',
+                borderRadius: '24px',
+                background: `linear-gradient(180deg, ${theme.accentSoft}, rgba(255,255,255,0.96))`,
+                border: `1px solid ${theme.line}`,
+              }}
+            >
               <SectionEyebrow title={t(language, 'professionalSummary')} theme={theme} />
-              <SummaryBlock summary={summary} theme={theme} />
+              <div style={{ display: 'flex', flex: 1, alignItems: 'center' }}>
+                <SummaryBlock summary={summary} theme={theme} />
+              </div>
             </div>
           )}
         </div>

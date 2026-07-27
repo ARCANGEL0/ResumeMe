@@ -92,7 +92,13 @@
     "native": "Modersmål",
     "fluent": "Flydende",
     "intermediate": "Øvet",
-    "beginner": "Begynder"
+    "beginner": "Begynder",
+    "photo": "Foto",
+    "uploadPhoto": "Upload foto",
+    "removePhoto": "Fjern",
+    "dropHere": "Slip her",
+    "dateOfBirth": "Fødselsdato",
+    "born": "Født"
   },
   "sectionTitles": {
     "experience": "Erfaring",

@@ -8,13 +8,14 @@ import {
   type SocialLink,
   getSocialPlatformMeta,
 } from '../../types/cv';
-import {t, type UILanguage} from '../../i18n';
+import {getSocialPlatformLabel, t, DEFAULT_LANGUAGE, type UILanguage} from '../../i18n';
 import type { ContactIconName } from '../../ui/ContactIcon';
 
 export interface ContactItem {
   key: string;
   icon: ContactIconName;
   value: string;
+  href?: string;
   type: 'core' | 'social';
 }
 
@@ -24,7 +25,42 @@ const CORE_ICONS = {
   location: 'location',
 } as const;
 
-export function getContactItems(personalInfo: PersonalInfo): ContactItem[] {
+export function formatBirthDate(value: string, language: UILanguage): string {
+  const raw = value.trim();
+  if (!raw) return '';
+
+  const parts = raw.split('-');
+  const year = parts[0];
+  const month = parts[1];
+  const day = parts[2];
+  if (!year || !month) return raw;
+
+  const label = day ? `${day}/${month}/${year}` : `${month}/${year}`;
+  return `${t(language, 'born')} ${label}`;
+}
+
+export function toExternalHref(value: string): string {
+  return /^https?:\/\//i.test(value.trim()) ? value.trim() : '';
+}
+
+function getHostLabel(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./i, '');
+  } catch {
+    return url;
+  }
+}
+
+function getSocialLabel(social: SocialLink, href: string, language: UILanguage): string {
+  if (!href) return social.value.trim();
+  if (social.platform === 'custom') return getHostLabel(href);
+  return getSocialPlatformLabel(language, social.platform, social.platform);
+}
+
+export function getContactItems(
+  personalInfo: PersonalInfo,
+  language: UILanguage = DEFAULT_LANGUAGE,
+): ContactItem[] {
   const items: ContactItem[] = [];
 
   if (personalInfo.email.trim()) {
@@ -54,14 +90,26 @@ export function getContactItems(personalInfo: PersonalInfo): ContactItem[] {
     });
   }
 
+  const birthDate = formatBirthDate(personalInfo.dateOfBirth ?? '', language);
+  if (birthDate) {
+    items.push({
+      key: 'dateOfBirth',
+      icon: 'birthday',
+      value: birthDate,
+      type: 'core',
+    });
+  }
+
   personalInfo.socials
     .filter((social) => social.value.trim())
     .forEach((social) => {
       const meta = getSocialPlatformMeta(social.platform);
+      const href = toExternalHref(social.value);
       items.push({
         key: social.id,
         icon: meta.id,
-        value: social.value.trim(),
+        value: getSocialLabel(social, href, language),
+        ...(href ? { href } : {}),
         type: 'social',
       });
     });

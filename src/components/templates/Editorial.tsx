@@ -6,7 +6,13 @@ import type { CVData } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
-import { ContactPanel, SectionColumn, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
+import {
+  ContactPanel,
+  PhotoFrame,
+  SectionColumn,
+  SummaryBlock,
+  type TemplateLayoutEditor,
+} from './templateComponents';
 
 interface Props {
   data: CVData;
@@ -19,7 +25,7 @@ export default function Editorial({ data, layoutEditor }: Props) {
   const { personalInfo, sections } = data;
   const layoutState = ensureTemplateLayout('editorial', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
@@ -40,6 +46,11 @@ export default function Editorial({ data, layoutEditor }: Props) {
     <div style={baseStyle}>
       <div style={{ padding: '28px 34px 30px' }}>
         <div style={{ textAlign: 'center', paddingBottom: '18px', borderBottom: `1px solid ${theme.line}` }}>
+          {personalInfo.photo && (
+            <div style={{ marginBottom: '16px' }}>
+              <PhotoFrame photo={personalInfo.photo} size={122} border={`2px solid ${theme.line}`} />
+            </div>
+          )}
           <h1 style={{ margin: 0, fontSize: '31px', letterSpacing: '0.08em', textTransform: 'uppercase', color: theme.text }}>{displayName}</h1>
           {leadRole && <div style={{ marginTop: '8px', color: theme.accent }}>{leadRole}</div>}
           <div style={{ marginTop: '14px', display: 'flex', justifyContent: 'center' }}>

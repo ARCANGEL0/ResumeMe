@@ -90,7 +90,13 @@
     "native": "لغة أم",
     "fluent": "طليق",
     "intermediate": "متوسط",
-    "beginner": "مبتدئ"
+    "beginner": "مبتدئ",
+    "photo": "الصورة",
+    "uploadPhoto": "تحميل صورة",
+    "removePhoto": "إزالة",
+    "dropHere": "أفلت هنا",
+    "dateOfBirth": "تاريخ الميلاد",
+    "born": "مواليد"
   },
   "sectionTitles": {
     "education": "التعليم",

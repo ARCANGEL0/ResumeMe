@@ -90,7 +90,13 @@
     "native": "Рідний",
     "fluent": "Вільно",
     "intermediate": "Середній",
-    "beginner": "Початковий"
+    "beginner": "Початковий",
+    "photo": "Фото",
+    "uploadPhoto": "Завантажити фото",
+    "removePhoto": "Видалити",
+    "dropHere": "Помістити сюди",
+    "dateOfBirth": "Дата народження",
+    "born": "Нар."
   },
   "sectionTitles": {
     "education": "Освіта",

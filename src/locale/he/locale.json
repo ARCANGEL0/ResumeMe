@@ -91,7 +91,13 @@
     "native": "שפת אם",
     "fluent": "שוטף",
     "intermediate": "בינוני",
-    "beginner": "מתחיל"
+    "beginner": "מתחיל",
+    "photo": "תמונה",
+    "uploadPhoto": "העלאת תמונה",
+    "removePhoto": "הסרה",
+    "dropHere": "שחרר כאן",
+    "dateOfBirth": "תאריך לידה",
+    "born": "נולד"
   },
   "sectionTitles": {
     "experience": "ניסיון",

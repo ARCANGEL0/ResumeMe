@@ -1,7 +1,8 @@
 // src/components/templates/templateComponents.tsx
-import { Fragment, useState, type CSSProperties } from 'react';
-import { getDropSectionLabel, t, type UILanguage } from '../../i18n';
+import { Fragment, type CSSProperties, type ReactNode } from 'react';
+import { getDropSectionLabel, getRegionDropLabel, t, type UILanguage } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
+import { beginSectionDrag, isRegionHovered, isZoneHovered, useHoverKey } from './sectionDrag';
 import type { CVEntry, CVSection } from '../../types/cv';
 import ContactIcon from '../../ui/ContactIcon';
 import { type ContactStyle, type LanguageStyle, type TemplateTheme } from './templateCatalog';
@@ -13,6 +14,7 @@ import {
   getLangLevel,
   getLangScore,
   getSkillLevelScore,
+  toExternalHref,
   type ContactItem,
 } from './templateUtils';
 
@@ -26,6 +28,57 @@ export interface TemplateLayoutEditor {
   onDragStart: (regionKey: string, sectionId: string) => void;
   onDragEnd: () => void;
   onDrop: (sourceRegion: string, targetRegion: string, sectionId: string, targetIndex: number) => void;
+  regionLabels?: Record<string, string>;
+}
+
+export function LinkedText({
+  children,
+  href,
+  style,
+}: {
+  children: ReactNode;
+  href?: string;
+  style?: CSSProperties;
+}) {
+  if (!href) {
+    return <span style={style}>{children}</span>;
+  }
+
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', ...style }}>
+      {children}
+    </a>
+  );
+}
+
+export function PhotoFrame({
+  border,
+  photo,
+  radius = '50%',
+  size = 96,
+}: {
+  border?: string;
+  photo?: string;
+  radius?: string;
+  size?: number;
+}) {
+  if (!photo) return null;
+
+  return (
+    <span
+      style={{
+        display: 'inline-block',
+        overflow: 'hidden',
+        width: `${size}px`,
+        height: `${size}px`,
+        flexShrink: 0,
+        borderRadius: radius,
+        border: border ?? 'none',
+      }}
+    >
+      <img src={photo} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+    </span>
+  );
 }
 
 export function HeaderBlock({
@@ -38,6 +91,10 @@ export function HeaderBlock({
   hideDivider = false,
   language,
   onDark = false,
+  photo,
+  photoPlacement = 'above',
+  photoRadius = '50%',
+  photoSize = 118,
   showDivider = true,
   showSummaryLabel = true,
   subtitle = '',
@@ -54,6 +111,10 @@ export function HeaderBlock({
   hideDivider?: boolean;
   language: UILanguage;
   onDark?: boolean;
+  photo?: string;
+  photoPlacement?: 'above' | 'left' | 'right';
+  photoRadius?: string;
+  photoSize?: number;
   showDivider?: boolean;
   showSummaryLabel?: boolean;
   subtitle?: string;
@@ -64,9 +125,24 @@ export function HeaderBlock({
   const headerAlign = align ?? theme.headerAlign;
   const textColor = onDark ? theme.sidebarText ?? theme.headerText ?? '#ffffff' : theme.text;
   const mutedColor = onDark ? 'rgba(255,255,255,0.76)' : theme.muted;
+  const isSideBySide = photoPlacement !== 'above';
 
-  return (
-    <div style={{ textAlign: headerAlign, marginBottom: compact ? '10px' : 0 }}>
+  const photoNode = photo ? (
+    <PhotoFrame
+      photo={photo}
+      size={photoSize}
+      radius={photoRadius}
+      border={`3px solid ${onDark ? 'rgba(255,255,255,0.35)' : theme.accent}`}
+    />
+  ) : null;
+
+  const body = (
+    <div style={{ textAlign: headerAlign, marginBottom: compact ? '10px' : 0, minWidth: 0, flex: isSideBySide ? 1 : undefined }}>
+      {photoNode && !isSideBySide && (
+        <div style={{ marginBottom: '16px', display: 'flex', justifyContent: headerAlign === 'center' ? 'center' : 'flex-start' }}>
+          {photoNode}
+        </div>
+      )}
       <h1
         style={{
           margin: 0,
@@ -139,6 +215,18 @@ export function HeaderBlock({
       )}
     </div>
   );
+
+  if (!isSideBySide || !photoNode) {
+    return body;
+  }
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '26px' }}>
+      {photoPlacement === 'left' && photoNode}
+      {body}
+      {photoPlacement === 'right' && photoNode}
+    </div>
+  );
 }
 
 export function ContactPanel({
@@ -171,7 +259,7 @@ export function ContactPanel({
               style={{
                 display: 'inline-flex',
                 width: '22px',
-                height: '22px',
+                height: '24px',
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRadius: '999px',
@@ -179,9 +267,9 @@ export function ContactPanel({
                 color: iconColor,
               }}
             >
-              <ContactIcon name={item.icon} style={{ width: '12px', height: '12px' }} />
+              <ContactIcon name={item.icon} style={{ width: '14px', height: '14px' }} />
             </span>
-            <span>{item.value}</span>
+            <LinkedText href={item.href}>{item.value}</LinkedText>
           </div>
         ))}
       </div>
@@ -210,10 +298,12 @@ export function ContactPanel({
             color: styleVariant === 'pills' ? textColor : mutedColor,
           }}
         >
-          <span style={{ display: 'inline-flex', width: '12px', height: '12px', color: iconColor }}>
+          <span style={{ display: 'inline-flex', width: '14px', height: '14px', color: iconColor }}>
             <ContactIcon name={item.icon} style={{ width: '100%', height: '100%' }} />
           </span>
-          <span style={{ color: textColor }}>{item.value}</span>
+          <LinkedText href={item.href} style={{ color: textColor }}>
+            {item.value}
+          </LinkedText>
         </span>
       ))}
     </div>
@@ -322,6 +412,51 @@ export function SectionPanels({
   );
 }
 
+export function CustomSectionRegion({
+  gap = '0',
+  layoutEditor,
+  regionKey,
+  renderSection,
+  sections,
+}: {
+  gap?: string;
+  layoutEditor?: TemplateLayoutEditor;
+  regionKey: string;
+  renderSection: (section: CVSection, index: number) => ReactNode;
+  sections: CVSection[];
+}) {
+  if (!layoutEditor) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap }}>
+        {sections.map((section, index) => (
+          <Fragment key={section.id}>{renderSection(section, index)}</Fragment>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <RegionShell gap={gap} layoutEditor={layoutEditor} regionKey={regionKey} sectionCount={sections.length}>
+      <SectionDropZone layoutEditor={layoutEditor} regionKey={regionKey} targetIndex={0} empty={sections.length === 0} />
+      {sections.map((section, index) => (
+        <Fragment key={section.id}>
+          <div
+            className={`template-preview-section ${
+              layoutEditor.dragState?.regionKey === regionKey && layoutEditor.dragState?.sectionId === section.id
+                ? 'is-source'
+                : ''
+            }`}
+            onPointerDown={(event) => beginSectionDrag(event, layoutEditor, regionKey, section.id)}
+          >
+            {renderSection(section, index)}
+          </div>
+          <SectionDropZone layoutEditor={layoutEditor} regionKey={regionKey} targetIndex={index + 1} />
+        </Fragment>
+      ))}
+    </RegionShell>
+  );
+}
+
 function SectionRegionStack({
   gap,
   layoutEditor,
@@ -356,25 +491,54 @@ function SectionRegionStack({
   }
 
   return (
-    <div className={`template-preview-region-stack ${layoutEditor?.dragState ? 'is-drag-active' : ''}`} style={{ display: 'flex', flexDirection: 'column', gap }}>
-      {layoutEditor && <SectionDropZone layoutEditor={layoutEditor} regionKey={regionKey} targetIndex={0} empty={sections.length === 0} />}
+    <RegionShell gap={gap} layoutEditor={layoutEditor} regionKey={regionKey} sectionCount={sections.length}>
+      <SectionDropZone layoutEditor={layoutEditor} regionKey={regionKey} targetIndex={0} empty={sections.length === 0} />
       {sections.map((section, index) => (
         <Fragment key={section.id}>
-          {layoutEditor ? (
-            <DraggableSection
-              layoutEditor={layoutEditor}
-              onDark={onDark}
-              regionKey={regionKey}
-              section={section}
-              shellStyle={shellStyle}
-              theme={theme}
-            />
-          ) : (
-            <div>{section.title}</div>
-          )}
-          {layoutEditor && <SectionDropZone layoutEditor={layoutEditor} regionKey={regionKey} targetIndex={index + 1} />}
+          <DraggableSection
+            layoutEditor={layoutEditor}
+            onDark={onDark}
+            regionKey={regionKey}
+            section={section}
+            shellStyle={shellStyle}
+            theme={theme}
+          />
+          <SectionDropZone layoutEditor={layoutEditor} regionKey={regionKey} targetIndex={index + 1} />
         </Fragment>
       ))}
+    </RegionShell>
+  );
+}
+
+function RegionShell({
+  children,
+  gap,
+  layoutEditor,
+  regionKey,
+  sectionCount,
+}: {
+  children: ReactNode;
+  gap: string;
+  layoutEditor: TemplateLayoutEditor;
+  regionKey: string;
+  sectionCount: number;
+}) {
+  const language = useCVStore((state) => state.language);
+  const hover = useHoverKey();
+  const isDragging = Boolean(layoutEditor.dragState);
+  const isOver = isDragging && isRegionHovered(hover, regionKey);
+  const label = getRegionDropLabel(language, layoutEditor.regionLabels?.[regionKey] ?? regionKey);
+
+  return (
+    <div
+      className={`template-preview-region-stack ${isDragging ? 'is-drag-active' : ''} ${isOver ? 'is-region-over' : ''}`}
+      style={{ display: 'flex', flexDirection: 'column', gap }}
+      data-drop-region=""
+      data-region={regionKey}
+      data-count={sectionCount}
+    >
+      {isDragging && <span className="template-preview-region-tag">{label}</span>}
+      {children}
     </div>
   );
 }
@@ -390,47 +554,17 @@ function SectionDropZone({
   regionKey: string;
   targetIndex: number;
 }) {
-  const [isOver, setIsOver] = useState(false);
-  const isActive = Boolean(layoutEditor.dragState);
   const language = useCVStore((state) => state.language);
+  const hover = useHoverKey();
+  const isActive = Boolean(layoutEditor.dragState);
+  const isOver = isActive && isZoneHovered(hover, regionKey, targetIndex);
 
   return (
     <div
       className={`template-preview-drop-zone ${empty ? 'is-empty' : ''} ${isActive ? 'is-active' : ''} ${isOver ? 'is-over' : ''}`}
-      onDragEnter={(event) => {
-        event.preventDefault();
-        if (layoutEditor?.dragState) setIsOver(true);
-      }}
-      onDragLeave={() => setIsOver(false)}
-      onDragOver={(event) => {
-        if (!layoutEditor?.dragState) return;
-        event.preventDefault();
-        event.dataTransfer.dropEffect = 'move';
-        setIsOver(true);
-      }}
-      onDrop={(event) => {
-        try {
-          event.preventDefault();
-          if (!layoutEditor) {
-            console.log('onDrop: layoutEditor is undefined');
-            return;
-          }
-          const sourceRegion = event.dataTransfer?.getData('text/template-region');
-          const sectionId = event.dataTransfer?.getData('text/template-section-id');
-          console.log('onDrop called:', { sourceRegion, sectionId, targetIndex });
-          if (sourceRegion && sectionId && layoutEditor.onDrop) {
-            layoutEditor.onDrop(sourceRegion, regionKey, sectionId, targetIndex);
-          } else {
-            console.log('onDrop: missing data or onDrop handler', { sourceRegion, sectionId, hasOnDrop: !!layoutEditor.onDrop });
-          }
-          setIsOver(false);
-          if (layoutEditor.onDragEnd) {
-            layoutEditor.onDragEnd();
-          }
-        } catch (error) {
-          console.error('onDrop error:', error);
-        }
-      }}
+      data-drop-zone=""
+      data-region={regionKey}
+      data-index={targetIndex}
     >
       {empty ? getDropSectionLabel(language) : ''}
     </div>
@@ -457,15 +591,8 @@ function DraggableSection({
 
   return (
     <div
-      draggable
       className={`template-preview-section ${isSource ? 'is-source' : ''}`}
-      onDragStart={(event) => {
-        event.dataTransfer.effectAllowed = 'move';
-        event.dataTransfer.setData('text/template-region', regionKey);
-        event.dataTransfer.setData('text/template-section-id', section.id);
-        layoutEditor?.onDragStart(regionKey, section.id);
-      }}
-      onDragEnd={() => layoutEditor?.onDragEnd()}
+      onPointerDown={(event) => beginSectionDrag(event, layoutEditor, regionKey, section.id)}
     >
       <div style={shellStyle}>
         <SectionBlock section={section} theme={theme} onDark={onDark} />
@@ -483,24 +610,40 @@ function SectionBlock({
   section: CVSection;
   theme: TemplateTheme;
 }) {
-  const titleColor = onDark ? theme.sidebarText ?? '#ffffff' : theme.text;
-  const borderColor = onDark ? 'rgba(255,255,255,0.14)' : theme.line;
-
   return (
     <section>
       <SectionHeading title={section.title} theme={theme} onDark={onDark} />
-      {section.type === 'skills' ? (
-        <SkillsSection section={section} theme={theme} onDark={onDark} />
-      ) : section.type === 'languages' ? (
-        <LanguagesSection section={section} theme={theme} onDark={onDark} />
-      ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {section.entries.map((entry) => (
-            <EntryBlock key={entry.id} entry={entry} theme={theme} onDark={onDark} borderColor={borderColor} titleColor={titleColor} />
-          ))}
-        </div>
-      )}
+      <SectionBlockBody section={section} theme={theme} onDark={onDark} />
     </section>
+  );
+}
+
+export function SectionBlockBody({
+  onDark = false,
+  section,
+  theme,
+}: {
+  onDark?: boolean;
+  section: CVSection;
+  theme: TemplateTheme;
+}) {
+  const titleColor = onDark ? theme.sidebarText ?? '#ffffff' : theme.text;
+  const borderColor = onDark ? 'rgba(255,255,255,0.14)' : theme.line;
+
+  if (section.type === 'skills') {
+    return <SkillsSection section={section} theme={theme} onDark={onDark} />;
+  }
+
+  if (section.type === 'languages') {
+    return <LanguagesSection section={section} theme={theme} onDark={onDark} />;
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      {section.entries.map((entry) => (
+        <EntryBlock key={entry.id} entry={entry} theme={theme} onDark={onDark} borderColor={borderColor} titleColor={titleColor} />
+      ))}
+    </div>
   );
 }
 
@@ -555,6 +698,57 @@ export function SectionHeading({
     );
   }
 
+  if (theme.sectionHeading === 'xp') {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+        <span style={{ color: onDark ? '#ffffff' : theme.accent, fontSize: '12px', fontWeight: 700 }}>{title}</span>
+        <span
+          style={{
+            flex: 1,
+            height: '1px',
+            background: `linear-gradient(90deg, ${onDark ? 'rgba(255,255,255,0.5)' : theme.accentAlt}, transparent)`,
+          }}
+        />
+      </div>
+    );
+  }
+
+  if (theme.sectionHeading === 'caps') {
+    return (
+      <div
+        style={{
+          marginBottom: '11px',
+          color: onDark ? theme.sidebarText ?? '#ffffff' : theme.accent,
+          fontSize: '13px',
+          fontWeight: 800,
+          letterSpacing: '0.05em',
+          textTransform: 'uppercase',
+        }}
+      >
+        {title}
+      </div>
+    );
+  }
+
+  if (theme.sectionHeading === 'underline') {
+    return (
+      <div
+        style={{
+          marginBottom: '12px',
+          paddingBottom: '5px',
+          borderBottom: `1px solid ${onDark ? 'rgba(255,255,255,0.28)' : theme.line}`,
+          color: onDark ? theme.sidebarText ?? '#ffffff' : theme.text,
+          fontSize: '12.5px',
+          fontWeight: 700,
+          letterSpacing: '0.07em',
+          textTransform: 'uppercase',
+        }}
+      >
+        {title}
+      </div>
+    );
+  }
+
   if (theme.sectionHeading === 'label') {
     return (
       <div
@@ -592,6 +786,7 @@ function SkillsSection({
 }) {
   const textColor = onDark ? theme.sidebarText ?? '#ffffff' : theme.text;
   const lineColor = onDark ? 'rgba(255,255,255,0.18)' : theme.line;
+  const fillColor = onDark ? '#ffffff' : theme.accent;
 
   if (theme.skillStyle === 'inline') {
     const labels = section.entries.map((entry) => entry.fields.name || entry.fields.title).filter(Boolean);
@@ -618,7 +813,7 @@ function SkillsSection({
               {score > 0 && (
                 <span style={{ display: 'inline-flex', gap: '3px' }}>
                   {Array.from({ length: 5 }).map((_, index) => (
-                    <span key={index} style={{ width: '5px', height: '5px', borderRadius: '999px', background: index < score ? theme.accent : lineColor }} />
+                    <span key={index} style={{ width: '5px', height: '5px', borderRadius: '999px', background: index < score ? fillColor : lineColor }} />
                   ))}
                 </span>
               )}
@@ -641,7 +836,7 @@ function SkillsSection({
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))', gap: '4px' }}>
                 {Array.from({ length: 5 }).map((_, index) => (
-                  <span key={index} style={{ height: '5px', borderRadius: '999px', background: index < score ? theme.accent : lineColor }} />
+                  <span key={index} style={{ height: '5px', borderRadius: '999px', background: index < score ? fillColor : lineColor }} />
                 ))}
               </div>
             </div>
@@ -661,9 +856,49 @@ function SkillsSection({
               <span>{entry.fields.name || entry.fields.title}</span>
               <span style={{ display: 'inline-flex', gap: '4px' }}>
                 {Array.from({ length: 5 }).map((_, index) => (
-                  <span key={index} style={{ width: '8px', height: '8px', borderRadius: '999px', background: index < score ? theme.accent : lineColor }} />
+                  <span key={index} style={{ width: '8px', height: '8px', borderRadius: '999px', background: index < score ? fillColor : lineColor }} />
                 ))}
               </span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  if (theme.skillStyle === 'retro') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '9px' }}>
+        {section.entries.map((entry) => {
+          const score = getSkillLevelScore(entry.fields.level || '');
+          return (
+            <div key={entry.id}>
+              <div style={{ marginBottom: '4px', color: textColor, fontWeight: 700 }}>
+                {entry.fields.name || entry.fields.title}
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '2px',
+                  padding: '2px',
+                  borderRadius: '3px',
+                  border: '1px solid #7f9db9',
+                  background: '#ffffff',
+                }}
+              >
+                {Array.from({ length: 10 }).map((_, index) => (
+                  <span
+                    key={index}
+                    style={{
+                      flex: 1,
+                      height: '9px',
+                      borderRadius: '1px',
+                      background:
+                        index < score * 2 ? 'linear-gradient(180deg, #8ede82 0%, #3faf3f 55%, #2f8f30 100%)' : 'transparent',
+                    }}
+                  />
+                ))}
+              </div>
             </div>
           );
         })}
@@ -784,6 +1019,7 @@ function LanguagesSection({
           entry={entry}
           languageStyle={theme.languageStyle}
           accent={theme.accent}
+          meterColor={onDark ? '#ffffff' : theme.accent}
           accentSoft={theme.accentSoft}
           textColor={textColor}
           mutedColor={mutedColor}
@@ -800,6 +1036,7 @@ function LanguageEntry({
   entry,
   languageStyle,
   lineColor,
+  meterColor,
   mutedColor,
   textColor,
 }: {
@@ -808,6 +1045,7 @@ function LanguageEntry({
   entry: CVEntry;
   languageStyle: LanguageStyle;
   lineColor: string;
+  meterColor: string;
   mutedColor: string;
   textColor: string;
 }) {
@@ -826,7 +1064,7 @@ function LanguageEntry({
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, minmax(0, 1fr))', gap: '4px' }}>
           {Array.from({ length: 6 }).map((_, index) => (
-            <span key={index} style={{ height: '5px', borderRadius: '999px', background: index < score ? accent : lineColor }} />
+            <span key={index} style={{ height: '5px', borderRadius: '999px', background: index < score ? meterColor : lineColor }} />
           ))}
         </div>
       </div>
@@ -839,7 +1077,7 @@ function LanguageEntry({
         <span style={{ color: textColor }}>{name}</span>
         <span style={{ display: 'inline-flex', gap: '4px' }}>
           {Array.from({ length: 6 }).map((_, index) => (
-            <span key={index} style={{ width: '8px', height: '8px', borderRadius: '999px', background: index < score ? accent : lineColor }} />
+            <span key={index} style={{ width: '8px', height: '8px', borderRadius: '999px', background: index < score ? meterColor : lineColor }} />
           ))}
         </span>
       </div>
@@ -913,7 +1151,11 @@ function EntryBlock({
         {date && <span style={{ color: onDark ? 'rgba(255,255,255,0.72)' : theme.muted, fontSize: '10px' }}>{date}</span>}
       </div>
 
-      {subtitle && <div style={{ marginTop: '2px', color: theme.accent, fontWeight: 600 }}>{subtitle}</div>}
+      {subtitle && (
+        <div style={{ marginTop: '2px', color: onDark ? 'rgba(255,255,255,0.88)' : theme.accent, fontWeight: 600 }}>
+          {subtitle}
+        </div>
+      )}
 
       {lines.length > 0 && (
         <ul style={{ margin: '6px 0 0 16px', padding: 0, color: onDark ? 'rgba(255,255,255,0.8)' : theme.muted }}>
@@ -933,7 +1175,11 @@ function EntryBlock({
         </div>
       )}
 
-      {entry.fields.url && <div style={{ marginTop: '6px', color: theme.accent, fontSize: '10px' }}>{entry.fields.url}</div>}
+      {entry.fields.url && (
+        <div style={{ marginTop: '6px', color: onDark ? 'rgba(255,255,255,0.88)' : theme.accent, fontSize: '10px' }}>
+          <LinkedText href={toExternalHref(entry.fields.url)}>{entry.fields.url}</LinkedText>
+        </div>
+      )}
     </div>
   );
 }

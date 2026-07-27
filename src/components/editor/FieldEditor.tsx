@@ -1,5 +1,6 @@
 import { useCallback, type ReactNode, type ChangeEvent } from 'react';
 import DOMPurify from 'dompurify';
+import DateFieldInput from './DateFieldInput';
 
 interface FieldOption {
   label: string;
@@ -46,19 +47,8 @@ export default function FieldEditor({
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-      console.log('FieldEditor handleChange:', event.target.value, 'type:', type);
       const sanitized = sanitizeInput(event.target.value);
       onChange(sanitized);
-    },
-    [onChange, type]
-  );
-
-  const handleMonthChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const dateValue = event.target.value;
-      if (dateValue) {
-        onChange(dateValue.substring(0, 7));
-      }
     },
     [onChange]
   );
@@ -81,35 +71,11 @@ export default function FieldEditor({
     );
   }
 
-  if (type === 'month') {
-    const dateVal = safeValue?.length === 7 ? `${safeValue}-01` : safeValue;
+  if (type === 'month' || type === 'date') {
     return (
       <div className={fieldClassName}>
         <label>{label}</label>
-        <input
-          type="date"
-          value={dateVal}
-          onChange={handleMonthChange}
-          placeholder={placeholder}
-          disabled={disabled}
-          maxLength={maxLength}
-        />
-      </div>
-    );
-  }
-
-  if (type === 'date') {
-    return (
-      <div className={fieldClassName}>
-        <label>{label}</label>
-        <input
-          type="date"
-          value={safeValue}
-          onChange={handleChange}
-          placeholder={placeholder}
-          disabled={disabled}
-          maxLength={maxLength}
-        />
+        <DateFieldInput kind={type} value={safeValue} onChange={onChange} disabled={disabled} />
       </div>
     );
   }

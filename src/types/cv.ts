@@ -32,6 +32,8 @@ export interface PersonalInfo {
   phone: string;
   location: string;
   summary: string;
+  photo?: string;
+  dateOfBirth?: string;
   socials: SocialLink[];
 }
 
@@ -72,7 +74,30 @@ export type TemplateId =
   | 'dossier'
   | 'north'
   | 'zenith'
-  | 'editorial';
+  | 'editorial'
+  | 'meridian'
+  | 'vertex'
+  | 'harbor'
+  | 'beacon'
+  | 'quartz'
+  | 'retro95'
+  | 'windows'
+  | 'cobalt'
+  | 'linen'
+  | 'praxis'
+  | 'portrait'
+  | 'insignia'
+  | 'bulletin'
+  | 'verso'
+  | 'granite'
+  | 'palladio'
+  | 'signal'
+  | 'corvus'
+  | 'vellum'
+  | 'toon'
+  | 'hexon'
+  | 'lagoon'
+  | 'scribe';
 
 export interface TemplateInfo {
   id: TemplateId;
@@ -113,6 +138,15 @@ export const DEFAULT_SECTION_TITLES: Record<SectionType, string> = {
 };
 
 export const TEMPLATES: TemplateInfo[] = [
+  { id: 'meridian', name: 'Meridian', description: 'Indigo double-rule header with a narrow meta column' },
+  { id: 'beacon', name: 'Beacon', description: 'Strict single column tuned for ATS parsing' },
+  { id: 'vellum', name: 'Vellum', description: 'Grey banded layout with wide-tracked section rules' },
+  { id: 'toon', name: 'Toon', description: 'Pastel sticker cards with heavy outlines and sparkles' },
+  { id: 'scribe', name: 'Scribe', description: 'Bare monochrome sheet with lowercase headings' },
+  { id: 'corvus', name: 'Corvus', description: 'Dark-paper resume with a luminous rail and inset portrait' },
+  { id: 'windows', name: 'Windows', description: 'Windows XP desktop window with a blue task pane' },
+  { id: 'retro95', name: 'Retro 95', description: 'Windows 95/98 desktop window with beveled group boxes' },
+  { id: 'dossier', name: 'Dossier', description: 'Dense yet elegant single-column for experienced candidates' },
   { id: 'modern', name: 'Modern', description: 'Clean two-column layout with accent sidebar' },
   { id: 'classic', name: 'Classic', description: 'Traditional single-column with refined lines' },
   { id: 'minimal', name: 'Minimal', description: 'Airy monochrome layout with quiet spacing' },
@@ -125,10 +159,24 @@ export const TEMPLATES: TemplateInfo[] = [
   { id: 'summit', name: 'Summit', description: 'Confident two-column layout with skill meters' },
   { id: 'studio', name: 'Studio', description: 'Modern designer resume with colorful cards' },
   { id: 'atlas', name: 'Atlas', description: 'Grid-driven professional layout with compact side notes' },
-  { id: 'dossier', name: 'Dossier', description: 'Dense yet elegant single-column for experienced candidates' },
   { id: 'north', name: 'North', description: 'Scandinavian minimalism with calm blue accents' },
   { id: 'zenith', name: 'Zenith', description: 'High-contrast resume with strong timeline sections' },
   { id: 'editorial', name: 'Editorial', description: 'Magazine-inspired layout with typographic hierarchy' },
+  { id: 'vertex', name: 'Vertex', description: 'Charcoal header band with amber accents and a supporting grid' },
+  { id: 'harbor', name: 'Harbor', description: 'Deep navy sidebar with a calm, corporate main column' },
+  { id: 'quartz', name: 'Quartz', description: 'Panelled layout in cool grey with muted green accents' },
+  { id: 'cobalt', name: 'Cobalt', description: 'Navy header block over a contact rail and wide experience column' },
+  { id: 'linen', name: 'Linen', description: 'Charcoal banner with a warm sand sidebar' },
+  { id: 'praxis', name: 'Praxis', description: 'Cream two-column layout for dense senior profiles' },
+  { id: 'portrait', name: 'Portrait', description: 'Centred photo header with a calm violet rule set' },
+  { id: 'insignia', name: 'Insignia', description: 'Deep teal sidebar with a framed portrait on top' },
+  { id: 'bulletin', name: 'Bulletin', description: 'Slate banner with a square portrait and terracotta accents' },
+  { id: 'verso', name: 'Verso', description: 'Warm parchment split with a circular portrait' },
+  { id: 'granite', name: 'Granite', description: 'Single-column graphite layout with heavy section bars' },
+  { id: 'palladio', name: 'Palladio', description: 'Formal centred serif for academic and legal profiles' },
+  { id: 'signal', name: 'Signal', description: 'Teal card layout with compact meters' },
+  { id: 'hexon', name: 'Hexon', description: 'Navy hexagon sidebar with paired skill meters' },
+  { id: 'lagoon', name: 'Lagoon', description: 'Teal rail with an angled photo and a timeline spine' },
 ];
 
 export function getSocialPlatformMeta(platform: SocialPlatform) {

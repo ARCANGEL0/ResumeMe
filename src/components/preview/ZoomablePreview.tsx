@@ -74,6 +74,7 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
   const [baseScale, setBaseScale] = useState(1);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [isDesktopPanning, setIsDesktopPanning] = useState(false);
+  const [paperSize, setPaperSize] = useState({ width: 794, height: 1123 });
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const paperRef = useRef<HTMLDivElement | null>(null);
@@ -289,26 +290,6 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
     [getViewportPoint, isMobileViewport],
   );
 
-  const handleWheel = useCallback(
-    (event: React.WheelEvent<HTMLDivElement>) => {
-      if (isMobileViewport) {
-        return;
-      }
-
-      const target = event.target as HTMLElement | null;
-      if (target?.closest('.preview-zoom-controls')) {
-        return;
-      }
-
-      event.preventDefault();
-
-      const factor = Math.exp(-event.deltaY * 0.0015);
-      const anchor = getViewportPoint(event.clientX, event.clientY);
-      applyZoomAtPoint(stateRef.current.zoom * factor, anchor);
-    },
-    [applyZoomAtPoint, getViewportPoint, isMobileViewport],
-  );
-
   const handleDesktopPanStart = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
       if (isMobileViewport || event.button !== 0) {
@@ -336,39 +317,25 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
     [getViewportPoint, isMobileViewport],
   );
 
-  const handleDoubleClick = useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
-      if (isMobileViewport) {
-        return;
-      }
-
-      const target = event.target as HTMLElement | null;
-      if (target?.closest('.preview-zoom-controls')) {
-        return;
-      }
-
-      resetView();
-    },
-    [isMobileViewport, resetView],
-  );
-
   const zoomIn = useCallback(() => {
-    const bounds = viewportRef.current?.getBoundingClientRect();
-    const anchor = bounds
-      ? { x: bounds.width / 2, y: bounds.height / 2 }
-      : { x: 0, y: 0 };
+    if (isMobileViewport) {
+      const bounds = viewportRef.current?.getBoundingClientRect();
+      applyZoomAtPoint(stateRef.current.zoom + 0.2, bounds ? { x: bounds.width / 2, y: bounds.height / 2 } : { x: 0, y: 0 });
+      return;
+    }
 
-    applyZoomAtPoint(stateRef.current.zoom + 0.2, anchor);
-  }, [applyZoomAtPoint]);
+    setZoom((current) => clamp(current + 0.2, MIN_ZOOM, MAX_ZOOM));
+  }, [applyZoomAtPoint, isMobileViewport]);
 
   const zoomOut = useCallback(() => {
-    const bounds = viewportRef.current?.getBoundingClientRect();
-    const anchor = bounds
-      ? { x: bounds.width / 2, y: bounds.height / 2 }
-      : { x: 0, y: 0 };
+    if (isMobileViewport) {
+      const bounds = viewportRef.current?.getBoundingClientRect();
+      applyZoomAtPoint(stateRef.current.zoom - 0.2, bounds ? { x: bounds.width / 2, y: bounds.height / 2 } : { x: 0, y: 0 });
+      return;
+    }
 
-    applyZoomAtPoint(stateRef.current.zoom - 0.2, anchor);
-  }, [applyZoomAtPoint]);
+    setZoom((current) => clamp(current - 0.2, MIN_ZOOM, MAX_ZOOM));
+  }, [applyZoomAtPoint, isMobileViewport]);
 
   useEffect(() => {
     const updateViewportMode = () => {
@@ -380,6 +347,40 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
     updateViewportMode();
     window.addEventListener('resize', updateViewportMode);
     return () => window.removeEventListener('resize', updateViewportMode);
+  }, []);
+
+  useEffect(() => {
+    const panel = viewportRef.current?.closest('.preview-panel') as HTMLElement | null;
+    if (!panel) return;
+
+    const syncOffset = () => {
+      const left = panel.getBoundingClientRect().left;
+      document.documentElement.style.setProperty('--preview-left', `${Math.max(0, Math.round(left))}px`);
+    };
+
+    syncOffset();
+    const observer = new ResizeObserver(syncOffset);
+    observer.observe(panel);
+    window.addEventListener('resize', syncOffset);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', syncOffset);
+      document.documentElement.style.removeProperty('--preview-left');
+    };
+  }, []);
+
+  useEffect(() => {
+    const paper = paperRef.current;
+    if (!paper) return;
+
+    const measure = () => {
+      setPaperSize({ width: paper.offsetWidth, height: paper.offsetHeight });
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(paper);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -410,26 +411,35 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
     };
   }, [getViewportPoint]);
 
+  const scale = baseScale * zoom;
+
   return (
     <div className="preview-stage">
       <div
         ref={viewportRef}
         className={`preview-viewport ${isDesktopPanning ? 'is-panning' : ''}`}
         onMouseDown={handleDesktopPanStart}
-        onWheel={handleWheel}
-        onDoubleClick={handleDoubleClick}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
         style={{ touchAction: isMobileViewport ? 'none' : 'auto' }}
       >
-        <div className="preview-paper-shell">
+        <div
+          className="preview-paper-shell"
+          style={
+            isMobileViewport
+              ? undefined
+              : { width: `${paperSize.width * scale}px`, height: `${paperSize.height * scale}px` }
+          }
+        >
           <div
             ref={paperRef}
             className={className ?? 'preview-paper'}
             style={{
-              transform: `translate(${panX}px, ${panY}px) scale(${baseScale * zoom})`,
+              transform: isMobileViewport
+                ? `translate(${panX}px, ${panY}px) scale(${scale})`
+                : `scale(${scale})`,
               transformOrigin: 'top left',
               userSelect: 'none',
             }}
@@ -439,7 +449,7 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
         </div>
       </div>
 
-      <div className="preview-zoom-controls" onWheel={(event) => event.stopPropagation()}>
+      <div className="preview-zoom-controls">
         <button type="button" onClick={zoomOut} aria-label="Zoom out">
           -
         </button>

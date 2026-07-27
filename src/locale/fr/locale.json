@@ -92,7 +92,13 @@
     "native": "Langue maternelle",
     "fluent": "Courant",
     "intermediate": "Intermédiaire",
-    "beginner": "Débutant"
+    "beginner": "Débutant",
+    "photo": "Photo",
+    "uploadPhoto": "Importer une photo",
+    "removePhoto": "Retirer",
+    "dropHere": "Déposer ici",
+    "dateOfBirth": "Date de naissance",
+    "born": "Né le"
   },
   "sectionTitles": {
     "education": "Formation",

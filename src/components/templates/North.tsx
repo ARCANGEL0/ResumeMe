@@ -22,7 +22,7 @@ export default function North({ data, layoutEditor }: Props) {
   const { personalInfo, sections } = data;
   const layoutState = ensureTemplateLayout('north', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo);
+  const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const leadRole = '';
 
@@ -69,6 +69,7 @@ export default function North({ data, layoutEditor }: Props) {
           </aside>
           <main style={{ paddingTop: '8px' }}>
             <HeaderBlock
+          photo={personalInfo.photo}
               displayName={displayName}
               subtitle={leadRole}
               summary=""
