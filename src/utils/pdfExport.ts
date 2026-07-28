@@ -1,11 +1,9 @@
 import DOMPurify from 'dompurify';
 
-const A4_WIDTH_MM = '210mm';
-const A4_HEIGHT_MM = '297mm';
 const EXPORT_ROOT_ATTR = 'data-pdf-export-root';
 const A4_HEIGHT_PX = (297 / 25.4) * 96;
 const A4_WIDTH_PX = (210 / 25.4) * 96;
-const PRINT_FIT_SAFETY = 0.965;
+const MAX_CANVAS_STRETCH = 1.35;
 
 export async function exportToPDF(elementId: string, fileName: string = 'curriculum.pdf'): Promise<void> {
   const element = document.getElementById(elementId);
@@ -15,8 +13,7 @@ export async function exportToPDF(elementId: string, fileName: string = 'curricu
   }
 
   const safeFileName = sanitizePdfFileName(fileName);
-  const printScale = getPrintScale(element);
-  const exportMarkup = buildPrintDocument(element, safeFileName, printScale);
+  const exportMarkup = buildPrintDocument(element, safeFileName);
   const iframe = document.createElement('iframe');
 
   iframe.setAttribute('aria-hidden', 'true');
@@ -54,7 +51,7 @@ export async function exportToPDF(elementId: string, fileName: string = 'curricu
   }
 }
 
-function buildPrintDocument(element: HTMLElement, fileName: string, printScale: number): string {
+function buildPrintDocument(element: HTMLElement, fileName: string): string {
   const clone = element.cloneNode(true) as HTMLElement;
   clone.removeAttribute('id');
   clone.setAttribute(EXPORT_ROOT_ATTR, 'true');
@@ -88,15 +85,16 @@ function buildPrintDocument(element: HTMLElement, fileName: string, printScale: 
       }
 
       body {
-        zoom: ${printScale};
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
 
       [${EXPORT_ROOT_ATTR}="true"] {
-        width: ${A4_WIDTH_MM} !important;
-        min-height: ${A4_HEIGHT_MM} !important;
-        margin: 0 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        width: ${A4_WIDTH_PX}px;
+        min-height: ${A4_HEIGHT_PX}px;
+        margin: 0 !important;
         background: #ffffff !important;
         border-radius: 0 !important;
         box-shadow: none !important;
@@ -104,6 +102,12 @@ function buildPrintDocument(element: HTMLElement, fileName: string, printScale: 
         overflow: visible !important;
         break-inside: auto !important;
         page-break-inside: auto !important;
+      }
+
+      [${EXPORT_ROOT_ATTR}="true"] > * {
+        flex: 1 0 auto !important;
+        width: 100% !important;
+        min-height: 0 !important;
       }
 
       [${EXPORT_ROOT_ATTR}="true"] *,
@@ -123,12 +127,40 @@ function buildPrintDocument(element: HTMLElement, fileName: string, printScale: 
     ${DOMPurify.sanitize(clone.outerHTML)}
     <script>
       (async function () {
+        var A4_W = ${A4_WIDTH_PX};
+        var A4_H = ${A4_HEIGHT_PX};
+        var MAX_K = ${MAX_CANVAS_STRETCH};
+
         try {
           if (document.fonts && document.fonts.ready) {
             await document.fonts.ready;
           }
         } catch (error) {
           console.error('Print export fonts failed:', error);
+        }
+
+        var sheet = document.querySelector('[${EXPORT_ROOT_ATTR}="true"]');
+
+        function applyCanvas(k) {
+          sheet.style.width = (A4_W * k) + 'px';
+          sheet.style.minHeight = (A4_H * k) + 'px';
+          document.body.style.zoom = String(1 / k);
+          return sheet.scrollHeight;
+        }
+
+        if (sheet) {
+          var k = 1;
+          var height = applyCanvas(k);
+
+          while (height > A4_H * k + 1 && k < MAX_K) {
+            var needed = height / A4_H;
+            k = Math.min(MAX_K, Math.max(k + 0.02, needed));
+            height = applyCanvas(k);
+          }
+
+          if (height > A4_H * k + 1) {
+            applyCanvas(1);
+          }
         }
 
         requestAnimationFrame(function () {
@@ -177,19 +209,6 @@ function sanitizePdfFileName(fileName: string | null | undefined): string {
   const withExtension = trimmed.toLowerCase().endsWith('.pdf') ? trimmed : `${trimmed}.pdf`;
 
   return withExtension.replace(/[<>:"/\\|?*\u0000-\u001f]+/g, '-');
-}
-
-function getPrintScale(element: HTMLElement): number {
-  const { width, height } = element.getBoundingClientRect();
-  if (!width || !height) {
-    return 1;
-  }
-
-  const widthScale = A4_WIDTH_PX / width;
-  const heightScale = A4_HEIGHT_PX / height;
-  const scale = Math.min(1, widthScale, heightScale) * PRINT_FIT_SAFETY;
-
-  return Number(Math.max(0.5, Math.min(1, scale)).toFixed(4));
 }
 
 function escapeHtml(value: string): string {

@@ -37,13 +37,13 @@ export default function Studio({ data, layoutEditor }: Props) {
 
   return (
     <div style={baseStyle}>
-      <div style={{ padding: '30px 30px 32px' }}>
-        <div style={{ padding: '26px 28px 24px', borderRadius: '28px', background: `linear-gradient(145deg, rgba(219,39,119,0.1), rgba(255,255,255,0.98) 45%, rgba(124,58,237,0.08))`, border: `1px solid ${theme.line}`, marginBottom: '22px' }}>
+      <div style={{ padding: '22px 24px 24px' }}>
+        <div style={{ padding: '20px 22px 18px', borderRadius: '24px', background: `linear-gradient(145deg, rgba(219,39,119,0.1), rgba(255,255,255,0.98) 45%, rgba(124,58,237,0.08))`, border: `1px solid ${theme.line}`, marginBottom: '16px' }}>
           <div
             style={{
               display: 'grid',
               gridTemplateColumns: summary ? 'minmax(0, 0.92fr) minmax(0, 1.08fr)' : '1fr',
-              gap: '28px',
+              gap: '22px',
               alignItems: 'center',
             }}
           >
@@ -66,20 +66,20 @@ export default function Studio({ data, layoutEditor }: Props) {
             )}
           </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.28fr) 230px', gap: '22px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.28fr) 225px', gap: '16px' }}>
           <SectionPanels
             sections={mainSections}
             theme={theme}
             regionKey="main"
             layoutEditor={layoutEditor}
-            shellStyle={{ padding: '18px 18px 16px', borderRadius: '22px', background: '#ffffff', border: `1px solid ${theme.line}`, boxShadow: `0 16px 30px rgba(31,26,36,0.06)` }}
+            shellStyle={{ padding: '14px 16px 13px', borderRadius: '18px', background: '#ffffff', border: `1px solid ${theme.line}`, boxShadow: `0 16px 30px rgba(31,26,36,0.06)` }}
           />
           <SectionPanels
             sections={sideSections}
             theme={theme}
             regionKey="side"
             layoutEditor={layoutEditor}
-            shellStyle={{ padding: '16px', borderRadius: '22px', background: theme.accentSoft, border: `1px solid ${theme.line}` }}
+            shellStyle={{ padding: '13px 14px', borderRadius: '18px', background: theme.accentSoft, border: `1px solid ${theme.line}` }}
           />
         </div>
       </div>
