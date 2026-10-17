@@ -1,92 +1,80 @@
-import { type CSSProperties } from 'react';
 import { t } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
 import type { CVData } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
-import {
-  ContactPanel,
-  PhotoFrame,
-  SectionColumn,
-  SectionHeading,
-  SummaryBlock,
-  type TemplateLayoutEditor,
-} from './templateComponents';
+import { ContactPanel, PhotoFrame, SectionColumn, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
-interface Props {
-  data: CVData;
-  layoutEditor?: TemplateLayoutEditor;
-}
-
-export default function Verso({ data, layoutEditor }: Props) {
+export default function Verso({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
   const language = useCVStore((state) => state.language);
-  const theme = TEMPLATE_THEMES['verso'];
   const { personalInfo, sections } = data;
-  const layoutState = ensureTemplateLayout('verso', data.layoutOverride, sections);
-  const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo, language);
-  const summary = personalInfo.summary.trim();
-  const photo = personalInfo.photo;
-
-  const baseStyle: CSSProperties = {
-    fontFamily: theme.fontFamily,
-    fontSize: '11.2px',
-    lineHeight: '1.62',
-    color: theme.text,
-    background: theme.page,
-    minHeight: '297mm',
+  const theme = {
+    ...TEMPLATE_THEMES.verso,
+    fontFamily: "'Segoe UI', Arial, sans-serif",
+    page: '#ffffff',
+    text: '#172b36',
+    muted: '#536773',
+    line: '#d3dfe4',
+    accent: '#087f8c',
+    accentAlt: '#35b5b2',
+    accentSoft: '#eaf3f5',
+    accentDark: '#102b37',
+    sidebarBg: '#f1f6f8',
+    sidebarText: '#172b36',
+    sectionHeading: 'bar' as const,
+    entryStyle: 'plain' as const,
+    skillStyle: 'bars' as const,
+    languageStyle: 'words' as const,
   };
-
-  const mainSections = getSectionsForRegion(sections, layoutState, 'main');
-  const sideSections = getSectionsForRegion(sections, layoutState, 'side');
+  const layout = ensureTemplateLayout('verso', data.layoutOverride, sections);
+  const mainSections = getSectionsForRegion(sections, layout, 'main');
+  const sideSections = getSectionsForRegion(sections, layout, 'side');
+  const contacts = getContactItems(personalInfo, language);
+  const role = sections.find((section) => section.type === 'experience')?.entries
+    .map((entry) => entry.fields.position?.trim()).find(Boolean) ?? '';
+  const summary = personalInfo.summary.trim();
+  const name = personalInfo.fullName || t(language, 'fullName');
 
   return (
-    <div style={baseStyle}>
-      <div style={{ padding: '34px 40px 24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '30px' }}>
-          <div style={{ minWidth: 0, flex: 1 }}>
-            <h1
-              style={{
-                margin: 0,
-                fontSize: '34px',
-                fontWeight: 700,
-                lineHeight: 1.06,
-                letterSpacing: theme.nameLetterSpacing,
-                color: theme.accentDark,
-              }}
-            >
-              {displayName}
-            </h1>
-            <div style={{ width: '58px', height: '3px', margin: '14px 0 0', background: theme.accentAlt }} />
-            {summary && (
-              <div style={{ marginTop: '18px' }}>
-                <SummaryBlock summary={summary} theme={theme} />
-              </div>
-            )}
-          </div>
-          {photo && <PhotoFrame photo={photo} size={150} border={`3px solid ${theme.accentAlt}`} />}
+    <div style={{ minHeight: '297mm', boxSizing: 'border-box', padding: '0 34px 38px', background: '#fff', color: theme.text, fontFamily: theme.fontFamily, fontSize: '10.5px', lineHeight: 1.55 }}>
+      <header style={{ position: 'relative', display: 'grid', gridTemplateColumns: personalInfo.photo ? 'minmax(0,1fr) 76px' : 'minmax(0,1fr)', gap: 24, alignItems: 'center', margin: '0 -34px 0', padding: '20px 34px 15px', color: '#f5f8fa', background: '#142832', borderBottom: '5px solid #29a8a5' }}>
+        <div style={{ position: 'absolute', inset: '0 0 auto auto', width: 190, height: 75, opacity: .16, pointerEvents: 'none' }}>
+          <svg viewBox="0 0 190 75" width="100%" height="100%" aria-hidden="true">
+            <path d="M70 0h120l-43 75H27L70 0Zm-38 0H0v75h27L70 0" fill="none" stroke="#62d2cf" strokeWidth="1" />
+            <path d="M85 0 42 75m69-75L68 75m69-75-43 75m69-75-43 75" stroke="#62d2cf" strokeWidth=".7" />
+          </svg>
         </div>
-      </div>
+        <div style={{ position: 'relative', minWidth: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+            <svg viewBox="0 0 28 28" width="24" height="24" fill="none" stroke="#55c7c1" strokeWidth="1.5" aria-hidden="true">
+              <path d="m14 2 10 6v12l-10 6L4 20V8l10-6Z" />
+              <path d="M9 14h10M14 9v10M6 8l8 5 8-5" />
+            </svg>
+            <span style={{ color: '#70c9c6', fontSize: 8, fontWeight: 700, letterSpacing: '.2em', textTransform: 'uppercase' }}>{t(language, 'profile')}</span>
+          </div>
+          <h1 style={{ margin: 0, color: '#f8fbfc', fontSize: 31, fontWeight: 650, letterSpacing: '-.035em', lineHeight: 1.05, overflowWrap: 'anywhere' }}>{name}</h1>
+          {role && <div style={{ marginTop: 6, color: '#c0d1d7', fontSize: 12, fontWeight: 500, letterSpacing: '.045em' }}>{role}</div>}
+        </div>
+        {personalInfo.photo && <div style={{ position: 'relative', justifySelf: 'end' }}><PhotoFrame photo={personalInfo.photo} size={70} radius="4px" border="1px solid #55c7c1" /></div>}
+      </header>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1.55fr) minmax(0, 0.88fr)',
-          gap: '32px',
-          padding: '10px 40px 36px',
-        }}
-      >
-        <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} gap="24px" />
-        <aside style={{ paddingLeft: '28px', borderLeft: `1px solid ${theme.line}` }}>
-          {contactItems.length > 0 && (
-            <div style={{ marginBottom: '26px' }}>
-              <SectionHeading title={t(language, 'contact')} theme={theme} />
-              <ContactPanel contactItems={contactItems} theme={theme} contactStyle="stack" />
-            </div>
-          )}
-          <SectionColumn sections={sideSections} theme={theme} regionKey="side" layoutEditor={layoutEditor} gap="24px" />
+      {contacts.length > 0 && <div style={{ padding: '11px 2px 10px', borderBottom: '1px solid #d3dfe4' }}>
+        <ContactPanel contactItems={contacts} theme={theme} contactStyle="inline" />
+      </div>}
+
+      {summary && <section style={{ display: 'grid', gridTemplateColumns: '124px minmax(0,1fr)', gap: 18, alignItems: 'start', margin: '19px 0 22px', padding: '13px 16px', background: '#f1f6f8', borderLeft: '3px solid #087f8c' }}>
+        <h2 style={{ margin: '2px 0 0', color: '#087f8c', fontSize: 9, fontWeight: 700, letterSpacing: '.17em', textTransform: 'uppercase' }}>{t(language, 'profile')}</h2>
+        <SummaryBlock summary={summary} theme={theme} />
+      </section>}
+
+      <div style={{ display: 'grid', gridTemplateColumns: '205px minmax(0,1fr)', gap: 27, marginTop: summary ? 0 : 21 }}>
+        <aside style={{ minWidth: 0, padding: '18px 17px 22px', background: '#f1f6f8', borderTop: '2px solid #087f8c' }}>
+          <SectionColumn sections={sideSections} theme={theme} regionKey="side" layoutEditor={layoutEditor} gap="21px" />
         </aside>
+        <main style={{ minWidth: 0, padding: '3px 0 0 18px', borderLeft: '1px solid #d3dfe4' }}>
+          <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} gap="24px" />
+        </main>
       </div>
     </div>
   );
