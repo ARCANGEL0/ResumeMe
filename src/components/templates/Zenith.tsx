@@ -1,81 +1,77 @@
-// src/components/templates/Zenith.tsx
-import { type CSSProperties } from 'react';
 import { t } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
-import type { CVData } from '../../types/cv';
+import type { CVData, CVSection } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
-import { getContactItems } from './templateUtils';
-import { HeaderBlock, SectionColumn, SectionPanels, type TemplateLayoutEditor } from './templateComponents';
+import { getContactItems, getEntryDate, getEntryDetailLines, getEntrySubtitle, getEntryTitle } from './templateUtils';
+import { ContactPanel, CustomSectionRegion, PhotoFrame, SectionBlockBody, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
-interface Props {
-  data: CVData;
-  layoutEditor?: TemplateLayoutEditor;
-}
-
-export default function Zenith({ data, layoutEditor }: Props) {
+export default function Zenith({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
   const language = useCVStore((state) => state.language);
-  const theme = TEMPLATE_THEMES['zenith'];
+  const theme = { ...TEMPLATE_THEMES.zenith, entryStyle: 'plain' as const, skillStyle: 'list' as const, languageStyle: 'words' as const };
   const { personalInfo, sections } = data;
-  const layoutState = ensureTemplateLayout('zenith', data.layoutOverride, sections);
-  const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo, language);
+  const layout = ensureTemplateLayout('zenith', data.layoutOverride, sections);
+  const career = getSectionsForRegion(sections, layout, 'lead');
+  const essentials = getSectionsForRegion(sections, layout, 'support');
+  const name = personalInfo.fullName || t(language, 'fullName');
+  const contacts = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
-  const baseStyle: CSSProperties = {
-    fontFamily: theme.fontFamily,
-    fontSize: '11.2px',
-    lineHeight: '1.65',
-    color: theme.text,
-    background: theme.page,
-    minHeight: '297mm',
-  };
 
-  const leadSections = getSectionsForRegion(sections, layoutState, 'lead');
-  const supportSections = getSectionsForRegion(sections, layoutState, 'support');
+  const renderSection = (section: CVSection) => (
+    <WaypointSection key={section.id} section={section} theme={theme} />
+  );
 
   return (
-    <div style={baseStyle}>
-      <header style={{ position: 'relative', overflow: 'hidden', padding: '38px 42px 32px', background: theme.headerBg, color: theme.headerText }}>
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: '650px' }}>
-          <div style={{ marginBottom: '12px', color: theme.accentAlt, fontSize: '9px', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase' }}>Zenith / Career Trajectory</div>
-          <HeaderBlock
-            photo={personalInfo.photo}
-            photoPlacement="left"
-            photoSize={82}
-            displayName={displayName}
-            summary=""
-            contactItems={contactItems}
-            theme={theme}
-            language={language}
-            onDark
-            contactStyle="inline"
-            titleSize="36px"
-            hideDivider
-          />
+    <div style={{ minHeight: '297mm', background: '#fff', color: '#1a1a1a', fontFamily: 'Arial, sans-serif', fontSize: '10.7px', lineHeight: 1.65 }}>
+      <header style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 130px', gap: 24, alignItems: 'center', padding: '28px 42px 19px', borderTop: '4px solid #171717' }}>
+        <div style={{ minWidth: 0 }}>
+          <h1 style={{ margin: 0, color: '#171717', fontSize: 37, fontWeight: 650, lineHeight: 1.02, letterSpacing: '-.05em', overflowWrap: 'anywhere' }}>{name}</h1>
+          {contacts.length > 0 && <div style={{ marginTop: 13 }}><ContactPanel contactItems={contacts} theme={theme} contactStyle="inline" /></div>}
         </div>
-        <span style={{ position: 'absolute', right: '38px', top: '38px', width: '112px', height: '112px', border: `1px solid ${theme.accentAlt}`, borderRadius: '50%', opacity: 0.48 }} />
-        <span style={{ position: 'absolute', right: '66px', top: '66px', width: '56px', height: '56px', border: `1px solid ${theme.accentAlt}`, borderRadius: '50%', opacity: 0.5 }} />
+        {personalInfo.photo && <div style={{ justifySelf: 'end' }}><PhotoFrame photo={personalInfo.photo} size={92} radius="50%" border="2px solid #ddd" /></div>}
       </header>
-      {summary && (
-        <div style={{ display: 'grid', gridTemplateColumns: '44px minmax(0, 1fr)', gap: '10px', alignItems: 'start', margin: '24px 42px 0', paddingBottom: '20px', borderBottom: `1px solid ${theme.line}` }}>
-          <span style={{ color: theme.accentAlt, fontSize: '34px', lineHeight: 1, fontFamily: 'Georgia, serif' }}>“</span>
-          <div style={{ maxWidth: '640px', paddingTop: '5px', color: theme.muted, lineHeight: 1.75 }}>{summary}</div>
-        </div>
-      )}
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.36fr) 232px', gap: '28px', padding: '30px 42px 40px' }}>
-        <main style={{ paddingLeft: '18px', borderLeft: `2px solid ${theme.line}` }}>
-          <SectionColumn sections={leadSections} theme={theme} regionKey="lead" layoutEditor={layoutEditor} gap="28px" />
-        </main>
-        <aside style={{ padding: '18px 17px', borderTop: `4px solid ${theme.accentAlt}`, background: theme.accentSoft }}>
-          <SectionPanels
-            sections={supportSections}
-            theme={theme}
-            regionKey="support"
-            layoutEditor={layoutEditor}
-            shellStyle={{ padding: 0, borderRadius: 0, background: 'transparent', border: 'none' }}
-          />
+      {summary && <section style={{ margin: '0 42px 25px', padding: '15px 19px', background: '#f5f5f5', color: '#444' }}>
+        <div style={{ marginBottom: 6, color: '#777', fontSize: 8, fontWeight: 700, letterSpacing: '.14em', textTransform: 'uppercase' }}>{t(language, 'profile')}</div><SummaryBlock summary={summary} theme={theme} />
+      </section>}
+      <main style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 210px', gap: 31, padding: '8px 42px 42px' }}>
+        <section style={{ minWidth: 0, paddingRight: 18 }}>
+          <CustomSectionRegion sections={career} regionKey="lead" layoutEditor={layoutEditor} gap="25px" renderSection={renderSection} />
+        </section>
+        <aside style={{ minWidth: 0, padding: '13px 13px 16px', background: '#f5f5f5' }}>
+          <CustomSectionRegion sections={essentials} regionKey="support" layoutEditor={layoutEditor} gap="22px" renderSection={renderSection} />
         </aside>
-      </div>
+      </main>
     </div>
+  );
+}
+
+function WaypointSection({ section, theme }: { section: CVSection; theme: typeof TEMPLATE_THEMES.zenith }) {
+  const headingStyle = { margin: '0 0 11px', color: '#25282b', fontSize: 11, fontWeight: 800, letterSpacing: '.12em', lineHeight: 1.3, textTransform: 'uppercase' as const, paddingBottom: 7, borderBottom: '1px solid #c8c8c8' };
+  if (section.type === 'skills' || section.type === 'languages') {
+    return <section><h2 style={headingStyle}>{section.title}</h2><SectionBlockBody section={section} theme={theme} /></section>;
+  }
+
+  return (
+    <section>
+      <h2 style={headingStyle}>{section.title}</h2>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+        {section.entries.map((entry, entryIndex) => {
+          const date = getEntryDate(entry);
+          const details = getEntryDetailLines(entry);
+          const subtitle = getEntrySubtitle(entry);
+          return (
+            <article key={entry.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(65px, 86px) minmax(0,1fr)', gap: 13, alignItems: 'start' }}>
+              <div style={{ padding: '5px 6px', background: '#f0f0f0', color: '#4a4a4a', fontSize: 8.5, fontWeight: 700, lineHeight: 1.3, textAlign: 'center', overflowWrap: 'anywhere' }}>{date || `ENTRY ${String(entryIndex + 1).padStart(2, '0')}`}</div>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'baseline' }}><strong style={{ color: '#202020', fontSize: 11 }}>{getEntryTitle(entry)}</strong></div>
+                {subtitle && <div style={{ marginTop: 2, color: '#333', fontWeight: 600 }}>{subtitle}</div>}
+                {details.length > 0 && <ul style={{ margin: '6px 0 0 15px', padding: 0, color: '#555' }}>{details.map((detail) => <li key={detail} style={{ marginBottom: 3 }}>{detail}</li>)}</ul>}
+                {entry.fields.url && <a href={entry.fields.url} target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginTop: 5, color: '#444', textDecoration: 'underline' }}>{entry.fields.url}</a>}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
   );
 }
