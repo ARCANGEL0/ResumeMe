@@ -160,7 +160,7 @@ export const TEMPLATES: TemplateInfo[] = [
   { id: 'summit', name: 'Apex', description: 'A full-width career history with a concise profile and supporting sections below' },
   { id: 'studio', name: 'Studio', description: 'Modern designer resume with colorful cards' },
   { id: 'atlas', name: 'Gridline', description: 'A practical two-column résumé with a broad career history and compact supporting rail' },
-  { id: 'north', name: 'North', description: 'Scandinavian minimalism with calm blue accents' },
+  { id: 'north', name: 'Nord', description: 'A centered profile header above a quiet two-column résumé layout' },
   { id: 'zenith', name: 'Zenith', description: 'High-contrast resume with strong timeline sections' },
   { id: 'editorial', name: 'Editorial', description: 'Magazine-inspired layout with typographic hierarchy' },
   { id: 'vertex', name: 'Vertex', description: 'Charcoal header band with amber accents and a supporting grid' },

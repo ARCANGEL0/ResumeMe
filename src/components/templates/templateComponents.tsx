@@ -835,11 +835,55 @@ function SkillsSection({
                 <span>{entry.fields.name || entry.fields.title}</span>
               </div>
               {score > 0 && (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))', gap: '4px' }}>
+                <div
+                  role="meter"
+                  aria-valuemin={0}
+                  aria-valuemax={5}
+                  aria-valuenow={score}
+                  style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))', gap: '3px' }}
+                >
                   {Array.from({ length: 5 }).map((_, index) => (
-                    <span key={index} style={{ height: '5px', borderRadius: '999px', background: index < score ? fillColor : lineColor }} />
+                    <span
+                      key={index}
+                      style={{
+                        height: '6px',
+                        background: index < score ? fillColor : lineColor,
+                        clipPath: 'polygon(14% 0, 100% 0, 86% 100%, 0 100%)',
+                      }}
+                    />
                   ))}
                 </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  if (theme.skillStyle === 'parallelogram') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {section.entries.map((entry) => {
+          const score = getSkillLevelScore(entry.fields.level || '');
+          const name = entry.fields.name || entry.fields.title;
+          const fill = `${(score / 5) * 100}%`;
+          return (
+            <div key={entry.id}>
+              <div style={{ marginBottom: '4px', color: textColor }}>{name}</div>
+              {score > 0 && (
+                <div
+                  role="meter"
+                  aria-label={`${name} proficiency`}
+                  aria-valuemin={0}
+                  aria-valuemax={5}
+                  aria-valuenow={score}
+                  style={{
+                    height: '6px',
+                    background: `linear-gradient(to right, ${fillColor} 0%, ${fillColor} ${fill}, ${lineColor} ${fill}, ${lineColor} 100%)`,
+                    clipPath: 'polygon(4% 0, 100% 0, 96% 100%, 0 100%)',
+                  }}
+                />
               )}
             </div>
           );
@@ -1057,6 +1101,30 @@ function LanguageEntry({
   const score = getLangScore(entry.fields.proficiency || '');
   const cefrLabel = getLangLevel(entry.fields.proficiency || '', 'cefr', lang) || entry.fields.proficiency || '';
   const wordLabel = getLangLevel(entry.fields.proficiency || '', 'words', lang) || entry.fields.proficiency || '';
+
+  if (languageStyle === 'parallelogram') {
+    const fill = `${(score / 6) * 100}%`;
+    return (
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', marginBottom: '4px' }}>
+          <span style={{ color: textColor }}>{name}</span>
+          <span style={{ color: mutedColor, fontSize: '10px' }}>{cefrLabel}</span>
+        </div>
+        <div
+          role="meter"
+          aria-label={`${name} proficiency`}
+          aria-valuemin={0}
+          aria-valuemax={6}
+          aria-valuenow={score}
+          style={{
+            height: '5px',
+            background: `linear-gradient(to right, ${meterColor} 0%, ${meterColor} ${fill}, ${lineColor} ${fill}, ${lineColor} 100%)`,
+            clipPath: 'polygon(4% 0, 100% 0, 96% 100%, 0 100%)',
+          }}
+        />
+      </div>
+    );
+  }
 
   if (languageStyle === 'bars') {
     return (

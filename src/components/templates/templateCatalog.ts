@@ -4,8 +4,8 @@ export type TemplateFamily = 'sidebar' | 'split' | 'single' | 'band';
 export type SectionHeadingStyle = 'rule' | 'pill' | 'bar' | 'label' | 'caps' | 'underline' | 'xp';
 export type ContactStyle = 'stack' | 'inline' | 'pills';
 export type EntryStyle = 'timeline' | 'card' | 'plain' | 'bordered';
-export type SkillStyle = 'bars' | 'chips' | 'list' | 'inline' | 'dots' | 'sarif' | 'retro';
-export type LanguageStyle = 'bars' | 'cefr' | 'words' | 'dots';
+export type SkillStyle = 'bars' | 'chips' | 'list' | 'inline' | 'dots' | 'parallelogram' | 'sarif' | 'retro';
+export type LanguageStyle = 'bars' | 'cefr' | 'words' | 'dots' | 'parallelogram';
 export type SummaryStyle = 'plain' | 'card' | 'quote';
 export type ThumbLayout = 'sidebar' | 'split' | 'single' | 'band';
 
@@ -344,24 +344,24 @@ export const TEMPLATE_THEMES: Record<TemplateId, TemplateTheme> = {
     family: 'split',
     thumbLayout: 'split',
     fontFamily: "'Arial', 'Segoe UI', sans-serif",
-    page: '#fbfdff',
-    text: '#24363c',
-    muted: '#61727a',
-    line: '#d8e4e7',
-    accent: '#477c8b',
-    accentAlt: '#9fc3c6',
-    accentSoft: '#edf5f5',
-    accentDark: '#24434c',
-    headerAlign: 'left',
-    sectionHeading: 'label',
+    page: '#ffffff',
+    text: '#171717',
+    muted: '#5d5d5d',
+    line: '#d6d6d6',
+    accent: '#171717',
+    accentAlt: '#777777',
+    accentSoft: '#f4f4f4',
+    accentDark: '#111111',
+    headerAlign: 'center',
+    sectionHeading: 'underline',
     contactStyle: 'inline',
     entryStyle: 'plain',
-    skillStyle: 'bars',
-    languageStyle: 'dots',
+    skillStyle: 'list',
+    languageStyle: 'words',
     summaryStyle: 'plain',
     sidebarSections: ['skills', 'languages'],
-    uppercaseName: true,
-    nameLetterSpacing: '0.08em',
+    uppercaseName: false,
+    nameLetterSpacing: '-0.025em',
   },
   zenith: {
     family: 'band',

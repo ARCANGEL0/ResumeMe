@@ -354,7 +354,7 @@ const DEFAULT_TEMPLATE_NAMES: Record<TemplateId, string> = {
   studio: 'Studio',
   atlas: 'Gridline',
   dossier: 'Dossier',
-  north: 'North',
+  north: 'Nord',
   zenith: 'Zenith',
   editorial: 'Editorial',
   meridian: 'Meridian',
