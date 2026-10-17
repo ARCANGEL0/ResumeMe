@@ -1,5 +1,4 @@
 import { useCallback, type ReactNode, type ChangeEvent } from 'react';
-import DOMPurify from 'dompurify';
 import DateFieldInput from './DateFieldInput';
 
 interface FieldOption {
@@ -21,17 +20,6 @@ interface FieldEditorProps {
 
 const MAX_FIELD_LENGTH = 2000;
 
-function sanitizeInput(input: string): string {
-  const clean = DOMPurify.sanitize(input, {
-    ALLOWED_TAGS: [],
-    ALLOWED_ATTR: [],
-    ALLOW_DATA_ATTR: false,
-    ALLOW_ARIA_ATTR: false,
-    FORBID_TAGS: ['style', 'script'],
-  });
-  return clean.slice(0, MAX_FIELD_LENGTH);
-}
-
 export default function FieldEditor({
   label,
   value,
@@ -47,20 +35,17 @@ export default function FieldEditor({
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-      const sanitized = sanitizeInput(event.target.value);
-      onChange(sanitized);
+      onChange(event.target.value.slice(0, maxLength));
     },
-    [onChange]
+    [maxLength, onChange]
   );
-
-  const safeValue = sanitizeInput(value);
 
   if (type === 'textarea') {
     return (
       <div className={fieldClassName}>
         <label>{label}</label>
         <textarea
-          value={safeValue}
+          value={value}
           onChange={handleChange}
           placeholder={placeholder}
           rows={5}
@@ -75,7 +60,7 @@ export default function FieldEditor({
     return (
       <div className={fieldClassName}>
         <label>{label}</label>
-        <DateFieldInput kind={type} value={safeValue} onChange={onChange} disabled={disabled} />
+        <DateFieldInput kind={type} value={value} onChange={onChange} disabled={disabled} />
       </div>
     );
   }
@@ -84,7 +69,7 @@ export default function FieldEditor({
     return (
       <div className={fieldClassName}>
         <label>{label}</label>
-        <select value={safeValue} onChange={handleChange} disabled={disabled}>
+        <select value={value} onChange={handleChange} disabled={disabled}>
           <option value="">{placeholder}</option>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -101,7 +86,7 @@ export default function FieldEditor({
       <label>{label}</label>
       <input
         type={type}
-        value={safeValue}
+        value={value}
         onChange={handleChange}
         placeholder={placeholder}
         disabled={disabled}
