@@ -1,6 +1,7 @@
 import { Fragment, useState, type CSSProperties } from 'react';
 import { t, type UILanguage } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
+import { debugLog } from '../../utils/debugLog';
 import type { CVData, CVSection, CVEntry, SocialPlatform } from '../../types/cv';
 import ContactIcon from '../../ui/ContactIcon';
 import { getContactItems, getEntryTitle, getEntryDate, getEntryDetailLines } from './templateUtils';
@@ -686,16 +687,16 @@ function SarifDropZone({
         try {
           event.preventDefault();
           if (!layoutEditor) {
-            console.log('Sarif onDrop: layoutEditor is undefined');
+            debugLog('Sarif onDrop: layoutEditor is undefined');
             return;
           }
           const sourceRegion = event.dataTransfer?.getData('text/template-region');
           const sectionId = event.dataTransfer?.getData('text/template-section-id');
-          console.log('Sarif onDrop:', { sourceRegion, sectionId, targetIndex });
+          debugLog('Sarif onDrop:', { sourceRegion, sectionId, targetIndex });
           if (sourceRegion && sectionId && layoutEditor.onDrop) {
             layoutEditor.onDrop(sourceRegion, 'main', sectionId, targetIndex);
           } else {
-            console.log('Sarif onDrop: missing data', { sourceRegion, sectionId, hasOnDrop: !!layoutEditor.onDrop });
+            debugLog('Sarif onDrop: missing data', { sourceRegion, sectionId, hasOnDrop: !!layoutEditor.onDrop });
           }
           setIsOver(false);
           if (layoutEditor.onDragEnd) {

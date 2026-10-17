@@ -1,6 +1,7 @@
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { t } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
+import { debugLog } from '../../utils/debugLog';
 import { LANGUAGE_PROFICIENCY_OPTIONS, type CVSection, SECTION_FIELDS } from '../../types/cv';
 import FieldEditor from './FieldEditor';
 
@@ -130,7 +131,7 @@ interface FieldCellProps {
 const FieldCell = function FieldCell({ entry, entryId, fieldKey, language, section, updateEntry }: FieldCellProps) {
   const fieldType = useMemo(() => getFieldType(fieldKey), [fieldKey]);
   const fieldValue = entry.fields[fieldKey] || '';
-  console.log('FieldCell render:', fieldKey, 'value:', fieldValue, 'entryId:', entryId);
+  debugLog('FieldCell render:', fieldKey, 'value:', fieldValue, 'entryId:', entryId);
   const endDateBackup = useRef('');
   const startDateBackup = useRef('');
 

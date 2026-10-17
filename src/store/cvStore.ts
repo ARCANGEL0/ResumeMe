@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useShallow } from 'zustand/react/shallow';
 import { DEFAULT_LANGUAGE, getSectionTitle, type UILanguage } from '../i18n';
+import { debugLog } from '../utils/debugLog';
 import {
   type CVData,
   type PersonalInfo,
@@ -221,7 +222,7 @@ export const useCVStore = create<CVStore>()(
     })),
 
   updateEntry: (sectionId, entryId, field, value) => {
-    console.log('updateEntry called:', sectionId, entryId, field, value);
+    debugLog('updateEntry called:', sectionId, entryId, field, value);
     set((state) => ({
       sections: state.sections.map((s) =>
         s.id === sectionId

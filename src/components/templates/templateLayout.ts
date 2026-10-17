@@ -1,4 +1,5 @@
 import type { CVSection, SectionType, TemplateId, TemplateLayoutState } from '../../types/cv';
+import { debugLog } from '../../utils/debugLog';
 
 export interface TemplateLayoutRegion {
   key: string;
@@ -397,7 +398,7 @@ export function moveLayoutSection(
   targetIndex: number,
 ): TemplateLayoutState | undefined {
   if (!layout) {
-    console.log('moveLayoutSection: layout is undefined');
+    debugLog('moveLayoutSection: layout is undefined');
     return undefined;
   }
   const nextLayout = Object.fromEntries(
