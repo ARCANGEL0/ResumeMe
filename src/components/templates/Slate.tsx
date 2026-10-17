@@ -6,7 +6,7 @@ import type { CVData } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
-import { ContactPanel, HeaderBlock, SectionColumn, SectionEyebrow, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
+import { ContactPanel, PhotoFrame, SectionColumn, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
 interface Props {
   data: CVData;
@@ -21,8 +21,6 @@ export default function Slate({ data, layoutEditor }: Props) {
   const displayName = personalInfo.fullName || t(language, 'fullName');
   const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
-  const leadRole = '';
-
   const baseStyle: CSSProperties = {
     fontFamily: theme.fontFamily,
     fontSize: '11.2px',
@@ -36,43 +34,27 @@ export default function Slate({ data, layoutEditor }: Props) {
   const mainSections = getSectionsForRegion(sections, layoutState, 'main');
 
   return (
-    <div style={{ ...baseStyle, display: 'grid', gridTemplateColumns: 'minmax(0, 1.44fr) 224px' }}>
-      <main style={{ padding: '34px 36px 36px' }}>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: summary ? 'minmax(0, 0.82fr) minmax(0, 1.18fr)' : '1fr',
-            gap: '30px',
-            alignItems: 'center',
-          }}
-        >
-          <HeaderBlock
-            photo={personalInfo.photo}
-            displayName={displayName}
-            subtitle={leadRole}
-            summary=""
-            contactItems={[]}
-            theme={theme}
-            language={language}
-            titleSize="30px"
-            hideContact
-          />
-          {summary && (
-            <div style={{ padding: '18px 20px', borderRadius: '14px', background: theme.accentSoft }}>
-              <SummaryBlock summary={summary} theme={theme} />
-            </div>
-          )}
-        </div>
-        <div style={{ marginTop: '26px' }}>
-          <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} />
-        </div>
+    <div style={{ ...baseStyle, display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 228px' }}>
+      <main style={{ padding: '42px 36px 40px 42px' }}>
+        <header style={{ display: 'flex', alignItems: 'flex-start', gap: '20px', paddingBottom: '22px', borderBottom: `2px solid ${theme.accent}` }}>
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <div style={{ marginBottom: '12px', color: theme.accent, fontSize: '9px', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase' }}>Slate / Career Record</div>
+            <h1 style={{ margin: 0, color: theme.accentDark, fontSize: '38px', fontWeight: 700, lineHeight: 1.02, letterSpacing: '-0.04em', overflowWrap: 'anywhere' }}>{displayName}</h1>
+          </div>
+          {personalInfo.photo && <PhotoFrame photo={personalInfo.photo} size={72} radius="3px" border={`2px solid ${theme.line}`} />}
+        </header>
+        {summary && (
+          <div style={{ margin: '22px 0 28px', padding: '15px 18px', borderLeft: `3px solid ${theme.accentAlt}`, background: theme.accentSoft, color: theme.muted, lineHeight: 1.72 }}>
+            <SummaryBlock summary={summary} theme={theme} />
+          </div>
+        )}
+        <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} gap="27px" />
       </main>
-      <aside style={{ padding: '30px 18px 28px', background: theme.sidebarBg, color: theme.sidebarText }}>
-        <SectionEyebrow title={t(language, 'contact')} theme={theme} />
+      <aside style={{ padding: '34px 20px 32px', background: theme.sidebarBg, color: theme.sidebarText, borderLeft: `4px solid ${theme.accent}` }}>
+        <div style={{ marginBottom: '11px', color: theme.accentAlt, fontSize: '9px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase' }}>{t(language, 'contact')}</div>
         <ContactPanel contactItems={contactItems} theme={theme} onDark contactStyle="stack" />
-        <div style={{ marginTop: '22px' }}>
-          <SectionColumn sections={sidebarSections} theme={theme} onDark regionKey="sidebar" layoutEditor={layoutEditor} />
-        </div>
+        <div style={{ width: '36px', height: '1px', margin: '24px 0', background: 'rgba(255,255,255,0.3)' }} />
+        <SectionColumn sections={sidebarSections} theme={theme} onDark regionKey="sidebar" layoutEditor={layoutEditor} gap="24px" />
       </aside>
     </div>
   );
