@@ -60,12 +60,12 @@ import hi from './locale/hi/locale.json';
 import fa from './locale/fa/locale.json';
 
 // Convert JSON to TranslationSet
-function jsonToTranslationSet(json: Record<string, unknown>): TranslationSet {
+function jsonToTranslationSet(json: TranslationSet): TranslationSet {
   return {
-    labels: json.labels || {},
-    sectionTitles: json.sectionTitles || {},
-    templateNames: json.templateNames || {},
-    templateDescriptions: json.templateDescriptions || {},
+    labels: json.labels,
+    sectionTitles: json.sectionTitles,
+    templateNames: json.templateNames,
+    templateDescriptions: json.templateDescriptions,
   };
 }
 

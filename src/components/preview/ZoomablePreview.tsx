@@ -41,15 +41,18 @@ function getDistance(a: Point, b: Point) {
   return Math.sqrt(dx * dx + dy * dy);
 }
 
-function getTouchPoint(touch: Touch) {
+function getTouchPoint(touch: React.Touch) {
   return { x: touch.clientX, y: touch.clientY };
 }
 
-function getTouchCenter(first: Touch, second: Touch) {
-  return {
-    x: (first.clientX + second.clientX) / 2,
-    y: (first.clientY + second.clientY) / 2,
-  };
+function getSingleTouch(touches: React.TouchList) {
+  return touches.item(0);
+}
+
+function getTouchPair(touches: React.TouchList): [React.Touch, React.Touch] | null {
+  const first = touches.item(0);
+  const second = touches.item(1);
+  return first && second ? [first, second] : null;
 }
 
 function getBaseScaleForViewport(width: number) {
@@ -158,19 +161,23 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
       }
 
       if (event.touches.length >= 2) {
+        const touchPair = getTouchPair(event.touches);
+        if (!touchPair) return;
+        const [firstTouch, secondTouch] = touchPair;
+
         if (event.cancelable) {
           event.preventDefault();
         }
 
         const center = getViewportPoint(
-          (event.touches[0].clientX + event.touches[1].clientX) / 2,
-          (event.touches[0].clientY + event.touches[1].clientY) / 2,
+          (firstTouch.clientX + secondTouch.clientX) / 2,
+          (firstTouch.clientY + secondTouch.clientY) / 2,
         );
 
         touchGestureRef.current = {
           mode: 'pinch',
           startCenter: center,
-          startDistance: getDistance(getTouchPoint(event.touches[0]), getTouchPoint(event.touches[1])),
+          startDistance: getDistance(getTouchPoint(firstTouch), getTouchPoint(secondTouch)),
           startZoom: stateRef.current.zoom,
           startPanX: stateRef.current.panX,
           startPanY: stateRef.current.panY,
@@ -179,13 +186,16 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
       }
 
       if (event.touches.length === 1) {
+        const touch = getSingleTouch(event.touches);
+        if (!touch) return;
+
         if (event.cancelable) {
           event.preventDefault();
         }
 
         touchGestureRef.current = {
           mode: 'pan',
-          startTouch: getViewportPoint(event.touches[0].clientX, event.touches[0].clientY),
+          startTouch: getViewportPoint(touch.clientX, touch.clientY),
           startPanX: stateRef.current.panX,
           startPanY: stateRef.current.panY,
         };
@@ -208,13 +218,17 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
       }
 
       if (event.touches.length >= 2) {
+        const touchPair = getTouchPair(event.touches);
+        if (!touchPair) return;
+        const [firstTouch, secondTouch] = touchPair;
+
         if (event.cancelable) {
           event.preventDefault();
         }
 
         const currentCenter = getViewportPoint(
-          (event.touches[0].clientX + event.touches[1].clientX) / 2,
-          (event.touches[0].clientY + event.touches[1].clientY) / 2,
+          (firstTouch.clientX + secondTouch.clientX) / 2,
+          (firstTouch.clientY + secondTouch.clientY) / 2,
         );
 
         const gesture =
@@ -223,7 +237,7 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
             : {
                 mode: 'pinch' as const,
                 startCenter: currentCenter,
-                startDistance: getDistance(getTouchPoint(event.touches[0]), getTouchPoint(event.touches[1])),
+                startDistance: getDistance(getTouchPoint(firstTouch), getTouchPoint(secondTouch)),
                 startZoom: stateRef.current.zoom,
                 startPanX: stateRef.current.panX,
                 startPanY: stateRef.current.panY,
@@ -231,7 +245,7 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
 
         touchGestureRef.current = gesture;
 
-        const currentDistance = getDistance(getTouchPoint(event.touches[0]), getTouchPoint(event.touches[1]));
+        const currentDistance = getDistance(getTouchPoint(firstTouch), getTouchPoint(secondTouch));
         const nextZoom = clamp((gesture.startZoom * currentDistance) / Math.max(gesture.startDistance, 1), MIN_ZOOM, MAX_ZOOM);
         const startScale = stateRef.current.baseScale * gesture.startZoom;
         const nextScale = stateRef.current.baseScale * nextZoom;
@@ -245,6 +259,9 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
       }
 
       if (event.touches.length === 1) {
+        const touch = getSingleTouch(event.touches);
+        if (!touch) return;
+
         if (event.cancelable) {
           event.preventDefault();
         }
@@ -254,14 +271,14 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
             ? touchGestureRef.current
             : {
                 mode: 'pan' as const,
-                startTouch: getViewportPoint(event.touches[0].clientX, event.touches[0].clientY),
+                startTouch: getViewportPoint(touch.clientX, touch.clientY),
                 startPanX: stateRef.current.panX,
                 startPanY: stateRef.current.panY,
               };
 
         touchGestureRef.current = gesture;
 
-        const currentPoint = getViewportPoint(event.touches[0].clientX, event.touches[0].clientY);
+        const currentPoint = getViewportPoint(touch.clientX, touch.clientY);
         setPanX(gesture.startPanX + currentPoint.x - gesture.startTouch.x);
         setPanY(gesture.startPanY + currentPoint.y - gesture.startTouch.y);
       }
@@ -283,15 +300,19 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
       }
 
       if (event.touches.length >= 2) {
+        const touchPair = getTouchPair(event.touches);
+        if (!touchPair) return;
+        const [firstTouch, secondTouch] = touchPair;
+
         const center = getViewportPoint(
-          (event.touches[0].clientX + event.touches[1].clientX) / 2,
-          (event.touches[0].clientY + event.touches[1].clientY) / 2,
+          (firstTouch.clientX + secondTouch.clientX) / 2,
+          (firstTouch.clientY + secondTouch.clientY) / 2,
         );
 
         touchGestureRef.current = {
           mode: 'pinch',
           startCenter: center,
-          startDistance: getDistance(getTouchPoint(event.touches[0]), getTouchPoint(event.touches[1])),
+          startDistance: getDistance(getTouchPoint(firstTouch), getTouchPoint(secondTouch)),
           startZoom: stateRef.current.zoom,
           startPanX: stateRef.current.panX,
           startPanY: stateRef.current.panY,
@@ -300,9 +321,12 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
       }
 
       if (event.touches.length === 1) {
+        const touch = getSingleTouch(event.touches);
+        if (!touch) return;
+
         touchGestureRef.current = {
           mode: 'pan',
-          startTouch: getViewportPoint(event.touches[0].clientX, event.touches[0].clientY),
+          startTouch: getViewportPoint(touch.clientX, touch.clientY),
           startPanX: stateRef.current.panX,
           startPanY: stateRef.current.panY,
         };

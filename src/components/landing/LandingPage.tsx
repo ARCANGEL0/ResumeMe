@@ -11,14 +11,16 @@ const WAVE_CONFIG = [
   { amplitude: 60, frequency: 0.012, speed: 0.015, baseline: 0.68, colorIdx: 0 },
   { amplitude: 40, frequency: 0.018, speed: 0.022, baseline: 0.72, colorIdx: 1 },
   { amplitude: 25, frequency: 0.025, speed: 0.03, baseline: 0.76, colorIdx: 2 },
-];
+] as const;
+
+const WAVE_COLORS = ['--wave-1', '--wave-2', '--wave-3'] as const;
 
 interface WaveState {
   frameId: number;
   tick: number;
   width: number;
   height: number;
-  colors: string[];
+  colors: [string, string, string];
 }
 
 function drawWave(
@@ -92,7 +94,7 @@ export default function LandingPage() {
 
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const styles = getComputedStyle(document.documentElement);
-    const colors = WAVE_CONFIG.map(w => styles.getPropertyValue(['--wave-1', '--wave-2', '--wave-3'][w.colorIdx]).trim());
+    const colors = WAVE_CONFIG.map(w => styles.getPropertyValue(WAVE_COLORS[w.colorIdx]).trim()) as [string, string, string];
     const state: WaveState = { frameId: 0, tick: 0, width: window.innerWidth, height: window.innerHeight, colors };
 
     const animate = () => {

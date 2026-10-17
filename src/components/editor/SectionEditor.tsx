@@ -1,5 +1,5 @@
-import { memo, useCallback, useMemo, useRef, useState } from 'react';
-import { t } from '../../i18n';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { t, type UILanguage } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
 import { debugLog } from '../../utils/debugLog';
 import { LANGUAGE_PROFICIENCY_OPTIONS, type CVSection, SECTION_FIELDS } from '../../types/cv';
@@ -57,13 +57,13 @@ function getFieldOptions(key: string, value: string) {
 }
 
 function isChecked(value: string | undefined) {
-  return value === true || value === 'true';
+  return value === 'true';
 }
 
 interface EntryCardProps {
   entryIndex: number;
   fieldKeys: string[];
-  language: ReturnType<typeof useCVStore>['language'];
+  language: UILanguage;
   reorderEntry: (sectionId: string, entryId: string, direction: 'up' | 'down') => void;
   removeEntry: (sectionId: string, entryId: string) => void;
   section: CVSection;
@@ -157,7 +157,7 @@ interface FieldCellProps {
   entry: CVSection['entries'][number];
   entryId: string;
   fieldKey: string;
-  language: ReturnType<typeof useCVStore>['language'];
+  language: UILanguage;
   section: CVSection;
   updateEntry: (sectionId: string, entryId: string, field: string, value: string) => void;
 }

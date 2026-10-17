@@ -20,10 +20,10 @@ export async function exportToPDF(elementId: string, fileName: string = 'curricu
     const opt = {
       margin: 0,
       filename: fileName,
-      image: { type: 'jpeg', quality: 0.98 },
+      image: { type: 'jpeg' as const, quality: 0.98 },
       html2canvas: { scale: 2, useCORS: true },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
+    } as const;
     
     await html2pdfInstance().set(opt).from(element).save();
   } catch (err) {
