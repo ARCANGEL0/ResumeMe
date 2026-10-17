@@ -27,21 +27,22 @@ export default function Creative({ data, layoutEditor }: Props) {
   return (
     <div style={{ fontFamily: theme.fontFamily, fontSize: '11.2px', lineHeight: '1.65', color: theme.text, background: '#ffffff', minHeight: '297mm' }}>
       {/* Header */}
-      <div style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #2d1b69 100%)', padding: '32px 40px 28px', display: 'flex', alignItems: 'center', gap: '26px' }}>
+      <div style={{ position: 'relative', background: `linear-gradient(118deg, ${theme.accentDark} 0%, #203c43 72%, #315e61 100%)`, padding: '36px 42px 32px', display: 'flex', alignItems: 'center', gap: '26px', overflow: 'hidden' }}>
         {personalInfo.photo && (
-          <PhotoFrame photo={personalInfo.photo} size={132} border="4px solid rgba(255,255,255,0.28)" />
+          <PhotoFrame photo={personalInfo.photo} size={112} radius="8px" border="2px solid rgba(255,255,255,0.45)" />
         )}
         <div style={{ minWidth: 0, flex: 1 }}>
-        <h1 style={{ margin: 0, fontSize: '40px', fontWeight: 900, color: '#ffffff', lineHeight: 1, letterSpacing: '-0.02em' }}>
+        <div style={{ marginBottom: '10px', color: theme.accentAlt, fontSize: '9px', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase' }}>Creative Profile</div>
+        <h1 style={{ margin: 0, fontSize: '38px', fontWeight: 750, color: '#ffffff', lineHeight: 1.04, letterSpacing: '-0.035em', overflowWrap: 'anywhere' }}>
           {displayName}
         </h1>
-        <div style={{ width: '56px', height: '4px', background: 'linear-gradient(90deg, #ec4899, #8b5cf6)', borderRadius: '2px', margin: '12px 0 14px' }} />
+        <div style={{ width: '48px', height: '3px', background: `linear-gradient(90deg, ${theme.accent}, ${theme.accentAlt})`, margin: '13px 0 15px' }} />
         {contactItems.length > 0 && (
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: summary ? '14px' : 0 }}>
             {contactItems.map((item) => (
               <span
                 key={item.key}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.1)', padding: '4px 10px', borderRadius: '999px', fontSize: '10px', color: 'rgba(255,255,255,0.9)' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.09)', border: '1px solid rgba(255,255,255,0.18)', padding: '5px 9px', borderRadius: '4px', fontSize: '9.5px', color: 'rgba(255,255,255,0.92)' }}
               >
                 <ContactIcon name={item.icon} style={{ width: '13px', height: '13px' }} />
                 <LinkedText href={item.href}>{item.value}</LinkedText>
@@ -50,7 +51,7 @@ export default function Creative({ data, layoutEditor }: Props) {
           </div>
         )}
         {summary && (
-          <p style={{ margin: 0, fontSize: '11px', color: 'rgba(255,255,255,0.72)', lineHeight: '1.6', maxWidth: '72%' }}>
+          <p style={{ margin: 0, fontSize: '11px', color: 'rgba(255,255,255,0.78)', lineHeight: '1.65', maxWidth: '760px', overflowWrap: 'anywhere' }}>
             {summary}
           </p>
         )}
@@ -72,14 +73,14 @@ export default function Creative({ data, layoutEditor }: Props) {
                 width: '130px',
                 flexShrink: 0,
                 padding: '16px 14px',
-                background: index % 2 === 0 ? 'rgba(236,72,153,0.04)' : 'rgba(139,92,246,0.04)',
-                borderRight: '2px solid rgba(236,72,153,0.18)',
+                background: index % 2 === 0 ? theme.accentSoft : '#f5f7f5',
+                borderRight: `2px solid ${theme.accent}`,
                 display: 'flex',
                 alignItems: 'flex-start',
                 justifyContent: 'flex-end',
               }}
             >
-              <span style={{ fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.5px', color: '#ec4899', textAlign: 'right', lineHeight: 1.4 }}>
+              <span style={{ fontSize: '9px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.5px', color: theme.accentDark, textAlign: 'right', lineHeight: 1.4, overflowWrap: 'anywhere' }}>
                 {section.title}
               </span>
             </div>
@@ -91,7 +92,7 @@ export default function Creative({ data, layoutEditor }: Props) {
                   {section.entries.map((entry) => (
                     <span
                       key={entry.id}
-                      style={{ display: 'inline-block', padding: '4px 10px', borderRadius: '999px', background: 'rgba(139,92,246,0.08)', color: '#5b21b6', fontSize: '10px', fontWeight: 600 }}
+                      style={{ display: 'inline-block', padding: '4px 9px', borderRadius: '3px', background: theme.accentSoft, color: theme.accentDark, fontSize: '10px', fontWeight: 600 }}
                     >
                       {entry.fields.name || entry.fields.title}
                     </span>
@@ -106,11 +107,11 @@ export default function Creative({ data, layoutEditor }: Props) {
                         <span style={{ fontSize: '10.5px', fontWeight: 600, color: '#1a1a2e' }}>
                           {entry.fields.language || entry.fields.name}
                         </span>
-                        <span style={{ display: 'inline-flex', gap: '3px' }}>
+                        {score > 0 && <span style={{ display: 'inline-flex', gap: '3px' }}>
                           {Array.from({ length: 6 }).map((_, i) => (
-                            <span key={i} style={{ width: '8px', height: '8px', borderRadius: '999px', background: i < score ? '#8b5cf6' : '#e8dcfb' }} />
+                            <span key={i} style={{ width: '7px', height: '7px', borderRadius: '999px', background: i < score ? theme.accentAlt : theme.line }} />
                           ))}
-                        </span>
+                        </span>}
                       </div>
                     );
                   })}
@@ -120,18 +121,18 @@ export default function Creative({ data, layoutEditor }: Props) {
                   {section.entries.map((entry, i) => (
                     <div
                       key={entry.id}
-                      style={{ paddingBottom: i < section.entries.length - 1 ? '10px' : 0, borderBottom: i < section.entries.length - 1 ? '1px dashed #f0edf8' : 'none' }}
+                      style={{ paddingBottom: i < section.entries.length - 1 ? '11px' : 0, borderBottom: i < section.entries.length - 1 ? `1px solid ${theme.line}` : 'none' }}
                     >
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '2px' }}>
-                        <span style={{ fontWeight: 700, fontSize: '11.5px', color: '#1a1a2e' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '12px', marginBottom: '2px' }}>
+                        <span style={{ minWidth: 0, fontWeight: 700, fontSize: '11.5px', color: theme.accentDark, overflowWrap: 'anywhere' }}>
                           {entry.fields.position || entry.fields.degree || entry.fields.name || entry.fields.title || 'Entry'}
                         </span>
-                        <span style={{ fontSize: '9.5px', color: '#aaa', fontWeight: 500, whiteSpace: 'nowrap' }}>
+                        <span style={{ flexShrink: 0, fontSize: '9.5px', color: theme.muted, fontWeight: 500, whiteSpace: 'nowrap' }}>
                           {getEntryDate(entry, language)}
                         </span>
                       </div>
                       {(entry.fields.company || entry.fields.institution || entry.fields.issuer) && (
-                        <div style={{ fontSize: '10px', color: '#8b5cf6', fontWeight: 600, marginBottom: '3px' }}>
+                        <div style={{ fontSize: '10px', color: theme.accent, fontWeight: 600, marginBottom: '3px' }}>
                           {entry.fields.company || entry.fields.institution || entry.fields.issuer}
                         </div>
                       )}
@@ -143,7 +144,7 @@ export default function Creative({ data, layoutEditor }: Props) {
                       {entry.fields.technologies && (
                         <div style={{ marginTop: '5px', display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                           {entry.fields.technologies.split(',').map((tech, ti) => (
-                            <span key={ti} style={{ fontSize: '9px', background: '#f3e8ff', color: '#7c3aed', padding: '2px 7px', borderRadius: '8px', fontWeight: 500 }}>
+                            <span key={ti} style={{ fontSize: '9px', background: theme.accentSoft, color: theme.accentDark, padding: '2px 7px', borderRadius: '3px', fontWeight: 500 }}>
                               {tech.trim()}
                             </span>
                           ))}
