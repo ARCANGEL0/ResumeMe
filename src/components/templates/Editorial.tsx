@@ -1,79 +1,49 @@
-// src/components/templates/Editorial.tsx
-import { type CSSProperties } from 'react';
 import { t } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
 import type { CVData } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
-import {
-  ContactPanel,
-  PhotoFrame,
-  SectionColumn,
-  SummaryBlock,
-  type TemplateLayoutEditor,
-} from './templateComponents';
+import { ContactPanel, PhotoFrame, SectionColumn, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
-interface Props {
-  data: CVData;
-  layoutEditor?: TemplateLayoutEditor;
-}
-
-export default function Editorial({ data, layoutEditor }: Props) {
+export default function Editorial({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
   const language = useCVStore((state) => state.language);
-  const theme = TEMPLATE_THEMES['editorial'];
+  const theme = { ...TEMPLATE_THEMES.editorial, entryStyle: 'plain' as const };
   const { personalInfo, sections } = data;
-  const layoutState = ensureTemplateLayout('editorial', data.layoutOverride, sections);
-  const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo, language);
+  const layout = ensureTemplateLayout('editorial', data.layoutOverride, sections);
+  const leftSections = getSectionsForRegion(sections, layout, 'left');
+  const middleSections = getSectionsForRegion(sections, layout, 'middle');
+  const rightSections = getSectionsForRegion(sections, layout, 'right');
+  const name = personalInfo.fullName || t(language, 'fullName');
+  const role = sections.find((section) => section.type === 'experience')?.entries.map((entry) => entry.fields.position?.trim()).find(Boolean) ?? '';
   const summary = personalInfo.summary.trim();
-  const leadRole = '';
-
-  const baseStyle: CSSProperties = {
-    fontFamily: theme.fontFamily,
-    fontSize: '11.2px',
-    lineHeight: '1.65',
-    color: theme.text,
-    background: theme.page,
-    minHeight: '297mm',
-  };
-
-  const leftSections = getSectionsForRegion(sections, layoutState, 'left');
-  const middleSections = getSectionsForRegion(sections, layoutState, 'middle');
-  const rightSections = getSectionsForRegion(sections, layoutState, 'right');
+  const contacts = getContactItems(personalInfo, language);
 
   return (
-    <div style={baseStyle}>
-      <div style={{ padding: '28px 34px 30px' }}>
-        <div style={{ textAlign: 'center', paddingBottom: '18px', borderBottom: `1px solid ${theme.line}` }}>
-          {personalInfo.photo && (
-            <div style={{ marginBottom: '16px' }}>
-              <PhotoFrame photo={personalInfo.photo} size={122} border={`2px solid ${theme.line}`} />
-            </div>
-          )}
-          <h1 style={{ margin: 0, fontSize: '31px', letterSpacing: '0.08em', textTransform: 'uppercase', color: theme.text }}>{displayName}</h1>
-          {leadRole && <div style={{ marginTop: '8px', color: theme.accent }}>{leadRole}</div>}
-          <div style={{ marginTop: '14px', display: 'flex', justifyContent: 'center' }}>
-            <ContactPanel contactItems={contactItems} theme={theme} contactStyle="inline" align="center" />
-          </div>
-        </div>
-        {summary && (
-          <div style={{ margin: '20px auto 24px', maxWidth: '82%' }}>
+    <div style={{ minHeight: '297mm', padding: '27px 31px 38px', background: '#fff', color: '#383838', fontFamily: "'Arial', sans-serif", fontSize: 10, lineHeight: 1.6 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '225px minmax(0,1fr)', gap: 25, alignItems: 'start' }}>
+        <aside>
+          <header style={{ padding: '20px 17px 18px', border: '1px solid #999', borderRadius: 13, textAlign: 'center', background: '#f3f3f2' }}>
+            {personalInfo.photo ? <PhotoFrame photo={personalInfo.photo} size={92} /> : <div style={{ width: 92, height: 92, margin: '0 auto', borderRadius: '50%', background: '#dedede' }} />}
+            <h1 style={{ margin: '12px 0 0', color: '#333', fontSize: 22, lineHeight: 1.08, fontWeight: 500 }}>{name}</h1>
+            {role && <div style={{ marginTop: 6, color: '#666', fontSize: 11 }}>{role}</div>}
+          </header>
+          <section style={{ marginTop: 17, padding: '17px 16px', border: '1px solid #aaa', borderRadius: 13 }}>
+            <h2 style={labelStyle}>{t(language, 'contact')}</h2><ContactPanel contactItems={contacts} theme={theme} contactStyle="stack" />
+            <div style={{ marginTop: 22 }}><SectionColumn sections={leftSections} theme={theme} regionKey="left" layoutEditor={layoutEditor} gap="22px" /></div>
+          </section>
+        </aside>
+        <main style={{ minWidth: 0 }}>
+          {summary && <section style={{ marginBottom: 22, padding: '4px 0 17px', borderBottom: '1px solid #aaa' }}>
+            <h2 style={labelStyle}>{t(language, 'profile')}</h2>
             <SummaryBlock summary={summary} theme={theme} />
-          </div>
-        )}
-        <div style={{ display: 'grid', gridTemplateColumns: '0.88fr 1.2fr 0.88fr', gap: '24px' }}>
-          <div style={{ paddingRight: '20px', borderRight: `1px solid ${theme.line}` }}>
-            <SectionColumn sections={leftSections} theme={theme} regionKey="left" layoutEditor={layoutEditor} />
-          </div>
-          <div>
-            <SectionColumn sections={middleSections} theme={theme} regionKey="middle" layoutEditor={layoutEditor} />
-          </div>
-          <div style={{ paddingLeft: '20px', borderLeft: `1px solid ${theme.line}` }}>
-            <SectionColumn sections={rightSections} theme={theme} regionKey="right" layoutEditor={layoutEditor} />
-          </div>
-        </div>
+          </section>}
+          <div style={{ marginBottom: 24, padding: '4px 0 3px' }}><SectionColumn sections={rightSections} theme={theme} regionKey="right" layoutEditor={layoutEditor} gap="22px" /></div>
+          <div style={{ paddingLeft: 17, borderLeft: '2px solid #b8b8b8' }}><SectionColumn sections={middleSections} theme={theme} regionKey="middle" layoutEditor={layoutEditor} gap="26px" /></div>
+        </main>
       </div>
     </div>
   );
 }
+
+const labelStyle = { margin: '0 0 9px', color: '#4e5152', fontSize: 10, fontWeight: 700, letterSpacing: '.14em', lineHeight: 1.3, textTransform: 'uppercase' as const };

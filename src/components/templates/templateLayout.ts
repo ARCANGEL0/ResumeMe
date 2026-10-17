@@ -55,10 +55,9 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> =
     },
   },
   professional: {
-    regions: [{ key: 'main', label: 'Main' }, { key: 'supporting', label: 'Supporting' }],
+    regions: [{ key: 'main', label: 'Main' }],
     defaultLayout: {
-      main: ['experience', 'projects', 'education', 'custom'],
-      supporting: ['skills', 'languages', 'certifications'],
+      main: ['experience', 'education', 'skills', 'languages', 'projects', 'certifications', 'custom'],
     },
   },
   executive: {
@@ -71,8 +70,8 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> =
   slate: {
     regions: [{ key: 'main', label: 'Main' }, { key: 'sidebar', label: 'Sidebar' }],
     defaultLayout: {
-      main: ['experience', 'projects', 'education', 'custom'],
-      sidebar: ['skills', 'languages'],
+      main: ['experience', 'education', 'projects', 'skills', 'languages', 'certifications', 'custom'],
+      sidebar: [],
     },
   },
   sarif: {
@@ -84,15 +83,15 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> =
   ivory: {
     regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Side' }],
     defaultLayout: {
-      main: ['experience', 'education', 'projects', 'custom'],
-      side: ['skills', 'languages', 'certifications'],
+      main: ['education', 'certifications', 'skills', 'experience', 'projects', 'languages', 'custom'],
+      side: [],
     },
   },
   summit: {
     regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Side' }],
     defaultLayout: {
-      main: ['experience', 'projects', 'education', 'custom'],
-      side: ['skills', 'languages', 'certifications'],
+      main: ['experience', 'education', 'projects'],
+      side: ['skills', 'languages', 'certifications', 'custom'],
     },
   },
   studio: {
@@ -112,15 +111,15 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> =
   dossier: {
     regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Side' }],
     defaultLayout: {
-      main: ['experience', 'projects', 'education', 'custom'],
-      side: ['skills', 'languages', 'certifications'],
+      main: ['experience', 'projects', 'custom'],
+      side: ['education', 'skills', 'languages', 'certifications'],
     },
   },
   north: {
     regions: [{ key: 'main', label: 'Main' }, { key: 'sidebar', label: 'Sidebar' }],
     defaultLayout: {
-      main: ['experience', 'projects', 'education', 'custom'],
-      sidebar: ['skills', 'languages', 'certifications'],
+      main: ['experience', 'education', 'projects', 'certifications', 'custom'],
+      sidebar: ['skills', 'languages'],
     },
   },
   zenith: {
@@ -177,8 +176,8 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> =
   quartz: {
     regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Side' }],
     defaultLayout: {
-      main: ['experience', 'projects', 'education', 'custom'],
-      side: ['skills', 'languages', 'certifications'],
+      main: ['experience', 'projects', 'custom'],
+      side: ['education', 'skills', 'languages', 'certifications'],
     },
   },
   retro95: {
@@ -198,8 +197,8 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> =
   cobalt: {
     regions: [{ key: 'main', label: 'Main' }, { key: 'aside', label: 'Aside' }],
     defaultLayout: {
-      main: ['experience', 'education', 'projects'],
-      aside: ['skills', 'languages', 'certifications', 'custom'],
+      main: ['experience', 'projects', 'education', 'skills'],
+      aside: ['languages', 'certifications', 'custom'],
     },
   },
   linen: {
@@ -247,8 +246,8 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> =
   scribe: {
     regions: [{ key: 'main', label: 'Main' }, { key: 'aside', label: 'Aside' }],
     defaultLayout: {
-      main: ['experience', 'projects', 'custom'],
-      aside: ['education', 'skills', 'languages', 'certifications'],
+      main: ['experience', 'projects', 'education', 'certifications', 'custom'],
+      aside: ['skills', 'languages'],
     },
   },
   portrait: {
@@ -261,15 +260,16 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> =
   insignia: {
     regions: [{ key: 'main', label: 'Main' }, { key: 'sidebar', label: 'Sidebar' }],
     defaultLayout: {
-      main: ['experience', 'projects', 'education', 'custom'],
-      sidebar: ['skills', 'languages', 'certifications'],
+      main: ['experience', 'projects'],
+      sidebar: ['skills', 'education', 'certifications', 'languages', 'custom'],
     },
   },
   bulletin: {
-    regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Side' }],
+    regions: [{ key: 'main', label: 'Main' }, { key: 'side', label: 'Skills' }, { key: 'bottom', label: 'Lower Sections' }],
     defaultLayout: {
-      main: ['experience', 'projects', 'education'],
-      side: ['skills', 'languages', 'certifications', 'custom'],
+      main: ['experience', 'projects'],
+      side: ['skills', 'languages'],
+      bottom: ['certifications', 'education', 'custom'],
     },
   },
   verso: {
@@ -325,8 +325,15 @@ export function createDefaultTemplateLayout(templateId: TemplateId, sections: CV
 
   preset.regions.forEach((region) => {
     const types = new Set(preset.defaultLayout[region.key] ?? []);
-    const orderedIds = sections
-      .filter((section) => !assigned.has(section.id) && types.has(section.type))
+    const regionSections = sections
+      .filter((section) => !assigned.has(section.id) && types.has(section.type));
+
+    if (templateId === 'ivory') {
+      const preferredOrder = preset.defaultLayout[region.key] ?? [];
+      regionSections.sort((a, b) => preferredOrder.indexOf(a.type) - preferredOrder.indexOf(b.type));
+    }
+
+    const orderedIds = regionSections
       .map((section) => {
         assigned.add(section.id);
         return section.id;

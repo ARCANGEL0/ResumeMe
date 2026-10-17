@@ -98,7 +98,7 @@ export const useCVStore = create<CVStore>()(
     (set, get) => ({
   personalInfo: defaultPersonalInfo,
   sections: defaultSections,
-  selectedTemplate: 'beacon',
+  selectedTemplate: 'north',
   templateLayouts: {},
   currentView: 'landing',
   language: DEFAULT_LANGUAGE,
@@ -286,6 +286,14 @@ export const useCVStore = create<CVStore>()(
   }),
   {
     name: 'cv-storage',
+    version: 2,
+    migrate: (persistedState, version) => {
+      const state = persistedState as Partial<CVStore>;
+      if (version < 2 && (!state.selectedTemplate || state.selectedTemplate === 'beacon' || state.selectedTemplate === 'hexon')) {
+        return { ...state, selectedTemplate: 'north' };
+      }
+      return state;
+    },
   }
 ));
 

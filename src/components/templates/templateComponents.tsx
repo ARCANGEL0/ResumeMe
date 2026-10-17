@@ -861,6 +861,67 @@ function SkillsSection({
     );
   }
 
+  if (theme.skillStyle === 'rounded-segments') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '9px', color: textColor }}>
+        {section.entries.map((entry) => {
+          const score = getSkillLevelScore(entry.fields.level || '');
+          const name = entry.fields.name || entry.fields.title;
+          return (
+            <div key={entry.id}>
+              <div style={{ marginBottom: '4px' }}>{name}</div>
+              {score > 0 && (
+                <div
+                  role="meter"
+                  aria-label={`${name} proficiency`}
+                  aria-valuemin={0}
+                  aria-valuemax={5}
+                  aria-valuenow={score}
+                  style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))', gap: '3px' }}
+                >
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <span
+                      key={index}
+                      style={{ height: '5px', borderRadius: '2px', background: index < score ? fillColor : lineColor }}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  if (theme.skillStyle === 'solid-bar') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '9px', color: textColor }}>
+        {section.entries.map((entry) => {
+          const score = getSkillLevelScore(entry.fields.level || '');
+          const name = entry.fields.name || entry.fields.title;
+          return (
+            <div key={entry.id}>
+              <div style={{ marginBottom: '4px' }}>{name}</div>
+              {score > 0 && (
+                <div
+                  role="meter"
+                  aria-label={`${name} proficiency`}
+                  aria-valuemin={0}
+                  aria-valuemax={5}
+                  aria-valuenow={score}
+                  style={{ height: '5px', background: lineColor }}
+                >
+                  <div style={{ width: `${(score / 5) * 100}%`, height: '100%', background: fillColor }} />
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
   if (theme.skillStyle === 'parallelogram') {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -1219,7 +1280,7 @@ function EntryBlock({
 
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: '14px', alignItems: 'baseline' }}>
         <span style={{ color: titleColor, fontWeight: 700, fontSize: '12px' }}>{getEntryTitle(entry)}</span>
-        {date && <span style={{ color: onDark ? 'rgba(255,255,255,0.72)' : theme.muted, fontSize: '10px' }}>{date}</span>}
+        {date && <span style={{ color: onDark ? 'rgba(255,255,255,0.72)' : theme.muted, fontSize: '10px', whiteSpace: 'nowrap' }}>{date}</span>}
       </div>
 
       {subtitle && (
@@ -1239,7 +1300,7 @@ function EntryBlock({
       {entry.fields.technologies && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '8px' }}>
           {entry.fields.technologies.split(',').map((tech) => (
-            <span key={tech} style={{ padding: '3px 8px', borderRadius: '999px', background: onDark ? 'rgba(255,255,255,0.1)' : theme.accentSoft, color: onDark ? titleColor : theme.accentDark, fontSize: '9.5px' }}>
+            <span key={tech} style={{ padding: '3px 8px', borderRadius: theme.projectTagStyle === 'rectangles' ? 0 : '999px', background: theme.projectTagStyle === 'rectangles' ? '#111111' : onDark ? 'rgba(255,255,255,0.1)' : theme.accentSoft, color: theme.projectTagStyle === 'rectangles' ? '#ffffff' : onDark ? titleColor : theme.accentDark, fontSize: '9.5px', fontWeight: theme.projectTagStyle === 'rectangles' ? 700 : 400 }}>
               {tech.trim()}
             </span>
           ))}

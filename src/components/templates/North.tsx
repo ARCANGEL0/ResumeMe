@@ -5,7 +5,7 @@ import ContactIcon from '../../ui/ContactIcon';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
-import { LinkedText, SectionColumn, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
+import { LinkedText, PhotoFrame, SectionColumn, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
 export default function North({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
   const language = useCVStore((state) => state.language);
@@ -18,7 +18,6 @@ export default function North({ data, layoutEditor }: { data: CVData; layoutEdit
   const contacts = getContactItems(personalInfo, language);
   const core = contacts.filter((item) => item.type === 'core');
   const socials = contacts.filter((item) => item.type === 'social');
-  const initials = name.trim().split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]?.toUpperCase()).join('') || 'CV';
   const summary = personalInfo.summary.trim();
 
   const contactRow = (item: typeof contacts[number]) => (
@@ -30,21 +29,12 @@ export default function North({ data, layoutEditor }: { data: CVData; layoutEdit
 
   return (
     <div style={{ minHeight: '297mm', padding: '31px 36px 42px', background: '#fff', color: '#353535', fontFamily: "Arial, 'Helvetica Neue', sans-serif", fontSize: 10, lineHeight: 1.55 }}>
-      <header style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 106px', gap: 22, alignItems: 'center', padding: '7px 0 21px', borderBottom: '2px solid #383838' }}>
+      <header style={{ display: 'grid', gridTemplateColumns: personalInfo.photo ? 'minmax(0,1fr) 106px' : 'minmax(0,1fr)', gap: 22, alignItems: 'center', padding: '7px 0 21px', borderBottom: '2px solid #383838' }}>
         <div>
           <h1 style={{ margin: 0, color: '#363636', fontSize: 31, fontWeight: 400, lineHeight: 1.05, letterSpacing: '.12em', textTransform: 'uppercase', overflowWrap: 'anywhere' }}>{name}</h1>
           {sections.find((section) => section.type === 'experience')?.entries.map((entry) => entry.fields.position?.trim()).find(Boolean) && <div style={{ marginTop: 7, color: '#444', fontSize: 11, fontWeight: 600, letterSpacing: '.2em', textTransform: 'uppercase' }}>{sections.find((section) => section.type === 'experience')?.entries.map((entry) => entry.fields.position?.trim()).find(Boolean)}</div>}
         </div>
-        <div style={{ width: 102, height: 102, justifySelf: 'end' }}>
-          <svg viewBox="0 0 120 120" role="img" aria-label={`${name} monogram`} style={{ width: '100%', height: '100%' }}>
-            <defs><path id="nord-seal-ring" d="M 60,60 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0" /></defs>
-            <circle cx="60" cy="60" r="45" fill="none" stroke="#595959" strokeWidth=".8" />
-            <text fill="#333" fontSize="9" letterSpacing="2.1"><textPath href="#nord-seal-ring" startOffset="4%">{`${name.toUpperCase()}  ·  ${name.toUpperCase()}  ·  `}</textPath></text>
-            <text x="60" y="56" textAnchor="middle" fill="#888" fontFamily="Georgia,serif" fontSize="20">{initials[0]}</text>
-            <path d="M50 65h20" stroke="#999" strokeWidth="1" />
-            <text x="60" y="82" textAnchor="middle" fill="#888" fontFamily="Georgia,serif" fontSize="20">{initials[1] || initials[0]}</text>
-          </svg>
-        </div>
+        {personalInfo.photo && <div style={{ justifySelf: 'end' }}><PhotoFrame photo={personalInfo.photo} size={102} radius="50%" border="1px solid #595959" /></div>}
       </header>
 
       <div style={{ display: 'grid', gridTemplateColumns: '160px minmax(0,1fr)', gap: 27, marginTop: 22 }}>

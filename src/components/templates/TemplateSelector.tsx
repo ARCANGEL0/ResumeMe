@@ -1,15 +1,15 @@
 import LanguageSelector from '../../ui/LanguageSelector';
 import ResumeMark from '../../ui/ResumeMark';
 
-import { getTemplateDescription, getTemplateName, t } from '../../i18n';
+import { getTemplateName, t } from '../../i18n';
 import { useCallback, useEffect, useState } from 'react';
 import { useCVStore } from '../../store/cvStore';
-import { TEMPLATES, type TemplateId, type TemplateLayoutState } from '../../types/cv';
+import { TEMPLATES, type TemplateLayoutState } from '../../types/cv';
 import { exportToPDF } from '../../utils/pdfExportMobile';
 import TemplateDocument from './TemplateDocument';
 import { createDefaultTemplateLayout, ensureTemplateLayout, getTemplateLayoutPreset, moveLayoutSection } from './templateLayout';
 import ZoomablePreview from '../preview/ZoomablePreview';
-import TemplateThumbnail from './TemplateThumbnail';
+import TemplateIcon from './TemplateIcon';
 
 export default function TemplateSelector() {
   const { language, personalInfo, sections, selectedTemplate, setTemplate, setTemplateLayout, setView, templateLayouts } =
@@ -117,7 +117,6 @@ export default function TemplateSelector() {
               <div className="template-list">
                 {TEMPLATES.map((template) => {
                   const isSelected = template.id === selectedTemplate;
-                  const templateDescription = getTemplateDescription(language, template.id);
 
                   return (
                     <button
@@ -127,21 +126,8 @@ export default function TemplateSelector() {
                       className={`template-list-card ${isSelected ? 'is-selected' : ''}`}
                       aria-pressed={isSelected}
                     >
-                      <div className="template-list-card__preview">
-                        <TemplateThumbPreview id={template.id} />
-                      </div>
-
-                      <div className="template-list-card__content">
-                        <div className="template-list-card__head">
-                          <span className="template-list-card__name">{getTemplateName(language, template.id)}</span>
-                          {isSelected && (
-                            <span className="template-list-card__badge">{t(language, 'selected')}</span>
-                          )}
-                        </div>
-                        {templateDescription ? (
-                          <p className="template-list-card__description">{templateDescription}</p>
-                        ) : null}
-                      </div>
+                      <TemplateIcon id={template.id} />
+                      <span className="template-list-card__name">{getTemplateName(language, template.id)}</span>
                     </button>
                   );
                 })}
@@ -226,9 +212,5 @@ function TemplatePreview({
       }}
     />
   );
-}
-
-function TemplateThumbPreview({ id }: { id: TemplateId }) {
-  return <TemplateThumbnail id={id} />;
 }
 

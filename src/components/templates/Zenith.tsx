@@ -60,13 +60,13 @@ function WaypointSection({ section, theme }: { section: CVSection; theme: typeof
           const details = getEntryDetailLines(entry);
           const subtitle = getEntrySubtitle(entry);
           return (
-            <article key={entry.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(65px, 86px) minmax(0,1fr)', gap: 13, alignItems: 'start' }}>
+            <article key={entry.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(55px, 72px) minmax(0,1fr)', gap: 10, alignItems: 'start', minWidth: 0 }}>
               <div style={{ padding: '5px 6px', background: '#f0f0f0', color: '#4a4a4a', fontSize: 8.5, fontWeight: 700, lineHeight: 1.3, textAlign: 'center', overflowWrap: 'anywhere' }}>{date || `ENTRY ${String(entryIndex + 1).padStart(2, '0')}`}</div>
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'baseline' }}><strong style={{ color: '#202020', fontSize: 11 }}>{getEntryTitle(entry)}</strong></div>
+              <div style={{ minWidth: 0, overflowWrap: 'anywhere' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'baseline', minWidth: 0 }}><strong style={{ minWidth: 0, color: '#202020', fontSize: 11, overflowWrap: 'anywhere' }}>{getEntryTitle(entry)}</strong></div>
                 {subtitle && <div style={{ marginTop: 2, color: '#333', fontWeight: 600 }}>{subtitle}</div>}
                 {details.length > 0 && <ul style={{ margin: '6px 0 0 15px', padding: 0, color: '#555' }}>{details.map((detail) => <li key={detail} style={{ marginBottom: 3 }}>{detail}</li>)}</ul>}
-                {entry.fields.url && <a href={entry.fields.url} target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginTop: 5, color: '#444', textDecoration: 'underline' }}>{entry.fields.url}</a>}
+                {entry.fields.url && <a href={entry.fields.url} target="_blank" rel="noreferrer" style={{ display: 'block', maxWidth: '100%', minWidth: 0, marginTop: 5, color: '#444', textDecoration: 'underline', overflowWrap: 'anywhere', wordBreak: 'break-word' }}>{entry.fields.url}</a>}
               </div>
             </article>
           );

@@ -8,7 +8,6 @@ import { getContactItems } from './templateUtils';
 import {
   ContactPanel,
   SectionColumn,
-  SectionHeading,
   SummaryBlock,
   type TemplateLayoutEditor,
 } from './templateComponents';
