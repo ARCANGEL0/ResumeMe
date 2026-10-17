@@ -40,49 +40,33 @@ export default function Praxis({ data, layoutEditor }: Props) {
   const sideSections = getSectionsForRegion(sections, layoutState, 'side');
 
   return (
-    <div style={baseStyle}>
-      <div style={{ borderTop: `6px solid ${theme.accentAlt}` }} />
-
-      <div style={{ padding: '26px 38px 22px' }}>
-        <h1
-          style={{
-            margin: 0,
-            fontSize: '29px',
-            fontWeight: 700,
-            lineHeight: 1.08,
-            letterSpacing: theme.nameLetterSpacing,
-            textTransform: 'uppercase',
-            color: theme.accentDark,
-          }}
-        >
-          {displayName}
-        </h1>
-        <div style={{ marginTop: '12px' }}>
+    <div style={{ ...baseStyle, background: '#fbfaf6' }}>
+      <div style={{ height: '7px', background: `linear-gradient(90deg, ${theme.accentDark} 0 77%, ${theme.accentAlt} 77% 100%)` }} />
+      <header style={{ padding: '36px 42px 26px', background: '#f4f1e9' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '22px' }}>
+          <h1 style={{ minWidth: 0, margin: 0, color: theme.accentDark, fontSize: '34px', fontWeight: 700, lineHeight: 1.04, letterSpacing: '-0.025em', textTransform: 'uppercase', overflowWrap: 'anywhere' }}>{displayName}</h1>
+          <span style={{ width: '54px', height: '54px', flexShrink: 0, display: 'grid', placeItems: 'center', border: `1px solid ${theme.accentAlt}` }}>
+            <svg viewBox="0 0 32 32" width="29" height="29" aria-hidden="true">
+              <path d="M5 8h22M5 16h22M5 24h22" fill="none" stroke={theme.accent} strokeWidth="1.4" />
+              <path d="M11 5v22M21 5v22" fill="none" stroke={theme.accentAlt} strokeWidth="1" />
+            </svg>
+          </span>
+        </div>
+        <div style={{ marginTop: '15px', paddingTop: '11px', borderTop: `1px solid ${theme.line}` }}>
           <ContactPanel contactItems={contactItems} theme={theme} contactStyle="inline" />
         </div>
-      </div>
-
-      <div style={{ margin: '0 38px', borderTop: `2px solid ${theme.accentDark}` }} />
-
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1.42fr) minmax(0, 0.92fr)',
-          gap: '30px',
-          padding: '24px 38px 34px',
-        }}
-      >
+        {summary && (
+          <div style={{ display: 'grid', gridTemplateColumns: '124px minmax(0, 1fr)', gap: '20px', marginTop: '20px', padding: '14px 16px', background: '#ffffff', borderLeft: `3px solid ${theme.accentAlt}` }}>
+            <div style={{ color: theme.accent, fontSize: '9px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' }}>{t(language, 'professionalSummary')}</div>
+            <div style={{ color: theme.muted, lineHeight: 1.7 }}><SummaryBlock summary={summary} theme={theme} /></div>
+          </div>
+        )}
+      </header>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.45fr) 224px', gap: '30px', padding: '28px 42px 40px' }}>
         <main>
-          {summary && (
-            <div style={{ marginBottom: '24px' }}>
-              <SectionHeading title={t(language, 'professionalSummary')} theme={theme} />
-              <SummaryBlock summary={summary} theme={theme} />
-            </div>
-          )}
-          <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} gap="24px" />
+          <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} gap="27px" />
         </main>
-
-        <aside style={{ paddingLeft: '26px', borderLeft: `1px solid ${theme.line}` }}>
+        <aside style={{ padding: '18px 17px', borderTop: `3px double ${theme.accent}`, borderBottom: `1px solid ${theme.line}`, background: '#f5f1e8' }}>
           <SectionColumn sections={sideSections} theme={theme} regionKey="side" layoutEditor={layoutEditor} gap="24px" />
         </aside>
       </div>
