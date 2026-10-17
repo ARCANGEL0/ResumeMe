@@ -48,9 +48,10 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> =
     },
   },
   creative: {
-    regions: [{ key: 'main', label: 'Main' }],
+    regions: [{ key: 'sidebar', label: 'Profile' }, { key: 'main', label: 'Experience' }],
     defaultLayout: {
-      main: ['experience', 'education', 'projects', 'certifications', 'custom', 'skills', 'languages'],
+      sidebar: ['skills', 'languages'],
+      main: ['experience', 'projects', 'education', 'certifications', 'custom'],
     },
   },
   professional: {
@@ -355,12 +356,26 @@ export function ensureTemplateLayout(
   }
 
   const preset = getTemplateLayoutPreset(templateId);
+  let savedLayout = layout;
+  if (templateId === 'creative' && layout.sidebar === undefined && layout.main?.length) {
+    const sectionTypes = new Map(sections.map((section) => [section.id, section.type]));
+    const sidebarTypes = new Set(preset.defaultLayout.sidebar ?? []);
+    const savedMain = layout.main;
+    const sidebar = savedMain.filter((sectionId) => sidebarTypes.has(sectionTypes.get(sectionId) as SectionType));
+    if (sidebar.length) {
+      savedLayout = {
+        ...layout,
+        main: savedMain.filter((sectionId) => !sidebar.includes(sectionId)),
+        sidebar,
+      };
+    }
+  }
   const sectionIds = new Set(sections.map((section) => section.id));
   const nextLayout: TemplateLayoutState = {};
   const assigned = new Set<string>();
 
   preset.regions.forEach((region) => {
-    nextLayout[region.key] = (layout[region.key] ?? []).filter((sectionId) => {
+    nextLayout[region.key] = (savedLayout[region.key] ?? []).filter((sectionId) => {
       if (!sectionIds.has(sectionId)) {
         return false;
       }
