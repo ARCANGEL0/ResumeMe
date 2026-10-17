@@ -157,7 +157,7 @@ export const TEMPLATES: TemplateInfo[] = [
   { id: 'slate', name: 'Column', description: 'An even two-column layout with a compact profile header and clear section divisions' },
   { id: 'sarif', name: 'Sarif', description: 'Dark sidebar on the left with clean main content' },
   { id: 'ivory', name: 'Ledger', description: 'A clear two-column résumé with chronological experience and a compact skills rail' },
-  { id: 'summit', name: 'Summit', description: 'Confident two-column layout with skill meters' },
+  { id: 'summit', name: 'Apex', description: 'A full-width career history with a concise profile and supporting sections below' },
   { id: 'studio', name: 'Studio', description: 'Modern designer resume with colorful cards' },
   { id: 'atlas', name: 'Atlas', description: 'Grid-driven professional layout with compact side notes' },
   { id: 'north', name: 'North', description: 'Scandinavian minimalism with calm blue accents' },

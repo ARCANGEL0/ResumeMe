@@ -350,7 +350,7 @@ const DEFAULT_TEMPLATE_NAMES: Record<TemplateId, string> = {
   slate: 'Column',
   sarif: 'Sarif',
   ivory: 'Ledger',
-  summit: 'Summit',
+  summit: 'Apex',
   studio: 'Studio',
   atlas: 'Atlas',
   dossier: 'Dossier',

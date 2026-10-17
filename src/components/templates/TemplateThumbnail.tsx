@@ -22,7 +22,7 @@ const LAYOUTS: Record<TemplateId, ThumbnailLayout> = {
   slate: 'columns',
   sarif: 'leftRail',
   ivory: 'rightRail',
-  summit: 'columns',
+  summit: 'single',
   studio: 'mosaic',
   atlas: 'cards',
   north: 'leftRail',
