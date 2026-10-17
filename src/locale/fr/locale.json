@@ -10,7 +10,7 @@
     "templatePickerSubtitle": "Choisissez une mise en page et verifiez-la au format A4",
     "landingSubtitle": "Creez un CV remarquable en quelques minutes",
     "createCv": "Creer un CV",
-    "fiveTemplates": "15 Modeles",
+    "templateCount": "{count} Modeles",
     "pdfExport": "Exporter en PDF",
     "livePreview": "Apercu en Direct",
     "easyEdit": "Edition Facile",

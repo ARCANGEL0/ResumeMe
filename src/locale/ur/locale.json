@@ -57,7 +57,7 @@
     "titleField": "عنوان",
     "pdfExport": "PDF ایکسپورٹ",
     "livePreview": "لائیو پیش نظارہ",
-    "fiveTemplates": "15 ٹیمپلیٹ",
+    "templateCount": "{count} ٹیمپلیٹ",
     "easyEdit": "آسان ترمیم",
     "addEntry": "+ اندراج شامل کریں",
     "stylish": "اسٹائلش",

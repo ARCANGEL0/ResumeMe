@@ -39,7 +39,7 @@
     "templatePickerSubtitle": "Выберите макет и просмотрите его в формате A4",
     "landingSubtitle": "Создайте сильное резюме за несколько минут",
     "createCv": "Создать CV",
-    "fiveTemplates": "15 Шаблонов",
+    "templateCount": "{count} Шаблонов",
     "pdfExport": "Экспорт PDF",
     "livePreview": "Живой Просмотр",
     "easyEdit": "Легкое Редактирование",

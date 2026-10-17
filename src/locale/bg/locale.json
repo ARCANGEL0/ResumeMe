@@ -57,7 +57,7 @@
     "titleField": "Заглавие",
     "pdfExport": "PDF експорт",
     "livePreview": "Преглед на живо",
-    "fiveTemplates": "15 шаблона",
+    "templateCount": "{count} шаблона",
     "easyEdit": "Лесно редактиране",
     "addEntry": "+ Добави запис",
     "stylish": "Стилен",

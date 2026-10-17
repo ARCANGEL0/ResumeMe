@@ -39,7 +39,7 @@
     "templatePickerSubtitle": "Kies een layout en bekijk die op A4-formaat",
     "landingSubtitle": "Maak in enkele minuten een sterk cv",
     "createCv": "Maak CV",
-    "fiveTemplates": "15 Sjablonen",
+    "templateCount": "{count} Sjablonen",
     "pdfExport": "PDF Export",
     "livePreview": "Live Voorbeeld",
     "easyEdit": "Makkelijk Bewerken",

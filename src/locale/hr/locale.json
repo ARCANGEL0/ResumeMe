@@ -57,7 +57,7 @@
     "titleField": "Naslov",
     "pdfExport": "PDF izvoz",
     "livePreview": "Pregled uživo",
-    "fiveTemplates": "15 predložaka",
+    "templateCount": "{count} predložaka",
     "easyEdit": "Lako uređivanje",
     "addEntry": "+ Dodaj unos",
     "stylish": "Stilski",

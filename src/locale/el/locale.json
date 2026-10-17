@@ -57,7 +57,7 @@
     "titleField": "Τίτλος",
     "pdfExport": "Εξαγωγή PDF",
     "livePreview": "Ζωντανή προεπισκόπηση",
-    "fiveTemplates": "15 πρότυπα",
+    "templateCount": "{count} πρότυπα",
     "easyEdit": "Εύκολη επεξεργασία",
     "addEntry": "+ Προσθήκη καταχώρησης",
     "stylish": "Μοντέρνο",

@@ -57,7 +57,7 @@
     "titleField": "Pamagat",
     "pdfExport": "I-export ang PDF",
     "livePreview": "Live na preview",
-    "fiveTemplates": "15 Template",
+    "templateCount": "{count} Template",
     "easyEdit": "Madaling pag-edit",
     "addEntry": "+ Magdagdag ng entry",
     "stylish": "Stylish",

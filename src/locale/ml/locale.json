@@ -57,7 +57,7 @@
     "titleField": "ശീർഷകം",
     "pdfExport": "PDF എക്സ്പോർട്ട്",
     "livePreview": "തത്സമയ പ്രിവ്യൂ",
-    "fiveTemplates": "15 ടെംപ്ലേറ്റുകൾ",
+    "templateCount": "{count} ടെംപ്ലേറ്റുകൾ",
     "easyEdit": "എളുപ്പത്തിൽ എഡിറ്റ് ചെയ്യുക",
     "addEntry": "+ എൻട്രി ചേർക്കുക",
     "stylish": "സ്റ്റൈലിഷ്",

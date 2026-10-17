@@ -39,7 +39,7 @@
     "templatePickerSubtitle": "Wybierz uklad i sprawdz go w formacie A4",
     "landingSubtitle": "Stworz profesjonalne CV w kilka minut",
     "createCv": "Utworz CV",
-    "fiveTemplates": "15 Szablonow",
+    "templateCount": "{count} Szablonow",
     "pdfExport": "Eksport PDF",
     "livePreview": "Podglad Na Zywo",
     "easyEdit": "Latwa Edycja",

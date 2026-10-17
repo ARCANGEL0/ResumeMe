@@ -57,7 +57,7 @@
     "titleField": "Pealkiri",
     "pdfExport": "PDF eksport",
     "livePreview": "Reaalajas eelvaade",
-    "fiveTemplates": "15 malli",
+    "templateCount": "{count} malli",
     "easyEdit": "Lihtne redigeerimine",
     "addEntry": "+ Lisa kirje",
     "stylish": "Stiilne",

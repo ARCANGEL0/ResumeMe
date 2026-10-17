@@ -57,7 +57,7 @@
     "titleField": "Nadpis",
     "pdfExport": "Export PDF",
     "livePreview": "Živý náhľad",
-    "fiveTemplates": "15 šablón",
+    "templateCount": "{count} šablón",
     "easyEdit": "Jednoduchá úprava",
     "addEntry": "+ Pridať položku",
     "stylish": "Štýlový",

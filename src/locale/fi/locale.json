@@ -57,7 +57,7 @@
     "titleField": "Otsikko",
     "pdfExport": "PDF-vienti",
     "livePreview": "Live-esikatselu",
-    "fiveTemplates": "15 mallia",
+    "templateCount": "{count} mallia",
     "easyEdit": "Helppo muokkaus",
     "addEntry": "+ Lisää merkintä",
     "stylish": "Tyylikäs",

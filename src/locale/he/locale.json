@@ -57,7 +57,7 @@
     "titleField": "כותרת",
     "pdfExport": "ייצוא PDF",
     "livePreview": "תצוגה מקדימה חיה",
-    "fiveTemplates": "15 תבניות",
+    "templateCount": "{count} תבניות",
     "easyEdit": "עריכה קלה",
     "addEntry": "+ הוסף רשומה",
     "stylish": "מעוצב",

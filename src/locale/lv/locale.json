@@ -57,7 +57,7 @@
     "titleField": "Virsraksts",
     "pdfExport": "PDF eksports",
     "livePreview": "Tiešraides priekšskatījums",
-    "fiveTemplates": "15 veidnes",
+    "templateCount": "{count} veidnes",
     "easyEdit": "Viegla rediģēšana",
     "addEntry": "+ Pievienot ierakstu",
     "stylish": "Stilīgs",

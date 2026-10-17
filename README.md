@@ -122,7 +122,7 @@ ResumeMe/
 │   │   │   └── locale.json
 │   │   ├── es/
 │   │   │   └── locale.json
-│   │   └── ... (48 languages)
+│   │   └── ... (49 languages)
 │   │
 │   ├── App.tsx                # 🏠 Main app
 │   ├── main.tsx               

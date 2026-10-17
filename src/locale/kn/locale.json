@@ -57,7 +57,7 @@
     "titleField": "ಶೀರ್ಷಿಕೆ",
     "pdfExport": "PDF ರಫ್ತು",
     "livePreview": "ಲೈವ್ ಪೂರ್ವಾವಲೋಕನ",
-    "fiveTemplates": "15 ಟೆಂಪ್ಲೇಟ್‌ಗಳು",
+    "templateCount": "{count} ಟೆಂಪ್ಲೇಟ್‌ಗಳು",
     "easyEdit": "ಸುಲಭ ಸಂಪಾದನೆ",
     "addEntry": "+ ಎಂಟ್ರಿ ಸೇರಿಸಿ",
     "stylish": "ಸ್ಟೈಲಿಶ್",

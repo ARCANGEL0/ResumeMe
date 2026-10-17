@@ -57,7 +57,7 @@
     "titleField": "Cím",
     "pdfExport": "PDF export",
     "livePreview": "Élő előnézet",
-    "fiveTemplates": "15 sablon",
+    "templateCount": "{count} sablon",
     "easyEdit": "Könnyű szerkesztés",
     "addEntry": "+ Bejegyzés hozzáadása",
     "stylish": "Stílusos",

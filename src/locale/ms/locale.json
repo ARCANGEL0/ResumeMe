@@ -57,7 +57,7 @@
     "titleField": "Tajuk",
     "pdfExport": "Eksport PDF",
     "livePreview": "Pratonton langsung",
-    "fiveTemplates": "15 Templat",
+    "templateCount": "{count} Templat",
     "easyEdit": "Penyuntingan mudah",
     "addEntry": "+ Tambah entri",
     "stylish": "Bergaya",

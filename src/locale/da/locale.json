@@ -38,7 +38,7 @@
     "currentlyWorking": "Arbejder her nu",
     "showOnlyStartDate": "Vis kun startdato",
     "showOnlyEndDate": "Vis kun slutdato",
-    "fiveTemplates": "15 Skabeloner",
+    "templateCount": "{count} Skabeloner",
     "pdfExport": "PDF-eksport",
     "livePreview": "Live forhåndsvisning",
     "easyEdit": "Nem redigering",

@@ -57,7 +57,7 @@
     "titleField": "Pavadinimas",
     "pdfExport": "PDF eksportas",
     "livePreview": "Tiesioginė peržiūra",
-    "fiveTemplates": "15 šablonų",
+    "templateCount": "{count} šablonų",
     "easyEdit": "Lengvas redagavimas",
     "addEntry": "+ Pridėti įrašą",
     "stylish": "Stilius",

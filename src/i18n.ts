@@ -1,4 +1,4 @@
-import { type SectionType, type SocialPlatform, type TemplateId } from './types/cv';
+import { TEMPLATES, type SectionType, type SocialPlatform, type TemplateId } from './types/cv';
 
 // Types
 type TranslationSet = {
@@ -442,7 +442,9 @@ export function getTemplateName(language: UILanguage, templateId: TemplateId): s
 // Get template description
 export function getTemplateDescription(language: UILanguage, templateId: TemplateId): string {
   const translation = getTranslation(language);
-  return translation.templateDescriptions?.[templateId] || '';
+  return translation.templateDescriptions?.[templateId]
+    || TEMPLATES.find((template) => template.id === templateId)?.description
+    || '';
 }
 
 // Get social platform label

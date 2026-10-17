@@ -57,7 +57,7 @@
     "titleField": "Kichwa",
     "pdfExport": "Hamisha PDF",
     "livePreview": "Hakikisho la moja kwa moja",
-    "fiveTemplates": "15 Templeti",
+    "templateCount": "{count} Templeti",
     "easyEdit": "Uhariri rahisi",
     "addEntry": "+ Ongeza ingizo",
     "stylish": "Kifahari",

@@ -57,7 +57,7 @@
     "titleField": "ਸਿਰਲੇਖ",
     "pdfExport": "PDF ਐਕਸਪੋਰਟ",
     "livePreview": "ਲਾਈਵ ਝਲਕ",
-    "fiveTemplates": "15 ਟੈਂਪਲੇਟ",
+    "templateCount": "{count} ਟੈਂਪਲੇਟ",
     "easyEdit": "ਆਸਾਨ ਸੰਪਾਦਨ",
     "addEntry": "+ ਐਂਟਰੀ ਸ਼ਾਮਲ ਕਰੋ",
     "stylish": "ਸਟਾਈਲਿਸ਼",

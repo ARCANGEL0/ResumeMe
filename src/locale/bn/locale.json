@@ -57,7 +57,7 @@
     "titleField": "শিরোনাম",
     "pdfExport": "PDF এক্সপোর্ট",
     "livePreview": "লাইভ প্রিভিউ",
-    "fiveTemplates": "15 টেমপ্লেট",
+    "templateCount": "{count} টেমপ্লেট",
     "easyEdit": "সহজ সম্পাদনা",
     "addEntry": "+ এন্ট্রি যোগ করুন",
     "stylish": "স্টাইলিশ",

@@ -57,7 +57,7 @@
     "titleField": "Titlu",
     "pdfExport": "Export PDF",
     "livePreview": "Previzualizare live",
-    "fiveTemplates": "15 șabloane",
+    "templateCount": "{count} șabloane",
     "easyEdit": "Editare ușoară",
     "addEntry": "+ Adăugați intrare",
     "stylish": "Stilat",

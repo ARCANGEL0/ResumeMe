@@ -57,7 +57,7 @@
     "titleField": "หัวข้อ",
     "pdfExport": "ส่งออก PDF",
     "livePreview": "ตัวอย่างสด",
-    "fiveTemplates": "15 เทมเพลต",
+    "templateCount": "{count} เทมเพลต",
     "easyEdit": "แก้ไขง่าย",
     "addEntry": "+ เพิ่มรายการ",
     "stylish": "สไตลิช",

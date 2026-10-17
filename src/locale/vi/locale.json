@@ -57,7 +57,7 @@
     "titleField": "Tiêu đề",
     "pdfExport": "Xuất PDF",
     "livePreview": "Xem trước trực tiếp",
-    "fiveTemplates": "15 Mẫu",
+    "templateCount": "{count} Mẫu",
     "easyEdit": "Chỉnh sửa dễ dàng",
     "addEntry": "+ Thêm mục",
     "stylish": "Phong cách",

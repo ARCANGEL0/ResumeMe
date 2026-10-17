@@ -38,7 +38,7 @@
     "currentlyWorking": "Arbetar här nu",
     "showOnlyStartDate": "Visa endast startdatum",
     "showOnlyEndDate": "Visa endast slutdatum",
-    "fiveTemplates": "15 Mallar",
+    "templateCount": "{count} Mallar",
     "pdfExport": "PDF-export",
     "livePreview": "Liveförhandsvisning",
     "easyEdit": "Latt att redigera",

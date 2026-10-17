@@ -10,7 +10,7 @@
     "templatePickerSubtitle": "Wahlen Sie ein Layout und prufen Sie es im A4-Format",
     "landingSubtitle": "Erstellen Sie in wenigen Minuten einen starken Lebenslauf",
     "createCv": "CV Erstellen",
-    "fiveTemplates": "15 Vorlagen",
+    "templateCount": "{count} Vorlagen",
     "pdfExport": "PDF Export",
     "livePreview": "Live Vorschau",
     "easyEdit": "Einfach Bearbeiten",

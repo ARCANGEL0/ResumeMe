@@ -1,5 +1,6 @@
 import LanguageSelector from '../../ui/LanguageSelector';
 import { t } from '../../i18n';
+import { TEMPLATES } from '../../types/cv';
 import { useEffect, useRef } from 'react';
 import { useCVStore } from '../../store/cvStore';
 
@@ -153,7 +154,7 @@ export default function LandingPage() {
         </p>
 
         <div className="landing-pills">
-          {[t(language, 'fiveTemplates'), t(language, 'pdfExport'), t(language, 'livePreview')].map((pill) => (
+          {[t(language, 'templateCount').replace('{count}', String(TEMPLATES.length)), t(language, 'pdfExport'), t(language, 'livePreview')].map((pill) => (
             <span key={pill} className="landing-pill">
               {pill}
             </span>

@@ -10,7 +10,7 @@
     "templatePickerSubtitle": "Escolha um layout e reveja-o em papel A4",
     "landingSubtitle": "Crie um currículo impressionante em minutos",
     "createCv": "Criar CV",
-    "fiveTemplates": "15 Modelos",
+    "templateCount": "{count} Modelos",
     "pdfExport": "Exportar PDF",
     "livePreview": "Pré-visualização",
     "easyEdit": "Edição Fácil",

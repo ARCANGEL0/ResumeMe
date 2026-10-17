@@ -39,7 +39,7 @@
     "templatePickerSubtitle": "レイアウトを選び A4 で確認します",
     "landingSubtitle": "数分で魅力的な履歴書を作成",
     "createCv": "CV を作成",
-    "fiveTemplates": "15 テンプレート",
+    "templateCount": "{count} テンプレート",
     "pdfExport": "PDF 出力",
     "livePreview": "ライブプレビュー",
     "easyEdit": "簡単編集",

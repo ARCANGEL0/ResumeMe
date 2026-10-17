@@ -39,7 +39,7 @@
     "templatePickerSubtitle": "Bir duzen secin ve A4 uzerinde inceleyin",
     "landingSubtitle": "Dakikalar icinde guclu bir ozgecmis olusturun",
     "createCv": "CV Olustur",
-    "fiveTemplates": "15 Sablon",
+    "templateCount": "{count} Sablon",
     "pdfExport": "PDF Aktar",
     "livePreview": "Canli Onizleme",
     "easyEdit": "Kolay Duzenleme",

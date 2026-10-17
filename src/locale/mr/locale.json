@@ -57,7 +57,7 @@
     "titleField": "शीर्षक",
     "pdfExport": "PDF निर्यात",
     "livePreview": "थेट पूर्वावलोकन",
-    "fiveTemplates": "15 टेम्पलेट",
+    "templateCount": "{count} टेम्पलेट",
     "easyEdit": "सोपे संपादन",
     "addEntry": "+ एंट्री जोडा",
     "stylish": "स्टाइलिश",

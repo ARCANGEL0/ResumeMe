@@ -38,7 +38,7 @@
     "currentlyWorking": "Jobber her nå",
     "showOnlyStartDate": "Vis bare startdato",
     "showOnlyEndDate": "Vis bare sluttdato",
-    "fiveTemplates": "15 Maler",
+    "templateCount": "{count} Maler",
     "pdfExport": "PDF-eksport",
     "livePreview": "Direkte forhåndsvisning",
     "easyEdit": "Enkel redigering",

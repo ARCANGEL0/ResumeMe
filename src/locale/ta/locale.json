@@ -57,7 +57,7 @@
     "titleField": "தலைப்பு",
     "pdfExport": "PDF ஏற்றுமதி",
     "livePreview": "நேரடி முன்னோட்டம்",
-    "fiveTemplates": "15 வார்ப்புருக்கள்",
+    "templateCount": "{count} வார்ப்புருக்கள்",
     "easyEdit": "எளிதான திருத்தம்",
     "addEntry": "+ உள்ளிடு சேர்",
     "stylish": "ஸ்டைலிஷ்",

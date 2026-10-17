@@ -39,7 +39,7 @@
     "templatePickerSubtitle": "레이아웃을 선택하고 A4 기준으로 확인하세요",
     "landingSubtitle": "몇 분 안에 강한 이력서를 만드세요",
     "createCv": "CV 만들기",
-    "fiveTemplates": "15 템플릿",
+    "templateCount": "{count} 템플릿",
     "pdfExport": "PDF 내보내기",
     "livePreview": "실시간 미리보기",
     "easyEdit": "쉬운 편집",

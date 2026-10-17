@@ -16,7 +16,7 @@
     "editor": "Editor",
     "email": "Email",
     "institution": "Institution",
-    "fiveTemplates": "15 Templates",
+    "templateCount": "{count} Templates",
     "next": "Next ->",
     "endDate": "End date",
     "downloadPdf": "Descargar PDF",

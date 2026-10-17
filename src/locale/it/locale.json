@@ -39,7 +39,7 @@
     "templatePickerSubtitle": "Scegli un layout e controllalo in formato A4",
     "landingSubtitle": "Crea un curriculum professionale in pochi minuti",
     "createCv": "Crea CV",
-    "fiveTemplates": "15 Modelli",
+    "templateCount": "{count} Modelli",
     "pdfExport": "Esporta PDF",
     "livePreview": "Anteprima Live",
     "easyEdit": "Modifica Facile",

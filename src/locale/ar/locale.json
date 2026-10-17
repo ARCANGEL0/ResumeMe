@@ -39,7 +39,7 @@
     "templatePickerSubtitle": "اختر تخطيطًا واعرضه على A4",
     "landingSubtitle": "أنشئ سيرة ذاتية قوية في دقائق",
     "createCv": "إنشاء CV",
-    "fiveTemplates": "15 قالب",
+    "templateCount": "{count} قالب",
     "pdfExport": "تصدير PDF",
     "livePreview": "معاينة مباشرة",
     "easyEdit": "تحرير سهل",

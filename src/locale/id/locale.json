@@ -51,7 +51,7 @@
     "titleField": "Judul",
     "email": "Email",
     "location": "Location",
-    "fiveTemplates": "15 Templat",
+    "templateCount": "{count} Templat",
     "easyEdit": "Pengeditan mudah",
     "sectionLibrary": "Section Library",
     "phone": "Phone",

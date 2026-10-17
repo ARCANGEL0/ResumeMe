@@ -6,7 +6,7 @@
     "developedByArcangelo": "developed by: ARCANGELO",
     "landingSubtitle": "Create a stunning resume in minutes",
     "createCv": "Create CV",
-    "fiveTemplates": "15 Templates",
+    "templateCount": "{count} Templates",
     "pdfExport": "PDF Export",
     "livePreview": "Live Preview",
     "easyEdit": "Easy Edit",

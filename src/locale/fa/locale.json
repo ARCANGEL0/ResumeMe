@@ -57,7 +57,7 @@
     "titleField": "عنوان",
     "pdfExport": "خروجی PDF",
     "livePreview": "پیش‌نمایش زنده",
-    "fiveTemplates": "15 قالب",
+    "templateCount": "{count} قالب",
     "easyEdit": "ویرایش آسان",
     "addEntry": "+ افزودن ورودی",
     "stylish": "شیک",

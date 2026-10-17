@@ -57,7 +57,7 @@
     "titleField": "శీర్షిక",
     "pdfExport": "PDF ఎగుమతి",
     "livePreview": "ప్రత్యక్ష ప్రివ్యూ",
-    "fiveTemplates": "15 టెంప్లేట్‌లు",
+    "templateCount": "{count} టెంప్లేట్‌లు",
     "easyEdit": "సులభమైన ఎడిటింగ్",
     "addEntry": "+ ఎంట్రీ జోడించండి",
     "stylish": "స్టైలిష్",

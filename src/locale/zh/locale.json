@@ -3,7 +3,7 @@
     "editor": "Editor",
     "email": "Email",
     "institution": "Institution",
-    "fiveTemplates": "15 Templates",
+    "templateCount": "{count} Templates",
     "next": "Next ->",
     "endDate": "End date",
     "downloadPdf": "下载 PDF",
