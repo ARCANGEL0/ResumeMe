@@ -6,7 +6,7 @@ import type { CVData } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
-import { HeaderBlock, SectionColumn, type TemplateLayoutEditor } from './templateComponents';
+import { ContactPanel, PhotoFrame, SectionColumn, type TemplateLayoutEditor } from './templateComponents';
 
 interface Props {
   data: CVData;
@@ -21,8 +21,6 @@ export default function Minimal({ data, layoutEditor }: Props) {
   const displayName = personalInfo.fullName || t(language, 'fullName');
   const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
-  const leadRole = '';
-
   const baseStyle: CSSProperties = {
     fontFamily: theme.fontFamily,
     fontSize: '11.2px',
@@ -34,40 +32,31 @@ export default function Minimal({ data, layoutEditor }: Props) {
 
   const sidebarSections = getSectionsForRegion(sections, layoutState, 'sidebar');
   const mainSections = getSectionsForRegion(sections, layoutState, 'main');
-  const hasSidebarRegion = sidebarSections.length > 0 || Boolean(layoutEditor);
-
   return (
-    <div style={baseStyle}>
-      <div style={{ height: '10px', background: `linear-gradient(90deg, ${theme.accent}, ${theme.line}, ${theme.accent})` }} />
-      <div style={{ padding: '34px 42px 42px' }}>
-        <div style={{ paddingBottom: '24px', borderBottom: `1px solid ${theme.line}` }}>
-          <HeaderBlock
-          photo={personalInfo.photo} photoSize={96}
-            displayName={displayName}
-            subtitle={leadRole}
-            summary={summary}
-            contactItems={contactItems}
-            theme={theme}
-            language={language}
-            titleSize="29px"
-            showSummaryLabel={false}
-          />
+    <div style={{ ...baseStyle, padding: '46px 50px 44px' }}>
+      <header style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 190px', gap: '28px', paddingBottom: '22px', borderBottom: `1px solid ${theme.line}` }}>
+        <div style={{ minWidth: 0 }}>
+          <div style={{ marginBottom: '15px', color: theme.accent, fontSize: '9px', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase' }}>Resume / Professional Profile</div>
+          <h1 style={{ margin: 0, color: theme.text, fontSize: '37px', lineHeight: 1.02, fontWeight: 500, letterSpacing: '-0.055em', overflowWrap: 'anywhere' }}>{displayName}</h1>
+          <span style={{ display: 'block', width: '38px', height: '2px', marginTop: '17px', background: theme.accent }} />
         </div>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: hasSidebarRegion ? 'minmax(0, 1.55fr) minmax(190px, 0.84fr)' : '1fr',
-            gap: '32px',
-            marginTop: '28px',
-          }}
-        >
-          <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} />
-          {hasSidebarRegion && (
-            <div style={{ paddingLeft: '10px', borderLeft: `1px solid ${theme.line}` }}>
-              <SectionColumn sections={sidebarSections} theme={theme} regionKey="sidebar" layoutEditor={layoutEditor} />
-            </div>
-          )}
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', paddingTop: '25px' }}>
+          {personalInfo.photo && <PhotoFrame photo={personalInfo.photo} size={50} radius="2px" />}
+          <ContactPanel contactItems={contactItems} theme={theme} contactStyle="stack" />
         </div>
+      </header>
+      {summary && (
+        <div style={{ maxWidth: '570px', margin: '24px 0 30px', color: theme.muted, fontSize: '12px', lineHeight: '1.75' }}>
+          {summary}
+        </div>
+      )}
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 195px', gap: '35px', marginTop: summary ? 0 : '30px' }}>
+        <main>
+          <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} gap="28px" />
+        </main>
+        <aside style={{ paddingLeft: '19px', borderLeft: `1px solid ${theme.line}` }}>
+          <SectionColumn sections={sidebarSections} theme={theme} regionKey="sidebar" layoutEditor={layoutEditor} gap="24px" />
+        </aside>
       </div>
     </div>
   );
