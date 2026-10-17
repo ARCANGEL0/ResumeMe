@@ -85,6 +85,7 @@ interface CVStore extends CVData {
   // Entries
   addEntry: (sectionId: string) => void;
   removeEntry: (sectionId: string, entryId: string) => void;
+  reorderEntry: (sectionId: string, entryId: string, direction: 'up' | 'down') => void;
   updateEntry: (sectionId: string, entryId: string, field: string, value: string) => void;
 
   // Template
@@ -201,7 +202,23 @@ export const useCVStore = create<CVStore>()(
       const tmp: CVSection = newSections[idx]!;
       newSections[idx] = newSections[newIdx]!;
       newSections[newIdx] = tmp;
-      return { sections: newSections };
+      const sectionOrder = new Map(newSections.map((section, index) => [section.id, index]));
+      const templateLayouts = Object.fromEntries(
+        Object.entries(state.templateLayouts).map(([templateId, layout]) => [
+          templateId,
+          Object.fromEntries(
+            Object.entries(layout ?? {}).map(([regionKey, sectionIds]) => [
+              regionKey,
+              [...(sectionIds ?? [])].sort(
+                (left, right) =>
+                  (sectionOrder.get(left) ?? Number.MAX_SAFE_INTEGER) -
+                  (sectionOrder.get(right) ?? Number.MAX_SAFE_INTEGER),
+              ),
+            ]),
+          ),
+        ]),
+      ) as CVStore['templateLayouts'];
+      return { sections: newSections, templateLayouts };
     }),
 
   getUsedSectionTypes: () => {
@@ -225,6 +242,21 @@ export const useCVStore = create<CVStore>()(
       sections: state.sections.map((s) =>
         s.id === sectionId ? { ...s, entries: s.entries.filter((e) => e.id !== entryId) } : s
       ),
+    })),
+
+  reorderEntry: (sectionId, entryId, direction) =>
+    set((state) => ({
+      sections: state.sections.map((section) => {
+        if (section.id !== sectionId) return section;
+        const index = section.entries.findIndex((entry) => entry.id === entryId);
+        const targetIndex = direction === 'up' ? index - 1 : index + 1;
+        if (index < 0 || targetIndex < 0 || targetIndex >= section.entries.length) return section;
+        const entries = section.entries.slice();
+        const current = entries[index]!;
+        entries[index] = entries[targetIndex]!;
+        entries[targetIndex] = current;
+        return { ...section, entries };
+      }),
     })),
 
   updateEntry: (sectionId, entryId, field, value) => {

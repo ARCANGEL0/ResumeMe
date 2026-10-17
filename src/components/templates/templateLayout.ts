@@ -316,15 +316,13 @@ export function createDefaultTemplateLayout(templateId: TemplateId, sections: CV
   const nextLayout: TemplateLayoutState = {};
 
   preset.regions.forEach((region) => {
-    const types = preset.defaultLayout[region.key] ?? [];
-    const orderedIds = types.flatMap((type) =>
-      sections
-        .filter((section) => !assigned.has(section.id) && section.type === type)
-        .map((section) => {
-          assigned.add(section.id);
-          return section.id;
-        }),
-    );
+    const types = new Set(preset.defaultLayout[region.key] ?? []);
+    const orderedIds = sections
+      .filter((section) => !assigned.has(section.id) && types.has(section.type))
+      .map((section) => {
+        assigned.add(section.id);
+        return section.id;
+      });
 
     nextLayout[region.key] = orderedIds;
   });

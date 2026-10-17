@@ -64,18 +64,22 @@ interface EntryCardProps {
   entryIndex: number;
   fieldKeys: string[];
   language: ReturnType<typeof useCVStore>['language'];
+  reorderEntry: (sectionId: string, entryId: string, direction: 'up' | 'down') => void;
   removeEntry: (sectionId: string, entryId: string) => void;
   section: CVSection;
   updateEntry: (sectionId: string, entryId: string, field: string, value: string) => void;
+  totalEntries: number;
 }
 
 function EntryCard({
   entryIndex,
   fieldKeys,
   language,
+  reorderEntry,
   removeEntry,
   section,
   updateEntry,
+  totalEntries,
 }: EntryCardProps) {
   const entry = section.entries[entryIndex];
   if (!entry) return null;
@@ -84,6 +88,14 @@ function EntryCard({
     removeEntry(section.id, entry.id);
   }, [removeEntry, section.id, entry.id]);
 
+  const handleMoveUp = useCallback(() => {
+    reorderEntry(section.id, entry.id, 'up');
+  }, [reorderEntry, section.id, entry.id]);
+
+  const handleMoveDown = useCallback(() => {
+    reorderEntry(section.id, entry.id, 'down');
+  }, [reorderEntry, section.id, entry.id]);
+
   return (
     <div className="entry-card">
       <div className="entry-card__top">
@@ -91,15 +103,37 @@ function EntryCard({
           <div className="entry-card__label">{t(language, 'entry')} {entryIndex + 1}</div>
           <p className="entry-card__summary">{t(language, 'fillInFields')}</p>
         </div>
-        <button
-          type="button"
-          onClick={handleRemove}
-          className="section-action"
-          aria-label={t(language, 'remove')}
-          title={t(language, 'remove')}
-        >
-          ✕
-        </button>
+        <div className="editor-section-actions">
+          <button
+            type="button"
+            onClick={handleMoveUp}
+            disabled={entryIndex === 0}
+            className="section-action"
+            aria-label={`Move ${t(language, 'entry')} ${entryIndex + 1} up`}
+            title={`Move ${t(language, 'entry')} ${entryIndex + 1} up`}
+          >
+            ↑
+          </button>
+          <button
+            type="button"
+            onClick={handleMoveDown}
+            disabled={entryIndex === totalEntries - 1}
+            className="section-action"
+            aria-label={`Move ${t(language, 'entry')} ${entryIndex + 1} down`}
+            title={`Move ${t(language, 'entry')} ${entryIndex + 1} down`}
+          >
+            ↓
+          </button>
+          <button
+            type="button"
+            onClick={handleRemove}
+            className="section-action"
+            aria-label={t(language, 'remove')}
+            title={t(language, 'remove')}
+          >
+            ✕
+          </button>
+        </div>
       </div>
 
       <div className="entry-card__grid">
@@ -250,6 +284,7 @@ const SectionEditor = function SectionEditor({ section, index, totalSections }: 
     language,
     removeEntry,
     removeSection,
+    reorderEntry,
     renameSection,
     reorderSection,
     updateEntry,
@@ -384,8 +419,10 @@ const SectionEditor = function SectionEditor({ section, index, totalSections }: 
             <EntryCard
               key={entry.id}
               entryIndex={entryIndex}
+              totalEntries={section.entries.length}
               fieldKeys={fieldKeys}
               language={language}
+              reorderEntry={reorderEntry}
               removeEntry={removeEntry}
               section={section}
               updateEntry={updateEntry}
