@@ -1,68 +1,43 @@
-// src/components/templates/Ivory.tsx
-import { type CSSProperties } from 'react';
 import { t } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
-import type { CVData } from '../../types/cv';
+import type { CVData, CVSection } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
-import { HeaderBlock, SectionColumn, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
+import { ContactPanel, CustomSectionRegion, PhotoFrame, SectionBlockBody, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
-interface Props {
-  data: CVData;
-  layoutEditor?: TemplateLayoutEditor;
-}
-
-export default function Ivory({ data, layoutEditor }: Props) {
+export default function Ivory({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
   const language = useCVStore((state) => state.language);
-  const theme = TEMPLATE_THEMES['ivory'];
+  const theme = { ...TEMPLATE_THEMES.ivory, fontFamily: "'Courier New', Courier, monospace", page: '#fff', text: '#363636', muted: '#6f6f6f', line: '#999', accent: '#858585', accentSoft: '#f5f5f5', entryStyle: 'plain' as const, skillStyle: 'list' as const, languageStyle: 'words' as const };
   const { personalInfo, sections } = data;
-  const layoutState = ensureTemplateLayout('ivory', data.layoutOverride, sections);
-  const displayName = personalInfo.fullName || t(language, 'fullName');
-  const contactItems = getContactItems(personalInfo, language);
+  const layout = ensureTemplateLayout('ivory', data.layoutOverride, sections);
+  const orderedSections = [...getSectionsForRegion(sections, layout, 'main'), ...getSectionsForRegion(sections, layout, 'side')];
+  const name = personalInfo.fullName || t(language, 'fullName');
   const summary = personalInfo.summary.trim();
-  const leadRole = '';
+  const contacts = getContactItems(personalInfo, language);
 
-  const baseStyle: CSSProperties = {
-    fontFamily: theme.fontFamily,
-    fontSize: '11.2px',
-    lineHeight: '1.65',
-    color: theme.text,
-    background: theme.page,
-    minHeight: '297mm',
-  };
-
-  const sideSections = getSectionsForRegion(sections, layoutState, 'side');
-  const mainSections = getSectionsForRegion(sections, layoutState, 'main');
-  const hasSideRegion = sideSections.length > 0 || Boolean(layoutEditor);
+  const sectionRow = (section: CVSection) => (
+    <div style={{ display: 'grid', gridTemplateColumns: '155px minmax(0,1fr)', gap: 20, alignItems: 'start' }}>
+      <h2 style={{ margin: 0, paddingTop: 2, color: '#858585', fontFamily: 'Georgia, serif', fontVariant: 'small-caps', fontSize: 15, letterSpacing: '.045em' }}>{section.title}</h2>
+      <div style={{ minWidth: 0, paddingTop: 13, borderTop: '1px solid #888' }}><SectionBlockBody section={section} theme={theme} /></div>
+    </div>
+  );
 
   return (
-    <div style={{ ...baseStyle, padding: '22px' }}>
-      <div style={{ minHeight: 'calc(297mm - 44px)', border: `1px solid ${theme.line}`, padding: '28px 34px 30px', boxShadow: `inset 0 0 0 5px ${theme.accentSoft}` }}>
-        <div style={{ textAlign: 'center', paddingBottom: '18px', borderBottom: `1px solid ${theme.line}` }}>
-          <HeaderBlock
-          photo={personalInfo.photo}
-            displayName={displayName}
-            subtitle={leadRole}
-            summary=""
-            contactItems={contactItems}
-            theme={theme}
-            language={language}
-            align="center"
-            contactStyle="inline"
-            titleSize="30px"
-            hideDivider
-          />
+    <div style={{ minHeight: '297mm', padding: '28px 37px 42px', background: '#fff', color: '#454545', fontFamily: "'Courier New', Courier, monospace", fontSize: 10.7, lineHeight: 1.72 }}>
+      <header style={{ display: 'grid', gridTemplateColumns: '92px minmax(0,1fr)', gap: 20, alignItems: 'center', paddingBottom: 18 }}>
+        <div style={{ display: 'grid', placeItems: 'center', width: 84, height: 84, borderRadius: '50%', background: '#f1f1f1', overflow: 'hidden' }}>
+          {personalInfo.photo ? <PhotoFrame photo={personalInfo.photo} size={84} /> : <svg viewBox="0 0 84 84" aria-hidden="true" style={{ width: 84, height: 84 }}><circle cx="42" cy="27" r="15" fill="#d7d7d7" /><path d="M12 72c2-17 14-26 30-26s28 9 30 26" fill="#d7d7d7" /></svg>}
         </div>
-        {summary && (
-          <div style={{ margin: '18px auto 24px', maxWidth: '86%' }}>
-            <SummaryBlock summary={summary} theme={theme} />
-          </div>
-        )}
-        <div style={{ display: 'grid', gridTemplateColumns: hasSideRegion ? 'minmax(0, 1.28fr) minmax(210px, 0.78fr)' : '1fr', gap: '30px' }}>
-          <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} />
-          {hasSideRegion && <SectionColumn sections={sideSections} theme={theme} regionKey="side" layoutEditor={layoutEditor} />}
-        </div>
+        <h1 style={{ margin: 0, color: '#383838', fontFamily: 'Georgia, serif', fontVariant: 'small-caps', fontSize: 30, fontWeight: 500, letterSpacing: '.025em' }}>{name}</h1>
+      </header>
+      {contacts.length > 0 && <div style={{ margin: '0 0 27px 98px', paddingBottom: 13, textAlign: 'center', borderBottom: '1px solid #d1d1d1', fontSize: 10.5 }}><ContactPanel contactItems={contacts} theme={theme} contactStyle="inline" align="center" /></div>}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 21 }}>
+        {summary && <section style={{ display: 'grid', gridTemplateColumns: '155px minmax(0,1fr)', gap: 20, alignItems: 'start' }}>
+          <h2 style={{ margin: 0, paddingTop: 2, color: '#858585', fontFamily: 'Georgia, serif', fontVariant: 'small-caps', fontSize: 15, letterSpacing: '.045em' }}>Objective</h2>
+          <div style={{ paddingTop: 13, borderTop: '1px solid #888' }}><SummaryBlock summary={summary} theme={theme} /></div>
+        </section>}
+        <CustomSectionRegion sections={orderedSections} regionKey="main" layoutEditor={layoutEditor} gap="21px" renderSection={sectionRow} />
       </div>
     </div>
   );

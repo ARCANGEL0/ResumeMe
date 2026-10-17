@@ -21,7 +21,7 @@ const LAYOUTS: Record<TemplateId, ThumbnailLayout> = {
   executive: 'single',
   slate: 'columns',
   sarif: 'leftRail',
-  ivory: 'centered',
+  ivory: 'rightRail',
   summit: 'columns',
   studio: 'mosaic',
   atlas: 'cards',
