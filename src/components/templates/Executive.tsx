@@ -21,8 +21,6 @@ export default function Executive({ data, layoutEditor }: Props) {
   const displayName = personalInfo.fullName || t(language, 'fullName');
   const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
-  const leadRole = '';
-
   const baseStyle: CSSProperties = {
     fontFamily: theme.fontFamily,
     fontSize: '11.2px',
@@ -37,40 +35,43 @@ export default function Executive({ data, layoutEditor }: Props) {
 
   return (
     <div style={baseStyle}>
-      <div style={{ padding: '30px 34px 34px' }}>
-        <div style={{ marginBottom: '24px', padding: '22px 24px 18px', borderBottom: `2px solid ${theme.accent}` }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '24px', alignItems: 'flex-end' }}>
-            <div style={{ flex: 1 }}>
-              <HeaderBlock
+      <header style={{ padding: '36px 42px 26px', background: theme.headerBg, color: theme.headerText, borderBottom: `5px solid ${theme.accent}` }}>
+        <div style={{ marginBottom: '12px', color: theme.accent, fontSize: '9px', fontWeight: 700, letterSpacing: '0.24em', textTransform: 'uppercase' }}>Leadership Profile</div>
+        <HeaderBlock
           photo={personalInfo.photo}
-                displayName={displayName}
-                subtitle={leadRole}
-                summary=""
-                contactItems={contactItems}
-                theme={theme}
-                language={language}
-                contactStyle="inline"
-                titleSize="31px"
-                hideDivider
-              />
-            </div>
-            {summary && (
-              <div style={{ maxWidth: '250px', paddingLeft: '18px', borderLeft: `1px solid ${theme.line}` }}>
-                <SummaryBlock summary={summary} theme={theme} />
-              </div>
-            )}
-          </div>
+          photoPlacement="left"
+          photoSize={86}
+          photoRadius="4px"
+          displayName={displayName}
+          summary=""
+          contactItems={contactItems}
+          theme={theme}
+          language={language}
+          onDark
+          contactStyle="inline"
+          titleSize="34px"
+          hideDivider
+        />
+      </header>
+      {summary && (
+        <div style={{ display: 'grid', gridTemplateColumns: '120px minmax(0, 1fr)', gap: '20px', padding: '20px 42px', background: theme.accentSoft, borderBottom: `1px solid ${theme.line}` }}>
+          <div style={{ color: theme.accentDark, fontSize: '9px', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase' }}>{t(language, 'profile')}</div>
+          <div style={{ color: theme.muted, lineHeight: 1.7 }}><SummaryBlock summary={summary} theme={theme} /></div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.26fr) 236px', gap: '24px' }}>
-          <SectionColumn sections={leftSections} theme={theme} regionKey="left" layoutEditor={layoutEditor} />
+      )}
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.48fr) 238px', gap: '26px', padding: '30px 42px 38px' }}>
+        <main style={{ paddingRight: '14px' }}>
+          <SectionColumn sections={leftSections} theme={theme} regionKey="left" layoutEditor={layoutEditor} gap="28px" />
+        </main>
+        <aside style={{ padding: '18px 18px 20px', borderTop: `3px solid ${theme.accent}`, borderBottom: `1px solid ${theme.line}`, background: '#fbf8f2' }}>
           <SectionPanels
             sections={rightSections}
             theme={theme}
             regionKey="right"
             layoutEditor={layoutEditor}
-            shellStyle={{ padding: '16px 16px 14px', borderRadius: '14px', background: theme.accentSoft, border: `1px solid ${theme.line}` }}
+            shellStyle={{ padding: 0, borderRadius: 0, background: 'transparent', border: 'none' }}
           />
-        </div>
+        </aside>
       </div>
     </div>
   );
