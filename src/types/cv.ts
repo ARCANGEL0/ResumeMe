@@ -50,6 +50,7 @@ export interface CVSection {
   id: string;
   type: SectionType;
   title: string;
+  isCustom?: boolean;
   entries: CVEntry[];
 }
 

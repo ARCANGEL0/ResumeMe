@@ -119,8 +119,10 @@ export const useCVStore = create<CVStore>()(
     set((state) => ({
       language,
       sections: state.sections.map((section) => {
-        // Always update section titles based on the new language
-        return { ...section, title: getSectionTitle(language, section.type) };
+        const isCustom = section.isCustom ?? section.title !== getSectionTitle(state.language, section.type);
+        return isCustom
+          ? { ...section, isCustom: true }
+          : { ...section, title: getSectionTitle(language, section.type), isCustom: false };
       }),
     })),
 
@@ -182,7 +184,11 @@ export const useCVStore = create<CVStore>()(
 
   renameSection: (sectionId, title) =>
     set((state) => ({
-      sections: state.sections.map((s) => (s.id === sectionId ? { ...s, title } : s)),
+      sections: state.sections.map((s) =>
+        s.id === sectionId
+          ? { ...s, title, isCustom: title !== getSectionTitle(state.language, s.type) }
+          : s,
+      ),
     })),
 
   reorderSection: (sectionId, direction) =>
