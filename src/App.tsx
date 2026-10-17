@@ -13,6 +13,7 @@ const LOREM_PATHS: Record<string, 'editor' | 'templates'> = {
   '/lorem': 'editor',
   '/lorem/templates': 'templates',
 };
+const RTL_LANGUAGES = new Set(['ar', 'fa', 'he', 'ur']);
 
 function normalizePath(pathname: string) {
   const trimmed = pathname.replace(/\/+$/, '');
@@ -29,6 +30,11 @@ export default function App() {
     if (!view) return;
     loadDocument(createLoremDocument(), view);
   }, [loadDocument]);
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+    document.documentElement.dir = RTL_LANGUAGES.has(language) ? 'rtl' : 'ltr';
+  }, [language]);
 
   if (currentView === 'landing') {
     return (
