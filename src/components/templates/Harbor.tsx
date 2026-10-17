@@ -41,67 +41,31 @@ export default function Harbor({ data, layoutEditor }: Props) {
   const mainSections = getSectionsForRegion(sections, layoutState, 'main');
 
   return (
-    <div style={{ ...baseStyle, display: 'grid', gridTemplateColumns: '215px minmax(0, 1fr)' }}>
-      <aside style={{ padding: '32px 22px 30px', background: theme.sidebarBg, color: theme.sidebarText }}>
-        {personalInfo.photo && (
-          <div style={{ marginBottom: '22px', textAlign: 'center' }}>
-            <PhotoFrame photo={personalInfo.photo} size={130} border="3px solid rgba(255,255,255,0.32)" />
-          </div>
-        )}
-        <div style={{ paddingBottom: '18px', borderBottom: '1px solid rgba(255,255,255,0.18)' }}>
-          <div style={{ fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)' }}>
-            {t(language, 'contact')}
-          </div>
-          <div style={{ marginTop: '14px' }}>
-            <ContactPanel contactItems={contactItems} theme={theme} contactStyle="stack" onDark />
-          </div>
+    <div style={baseStyle}>
+      <header style={{ position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '24px', padding: '36px 40px 34px', background: theme.sidebarBg, color: theme.sidebarText }}>
+        <div style={{ position: 'relative', zIndex: 1, minWidth: 0, flex: 1 }}>
+          <div style={{ marginBottom: '10px', color: theme.accentAlt, fontSize: '9px', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase' }}>Harbor / Career Profile</div>
+          <h1 style={{ margin: 0, color: '#ffffff', fontSize: '36px', fontWeight: 700, lineHeight: 1.04, letterSpacing: '-0.035em', overflowWrap: 'anywhere' }}>{displayName}</h1>
+          <div style={{ width: '44px', height: '3px', margin: '13px 0 14px', background: theme.accentAlt }} />
+          <ContactPanel contactItems={contactItems} theme={theme} contactStyle="inline" onDark />
         </div>
-
-        {(sidebarSections.length > 0 || layoutEditor) && (
-          <div style={{ marginTop: '24px' }}>
-            <SectionColumn
-              sections={sidebarSections}
-              theme={theme}
-              regionKey="sidebar"
-              layoutEditor={layoutEditor}
-              onDark
-              gap="24px"
-            />
-          </div>
-        )}
-      </aside>
-
-      <main style={{ padding: '34px 38px 36px' }}>
-        <h1
-          style={{
-            margin: 0,
-            fontSize: '31px',
-            fontWeight: 700,
-            lineHeight: 1.1,
-            color: theme.accentDark,
-            letterSpacing: theme.nameLetterSpacing,
-          }}
-        >
-          {displayName}
-        </h1>
-        <div
-          style={{
-            width: '58px',
-            height: '3px',
-            margin: '12px 0 20px',
-            background: `linear-gradient(90deg, ${theme.accent}, ${theme.accentAlt})`,
-          }}
-        />
-
-        {summary && (
-          <div style={{ marginBottom: '24px' }}>
-            <SectionEyebrow title={t(language, 'profile')} theme={theme} />
-            <SummaryBlock summary={summary} theme={theme} />
-          </div>
-        )}
-
-        <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} gap="24px" />
-      </main>
+        {personalInfo.photo && <PhotoFrame photo={personalInfo.photo} size={84} radius="50%" border={`2px solid ${theme.accentAlt}`} />}
+        <span style={{ position: 'absolute', right: '-35px', bottom: '-64px', width: '176px', height: '112px', borderTop: `1px solid ${theme.accentAlt}`, borderRadius: '50%', transform: 'rotate(-14deg)', opacity: 0.55 }} />
+      </header>
+      {summary && (
+        <div style={{ margin: '22px 40px 0', padding: '15px 18px', borderLeft: `4px solid ${theme.accentAlt}`, background: theme.accentSoft }}>
+          <SectionEyebrow title={t(language, 'profile')} theme={theme} />
+          <SummaryBlock summary={summary} theme={theme} />
+        </div>
+      )}
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 226px', gap: '30px', padding: '28px 40px 40px' }}>
+        <main style={{ paddingRight: '12px' }}>
+          <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} gap="27px" />
+        </main>
+        <aside style={{ padding: '19px 17px', color: theme.sidebarText, background: theme.sidebarBg, borderTop: `4px solid ${theme.accentAlt}` }}>
+          <SectionColumn sections={sidebarSections} theme={theme} regionKey="sidebar" layoutEditor={layoutEditor} onDark gap="23px" />
+        </aside>
+      </div>
     </div>
   );
 }
