@@ -68,7 +68,7 @@ export function beginSectionDrag(
   regionKey: string,
   sectionId: string,
 ) {
-  if (event.button !== 0 || event.pointerType !== 'mouse') return;
+  if (event.button !== 0 || !event.isPrimary) return;
 
   event.preventDefault();
 

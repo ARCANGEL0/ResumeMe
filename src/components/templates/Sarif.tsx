@@ -2,6 +2,7 @@ import { Fragment, useState, type CSSProperties } from 'react';
 import { t, type UILanguage } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
 import { debugLog } from '../../utils/debugLog';
+import { beginSectionDrag, isZoneHovered, useHoverKey } from './sectionDrag';
 import type { CVData, CVSection, CVEntry, SocialPlatform } from '../../types/cv';
 import ContactIcon from '../../ui/ContactIcon';
 import { getContactItems, getEntryTitle, getEntryDate, getEntryDetailLines } from './templateUtils';
@@ -644,6 +645,11 @@ function SarifDraggableSection({
     <div
       draggable
       className={`template-preview-section ${isSource ? 'is-source' : ''}`}
+      onPointerDown={(event) => {
+        if (event.pointerType === 'touch') {
+          beginSectionDrag(event, layoutEditor, 'main', section.id);
+        }
+      }}
       onDragStart={(event) => {
         event.dataTransfer.effectAllowed = 'move';
         event.dataTransfer.setData('text/template-region', 'main');
@@ -667,11 +673,16 @@ function SarifDropZone({
   targetIndex: number;
 }) {
   const [isOver, setIsOver] = useState(false);
+  const hover = useHoverKey();
   const isActive = Boolean(layoutEditor?.dragState);
+  const isPointerOver = isZoneHovered(hover, 'main', targetIndex);
 
   return (
     <div
-      className={`template-preview-drop-zone ${empty ? 'is-empty' : ''} ${isActive ? 'is-active' : ''} ${isOver ? 'is-over' : ''}`}
+      className={`template-preview-drop-zone ${empty ? 'is-empty' : ''} ${isActive ? 'is-active' : ''} ${isOver || isPointerOver ? 'is-over' : ''}`}
+      data-drop-zone=""
+      data-region="main"
+      data-index={targetIndex}
       onDragEnter={(event) => {
         event.preventDefault();
         if (layoutEditor?.dragState) setIsOver(true);
@@ -756,6 +767,9 @@ export default function Sarif({ data, layoutEditor }: Props) {
           <div
             className={`template-preview-region-stack ${layoutEditor.dragState ? 'is-drag-active' : ''}`}
             style={{ display: 'flex', flexDirection: 'column', gap: '0' }}
+            data-drop-region=""
+            data-region="main"
+            data-count={mainSections.length}
           >
             <SarifDropZone layoutEditor={layoutEditor} targetIndex={0} empty={mainSections.length === 0} />
             {mainSections.map((section, index) => (

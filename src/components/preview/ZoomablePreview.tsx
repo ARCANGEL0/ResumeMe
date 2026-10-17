@@ -10,6 +10,7 @@ type Point = {
 
 type TouchGestureState =
   | { mode: 'idle' }
+  | { mode: 'section-drag' }
   | {
       mode: 'pan';
       startTouch: Point;
@@ -147,6 +148,15 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
         return;
       }
 
+      if (touchGestureRef.current.mode === 'section-drag') {
+        return;
+      }
+
+      if (event.touches.length === 1 && target?.closest('.template-preview-section')) {
+        touchGestureRef.current = { mode: 'section-drag' };
+        return;
+      }
+
       if (event.touches.length >= 2) {
         if (event.cancelable) {
           event.preventDefault();
@@ -187,6 +197,13 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
   const handleTouchMove = useCallback(
     (event: React.TouchEvent<HTMLDivElement>) => {
       if (!isMobileViewport) {
+        return;
+      }
+
+      if (touchGestureRef.current.mode === 'section-drag') {
+        if (event.cancelable) {
+          event.preventDefault();
+        }
         return;
       }
 
@@ -255,6 +272,13 @@ export default function ZoomablePreview({ children, className }: ZoomablePreview
   const handleTouchEnd = useCallback(
     (event: React.TouchEvent<HTMLDivElement>) => {
       if (!isMobileViewport) {
+        return;
+      }
+
+      if (touchGestureRef.current.mode === 'section-drag') {
+        if (event.touches.length === 0) {
+          touchGestureRef.current = { mode: 'idle' };
+        }
         return;
       }
 
