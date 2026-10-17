@@ -39,14 +39,6 @@ export default function Lagoon({ data, layoutEditor }: Props) {
   const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
   const photo = personalInfo.photo;
-  const initials = displayName
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0])
-    .join('')
-    .toUpperCase();
-
   const baseStyle: CSSProperties = {
     fontFamily: theme.fontFamily,
     fontSize: '10.6px',
@@ -70,31 +62,14 @@ export default function Lagoon({ data, layoutEditor }: Props) {
           background: `linear-gradient(170deg, #4a4e55 0%, ${SLATE} 45%, ${SLATE_DEEP} 100%)`,
         }}
       >
-        <div style={{ position: 'relative' }}>
+        {photo && <div style={{ position: 'relative' }}>
           <div
             style={{
               height: '236px',
-              background: photo ? `#dfe3e5 center/cover url(${photo})` : '#dfe3e5',
+              background: `#dfe3e5 center/cover url(${photo})`,
               clipPath: 'polygon(0 0, 100% 0, 100% 80%, 0 100%)',
             }}
           />
-          {!photo && (
-            <span
-              style={{
-                position: 'absolute',
-                inset: '0 0 34px 0',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: SLATE_DEEP,
-                fontSize: '48px',
-                fontWeight: 800,
-                letterSpacing: '0.06em',
-              }}
-            >
-              {initials}
-            </span>
-          )}
           <span
             style={{
               position: 'absolute',
@@ -105,7 +80,7 @@ export default function Lagoon({ data, layoutEditor }: Props) {
               background: AMBER,
             }}
           />
-        </div>
+        </div>}
 
         <div style={{ padding: '16px 22px 30px', color: '#eef4f4' }}>
           {contactItems.length > 0 && (
@@ -256,7 +231,9 @@ function SectionBody({
         {section.entries.map((entry) => (
           <div key={entry.id}>
             <span style={{ color: strong, fontWeight: 600 }}>{entry.fields.name || entry.fields.title}</span>
-            <LevelBar onDark={onDark} ratio={getSkillLevelScore(entry.fields.level || '') / 5} />
+            {getSkillLevelScore(entry.fields.level || '') > 0 && (
+              <LevelBar onDark={onDark} ratio={getSkillLevelScore(entry.fields.level || '') / 5} />
+            )}
           </div>
         ))}
       </div>
@@ -274,7 +251,9 @@ function SectionBody({
                 {getLangLevel(entry.fields.proficiency || '', 'words', language)}
               </span>
             </span>
-            <LevelBar onDark={onDark} ratio={getLangScore(entry.fields.proficiency || '') / 6} />
+            {getLangScore(entry.fields.proficiency || '') > 0 && (
+              <LevelBar onDark={onDark} ratio={getLangScore(entry.fields.proficiency || '') / 6} />
+            )}
           </div>
         ))}
       </div>

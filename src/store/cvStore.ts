@@ -98,7 +98,7 @@ export const useCVStore = create<CVStore>()(
     (set, get) => ({
   personalInfo: defaultPersonalInfo,
   sections: defaultSections,
-  selectedTemplate: 'minimal',
+  selectedTemplate: 'beacon',
   templateLayouts: {},
   currentView: 'landing',
   language: DEFAULT_LANGUAGE,

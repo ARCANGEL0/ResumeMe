@@ -71,9 +71,7 @@ export default function Hexon({ data, layoutEditor }: Props) {
                 <img src={photo} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               </span>
             </span>
-          ) : (
-            <span style={{ display: 'inline-block', width: '96px', height: '106px', clipPath: HEX, background: 'rgba(255,255,255,0.12)' }} />
-          )}
+          ) : null}
           <h1 style={{ margin: '18px 0 0', fontSize: '23px', fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#ffffff' }}>
             {displayName}
           </h1>
@@ -202,14 +200,17 @@ function SectionBody({
   if (section.type === 'skills') {
     return (
       <div style={{ display: 'grid', gridTemplateColumns: onDark ? '1fr' : '1fr 1fr', gap: '7px 24px' }}>
-        {section.entries.map((entry) => (
-          <span key={entry.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
-            <span style={{ fontSize: '10px', letterSpacing: '0.06em', textTransform: 'uppercase', color: strong }}>
-              {entry.fields.name || entry.fields.title}
+        {section.entries.map((entry) => {
+          const score = getSkillLevelScore(entry.fields.level || '');
+          return (
+            <span key={entry.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+              <span style={{ fontSize: '10px', letterSpacing: '0.06em', textTransform: 'uppercase', color: strong }}>
+                {entry.fields.name || entry.fields.title}
+              </span>
+              {score > 0 && <Meter onDark={onDark} score={score} total={5} />}
             </span>
-            <Meter onDark={onDark} score={getSkillLevelScore(entry.fields.level || '')} total={5} />
-          </span>
-        ))}
+          );
+        })}
       </div>
     );
   }
@@ -217,14 +218,17 @@ function SectionBody({
   if (section.type === 'languages') {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
-        {section.entries.map((entry) => (
-          <span key={entry.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
-            <span style={{ fontSize: '10px', letterSpacing: '0.06em', textTransform: 'uppercase', color: strong }}>
-              {entry.fields.language || entry.fields.name}
+        {section.entries.map((entry) => {
+          const score = getLangScore(entry.fields.proficiency || '');
+          return (
+            <span key={entry.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+              <span style={{ fontSize: '10px', letterSpacing: '0.06em', textTransform: 'uppercase', color: strong }}>
+                {entry.fields.language || entry.fields.name}
+              </span>
+              {score > 0 && <Meter onDark={onDark} score={score} total={6} />}
             </span>
-            <Meter onDark={onDark} score={getLangScore(entry.fields.proficiency || '')} total={6} />
-          </span>
-        ))}
+          );
+        })}
       </div>
     );
   }

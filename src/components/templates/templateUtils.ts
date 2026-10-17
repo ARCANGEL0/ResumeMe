@@ -170,19 +170,7 @@ export function getLangLevel(value: string, format: 'cefr' | 'words' = 'cefr', l
 
 export function getSkillLevelScore(value: string): number {
   const trimmed = value.trim();
-  const numeric = Number.parseInt(trimmed, 10);
-
-  if (Number.isFinite(numeric)) {
-    return Math.max(1, Math.min(5, numeric));
-  }
-
-  const normalized = trimmed.toLowerCase();
-  if (!normalized) return 0;
-  if (normalized.includes('expert') || normalized.includes('lead')) return 5;
-  if (normalized.includes('advanced') || normalized.includes('senior')) return 4;
-  if (normalized.includes('intermediate') || normalized.includes('mid')) return 3;
-  if (normalized.includes('junior') || normalized.includes('basic')) return 2;
-  return 1;
+  return /^[1-5]$/.test(trimmed) ? Number(trimmed) : 0;
 }
 
 export function getEntryTitle(entry: CVEntry): string {

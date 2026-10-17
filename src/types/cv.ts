@@ -139,8 +139,8 @@ export const DEFAULT_SECTION_TITLES: Record<SectionType, string> = {
 };
 
 export const TEMPLATES: TemplateInfo[] = [
-  { id: 'meridian', name: 'Meridian', description: 'Indigo double-rule header with a narrow meta column' },
   { id: 'beacon', name: 'Beacon', description: 'Strict single column tuned for ATS parsing' },
+  { id: 'meridian', name: 'Meridian', description: 'Indigo double-rule header with a narrow meta column' },
   { id: 'vellum', name: 'Vellum', description: 'Grey banded layout with wide-tracked section rules' },
   { id: 'toon', name: 'Toon', description: 'Pastel sticker cards with heavy outlines and sparkles' },
   { id: 'scribe', name: 'Scribe', description: 'Bare monochrome sheet with lowercase headings' },

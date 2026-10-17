@@ -834,11 +834,13 @@ function SkillsSection({
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', marginBottom: '4px', color: textColor }}>
                 <span>{entry.fields.name || entry.fields.title}</span>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))', gap: '4px' }}>
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <span key={index} style={{ height: '5px', borderRadius: '999px', background: index < score ? fillColor : lineColor }} />
-                ))}
-              </div>
+              {score > 0 && (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, minmax(0, 1fr))', gap: '4px' }}>
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <span key={index} style={{ height: '5px', borderRadius: '999px', background: index < score ? fillColor : lineColor }} />
+                  ))}
+                </div>
+              )}
             </div>
           );
         })}
@@ -854,11 +856,13 @@ function SkillsSection({
           return (
             <div key={entry.id} style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', alignItems: 'center' }}>
               <span>{entry.fields.name || entry.fields.title}</span>
-              <span style={{ display: 'inline-flex', gap: '4px' }}>
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <span key={index} style={{ width: '8px', height: '8px', borderRadius: '999px', background: index < score ? fillColor : lineColor }} />
-                ))}
-              </span>
+              {score > 0 && (
+                <span style={{ display: 'inline-flex', gap: '4px' }}>
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <span key={index} style={{ width: '8px', height: '8px', borderRadius: '999px', background: index < score ? fillColor : lineColor }} />
+                  ))}
+                </span>
+              )}
             </div>
           );
         })}
@@ -876,7 +880,7 @@ function SkillsSection({
               <div style={{ marginBottom: '4px', color: textColor, fontWeight: 700 }}>
                 {entry.fields.name || entry.fields.title}
               </div>
-              <div
+              {score > 0 && <div
                 style={{
                   display: 'flex',
                   gap: '2px',
@@ -898,7 +902,7 @@ function SkillsSection({
                     }}
                   />
                 ))}
-              </div>
+              </div>}
             </div>
           );
         })}
@@ -945,8 +949,7 @@ function SkillsSection({
                 {name}
               </div>
               
-              {/* Gold progress bar */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {score > 0 && <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <div
                   style={{
                     flex: 1,
@@ -979,7 +982,7 @@ function SkillsSection({
                 >
                   {score}/5
                 </span>
-              </div>
+              </div>}
             </div>
           );
         })}

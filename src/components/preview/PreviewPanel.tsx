@@ -20,7 +20,7 @@ export default function PreviewPanel() {
       templateLayouts: state.templateLayouts,
     }))
   );
-  const safeTemplate = isValidTemplateId(selectedTemplate) ? selectedTemplate : 'minimal';
+  const safeTemplate = isValidTemplateId(selectedTemplate) ? selectedTemplate : 'beacon';
   const cvData = useMemo(
     () => ({
       personalInfo,

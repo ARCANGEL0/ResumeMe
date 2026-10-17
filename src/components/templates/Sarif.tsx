@@ -5,7 +5,7 @@ import { debugLog } from '../../utils/debugLog';
 import { beginSectionDrag, isZoneHovered, useHoverKey } from './sectionDrag';
 import type { CVData, CVSection, CVEntry, SocialPlatform } from '../../types/cv';
 import ContactIcon from '../../ui/ContactIcon';
-import { getContactItems, getEntryTitle, getEntryDate, getEntryDetailLines } from './templateUtils';
+import { getContactItems, getEntryTitle, getEntryDate, getEntryDetailLines, getSkillLevelScore } from './templateUtils';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { LinkedText, type TemplateLayoutEditor } from './templateComponents';
 
@@ -472,20 +472,23 @@ function EducationEntry({ entry }: { entry: CVEntry }) {
 }
 
 function SkillBar({ name, level }: { name: string; level: string }) {
-  const levelNum = Math.min(5, Math.max(1, parseInt(level) || 3));
+  const levelNum = getSkillLevelScore(level);
+  const hasLevel = levelNum > 0;
   const percentage = (levelNum / 5) * 100;
   
   return (
     <div style={S.skillBarContainer}>
       <div style={S.skillBarHeader}>
         <span style={S.skillBarName}>{name}</span>
-        <span style={S.skillBarLevel}>{levelNum}/5</span>
+        {hasLevel && <span style={S.skillBarLevel}>{levelNum}/5</span>}
       </div>
-      <div style={S.skillBarTrack}>
-        <div style={{...S.skillBarFill, width: `${percentage}%`}}>
-          <div style={S.skillBarGlow} />
+      {hasLevel && (
+        <div style={S.skillBarTrack}>
+          <div style={{...S.skillBarFill, width: `${percentage}%`}}>
+            <div style={S.skillBarGlow} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -497,7 +500,7 @@ function SkillsSection({ entries }: { entries: CVEntry[] }) {
   entries.forEach((entry) => {
     const category = entry.fields.category || '';
     const name = entry.fields.name || '';
-    const level = entry.fields.level || '3';
+    const level = entry.fields.level || '';
     if (category) {
       if (!categorized[category]) categorized[category] = [];
       categorized[category].push({name, level});
