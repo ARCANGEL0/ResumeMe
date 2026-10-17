@@ -5,7 +5,7 @@ import type { CVData } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
-import { HeaderBlock, SectionPanels, type TemplateLayoutEditor } from './templateComponents';
+import { ContactPanel, PhotoFrame, SectionPanels, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
 interface Props {
   data: CVData;
@@ -20,74 +20,45 @@ export default function Signal({ data, layoutEditor }: Props) {
   const displayName = personalInfo.fullName || t(language, 'fullName');
   const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
-
+  const mainSections = getSectionsForRegion(sections, layoutState, 'main');
+  const sideSections = getSectionsForRegion(sections, layoutState, 'side');
   const baseStyle: CSSProperties = {
+    minHeight: '297mm',
+    background: theme.page,
+    color: theme.text,
     fontFamily: theme.fontFamily,
     fontSize: '11.2px',
-    lineHeight: '1.6',
-    color: theme.text,
-    background: theme.page,
-    minHeight: '297mm',
+    lineHeight: 1.62,
   };
-
   const panelStyle: CSSProperties = {
-    padding: '16px 18px',
-    borderRadius: '12px',
+    padding: '17px 18px',
+    borderRadius: '3px',
     border: `1px solid ${theme.line}`,
+    borderTop: `3px solid ${theme.accent}`,
     background: '#ffffff',
   };
 
-  const mainSections = getSectionsForRegion(sections, layoutState, 'main');
-  const sideSections = getSectionsForRegion(sections, layoutState, 'side');
-
   return (
     <div style={baseStyle}>
-      <div
-        style={{
-          padding: '30px 36px 26px',
-          background: `linear-gradient(135deg, ${theme.accentSoft} 0%, #ffffff 70%)`,
-          borderBottom: `3px solid ${theme.accent}`,
-        }}
-      >
-        <HeaderBlock
-          photo={personalInfo.photo}
-          photoSize={132}
-          photoPlacement="left"
-          displayName={displayName}
-          summary={summary}
-          contactItems={contactItems}
-          theme={theme}
-          language={language}
-          titleSize="33px"
-          contactStyle="pills"
-          hideDivider
-          showSummaryLabel={false}
-        />
-      </div>
-
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1.5fr) minmax(0, 0.92fr)',
-          gap: '16px',
-          padding: '22px 36px 32px',
-        }}
-      >
-        <SectionPanels
-          sections={mainSections}
-          theme={theme}
-          regionKey="main"
-          layoutEditor={layoutEditor}
-          shellStyle={panelStyle}
-        />
-        <SectionPanels
-          sections={sideSections}
-          theme={theme}
-          regionKey="side"
-          layoutEditor={layoutEditor}
-          shellStyle={panelStyle}
-        />
-      </div>
+      <div style={{ height: '11px', background: theme.accentDark }}><div style={{ width: '31%', height: '100%', background: theme.accentAlt }} /></div>
+      <header style={{ padding: '34px 40px 25px', background: `linear-gradient(120deg, ${theme.accentSoft}, ${theme.page} 62%)`, borderBottom: `1px solid ${theme.line}` }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '25px' }}>
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <div style={{ width: '42px', height: '4px', marginBottom: '14px', background: theme.accentAlt }} />
+            <h1 style={{ margin: 0, color: theme.accentDark, fontSize: '36px', fontWeight: 720, lineHeight: 1.04, letterSpacing: '-0.04em', overflowWrap: 'anywhere' }}>{displayName}</h1>
+          </div>
+          {personalInfo.photo && <PhotoFrame photo={personalInfo.photo} size={86} radius="4px" border={`3px solid ${theme.page}`} />}
+        </div>
+        {contactItems.length > 0 && <div style={{ marginTop: '19px', padding: '11px 14px', borderLeft: `3px solid ${theme.accent}`, background: '#ffffff' }}><ContactPanel contactItems={contactItems} theme={theme} contactStyle="inline" /></div>}
+        {summary && <div style={{ display: 'grid', gridTemplateColumns: '5px minmax(0, 1fr)', gap: '14px', marginTop: '19px', maxWidth: '660px' }}>
+          <div style={{ borderRadius: '4px', background: `linear-gradient(180deg, ${theme.accent}, ${theme.accentAlt})` }} />
+          <div style={{ color: theme.muted, lineHeight: 1.75 }}><SummaryBlock summary={summary} theme={theme} /></div>
+        </div>}
+      </header>
+      <main style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 0.86fr) minmax(0, 1.54fr)', alignItems: 'start', gap: '20px', padding: '25px 40px 38px' }}>
+        <aside style={{ paddingTop: '3px' }}><SectionPanels sections={sideSections} theme={theme} regionKey="side" layoutEditor={layoutEditor} shellStyle={panelStyle} /></aside>
+        <div><SectionPanels sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} shellStyle={panelStyle} /></div>
+      </main>
     </div>
   );
 }
