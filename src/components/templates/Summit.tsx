@@ -7,11 +7,9 @@ import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
 import {
-  ContactPanel,
-  PhotoFrame,
-  SectionEyebrow,
+  HeaderBlock,
+  SectionColumn,
   SectionPanels,
-  SummaryBlock,
   type TemplateLayoutEditor,
 } from './templateComponents';
 
@@ -28,8 +26,6 @@ export default function Summit({ data, layoutEditor }: Props) {
   const displayName = personalInfo.fullName || t(language, 'fullName');
   const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
-  const leadRole = '';
-
   const baseStyle: CSSProperties = {
     fontFamily: theme.fontFamily,
     fontSize: '11.2px',
@@ -45,56 +41,47 @@ export default function Summit({ data, layoutEditor }: Props) {
 
   return (
     <div style={baseStyle}>
-      <div style={{ padding: '26px 30px 32px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.08fr) minmax(220px, 0.92fr)', gap: '20px', marginBottom: '24px' }}>
-          <div style={{ padding: '22px 24px', borderRadius: '24px', background: '#ffffff', border: `1px solid ${theme.line}` }}>
-            <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-              {personalInfo.photo && <PhotoFrame photo={personalInfo.photo} size={104} border={`3px solid ${theme.accentSoft}`} />}
-              <div style={{ minWidth: 0, flex: 1 }}>
-                <h1 style={{ margin: 0, fontSize: '30px', lineHeight: 1.08, color: theme.accentDark }}>{displayName}</h1>
-                {leadRole && <div style={{ marginTop: '8px', color: theme.muted }}>{leadRole}</div>}
-              </div>
-            </div>
-            <div style={{ marginTop: '16px' }}>
-              <ContactPanel contactItems={contactItems} theme={theme} contactStyle="pills" />
-            </div>
+      <header style={{ position: 'relative', overflow: 'hidden', padding: '34px 38px 36px', color: '#ffffff', background: theme.accentDark }}>
+        <div style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: summary ? 'minmax(0, 1.12fr) minmax(205px, 0.88fr)' : '1fr', gap: '30px', alignItems: 'center' }}>
+          <div>
+            <div style={{ marginBottom: '11px', color: theme.accentAlt, fontSize: '9px', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase' }}>Summit / Career Overview</div>
+            <HeaderBlock
+              photo={personalInfo.photo}
+              photoPlacement="left"
+              photoSize={82}
+              displayName={displayName}
+              summary=""
+              contactItems={contactItems}
+              theme={theme}
+              language={language}
+              onDark
+              contactStyle="inline"
+              titleSize="32px"
+              hideDivider
+            />
           </div>
-          {summary && (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                padding: '20px 20px 18px',
-                borderRadius: '24px',
-                background: `linear-gradient(180deg, ${theme.accentSoft}, rgba(255,255,255,0.96))`,
-                border: `1px solid ${theme.line}`,
-              }}
-            >
-              <SectionEyebrow title={t(language, 'professionalSummary')} theme={theme} />
-              <div style={{ display: 'flex', flex: 1, alignItems: 'center' }}>
-                <SummaryBlock summary={summary} theme={theme} />
-              </div>
-            </div>
-          )}
+          {summary && <div style={{ padding: '8px 0 8px 20px', borderLeft: `2px solid ${theme.accentAlt}`, color: 'rgba(255,255,255,0.78)', lineHeight: 1.72 }}>{summary}</div>}
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: hasSideRegion ? 'minmax(0, 1.34fr) minmax(220px, 0.82fr)' : '1fr', gap: '22px' }}>
-          <SectionPanels
-            sections={mainSections}
-            theme={theme}
-            regionKey="main"
-            layoutEditor={layoutEditor}
-            shellStyle={{ padding: '18px 18px 16px', borderRadius: '20px', background: '#ffffff', border: `1px solid ${theme.line}` }}
-          />
-          {hasSideRegion && (
+        <svg viewBox="0 0 420 100" preserveAspectRatio="none" aria-hidden="true" style={{ position: 'absolute', right: 0, bottom: 0, width: '52%', height: '95px', opacity: 0.2 }}>
+          <path d="M0 100 106 28l54 36 89-58 66 61 45-29 60 40v22z" fill={theme.accentAlt} />
+          <path d="m105 29 25 17-25-5-24 14zM249 7l33 30-33-12-22 17z" fill="#ffffff" />
+        </svg>
+      </header>
+      <div style={{ display: 'grid', gridTemplateColumns: hasSideRegion ? 'minmax(0, 1.38fr) minmax(220px, 0.82fr)' : '1fr', gap: '28px', padding: '30px 38px 38px' }}>
+        <main style={{ paddingRight: '8px' }}>
+          <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} gap="28px" />
+        </main>
+        {hasSideRegion && (
+          <aside style={{ padding: '20px 18px', borderTop: `4px solid ${theme.accent}`, background: theme.accentSoft }}>
             <SectionPanels
               sections={sideSections}
               theme={theme}
               regionKey="side"
               layoutEditor={layoutEditor}
-              shellStyle={{ padding: '16px 18px', borderRadius: '20px', background: theme.accentSoft, border: `1px solid ${theme.line}` }}
+              shellStyle={{ padding: 0, borderRadius: 0, background: 'transparent', border: 'none' }}
             />
-          )}
-        </div>
+          </aside>
+        )}
       </div>
     </div>
   );
