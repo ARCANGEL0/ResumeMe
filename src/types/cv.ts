@@ -150,7 +150,7 @@ export const TEMPLATES: TemplateInfo[] = [
   { id: 'dossier', name: 'Dossier', description: 'Dense yet elegant single-column for experienced candidates' },
   { id: 'modern', name: 'Modern', description: 'Clean two-column layout with accent sidebar' },
   { id: 'classic', name: 'Classic', description: 'Traditional single-column with refined lines' },
-  { id: 'minimal', name: 'Minimal', description: 'Airy monochrome layout with quiet spacing' },
+  { id: 'minimal', name: 'Forma', description: 'A technical résumé with a compact skills rail and a structured career column' },
   { id: 'creative', name: 'Creative', description: 'Vibrant contemporary resume with bold markers' },
   { id: 'professional', name: 'Professional', description: 'Structured corporate layout for ATS-friendly resumes' },
   { id: 'executive', name: 'Executive', description: 'Premium leadership profile with a dark header band' },

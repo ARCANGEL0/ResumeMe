@@ -343,7 +343,7 @@ const DEVELOPED_BY_TRANSLATIONS: Partial<Record<UILanguage, string>> = {
 const DEFAULT_TEMPLATE_NAMES: Record<TemplateId, string> = {
   modern: 'Modern',
   classic: 'Classic',
-  minimal: 'Minimal',
+  minimal: 'Forma',
   creative: 'Creative',
   professional: 'Professional',
   executive: 'Executive',

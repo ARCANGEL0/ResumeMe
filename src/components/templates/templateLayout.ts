@@ -34,10 +34,17 @@ export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> =
     },
   },
   minimal: {
-    regions: [{ key: 'main', label: 'Main' }, { key: 'sidebar', label: 'Sidebar' }],
+    regions: [
+      { key: 'main', label: 'Career' },
+      { key: 'lowerLeft', label: 'Education' },
+      { key: 'lowerMiddle', label: 'Skills' },
+      { key: 'lowerRight', label: 'Additional' },
+    ],
     defaultLayout: {
-      main: ['experience', 'education', 'projects', 'certifications', 'custom'],
-      sidebar: ['skills', 'languages'],
+      main: ['experience', 'projects'],
+      lowerLeft: ['education'],
+      lowerMiddle: ['skills', 'languages'],
+      lowerRight: ['certifications', 'custom'],
     },
   },
   creative: {
