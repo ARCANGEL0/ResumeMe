@@ -6,7 +6,7 @@ import type { CVData } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
-import { HeaderBlock, SectionColumn, SectionPanels, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
+import { ContactPanel, PhotoFrame, SectionColumn, SectionPanels, type TemplateLayoutEditor } from './templateComponents';
 
 interface Props {
   data: CVData;
@@ -21,8 +21,6 @@ export default function Professional({ data, layoutEditor }: Props) {
   const displayName = personalInfo.fullName || t(language, 'fullName');
   const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
-  const leadRole = '';
-
   const baseStyle: CSSProperties = {
     fontFamily: theme.fontFamily,
     fontSize: '11.2px',
@@ -38,50 +36,35 @@ export default function Professional({ data, layoutEditor }: Props) {
 
   return (
     <div style={baseStyle}>
-      <div style={{ padding: '28px 38px 30px', background: theme.headerBg, color: theme.headerText }}>
-        <div style={{ display: 'grid', gridTemplateColumns: summary ? 'minmax(0, 1fr) minmax(280px, 1.05fr)' : '1fr', gap: '24px', alignItems: 'stretch' }}>
-          <HeaderBlock
-            photo={personalInfo.photo}
-            displayName={displayName}
-            subtitle={leadRole}
-            summary=""
-            contactItems={contactItems}
-            theme={theme}
-            language={language}
-            onDark
-            contactStyle="inline"
-            titleSize="29px"
-          />
-          {summary && (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '22px 24px',
-                borderRadius: '18px',
-                background: 'rgba(255,255,255,0.1)',
-                fontSize: '12.6px',
-                lineHeight: '1.72',
-              }}
-            >
-              <SummaryBlock summary={summary} theme={theme} onDark />
-            </div>
-          )}
+      <div style={{ height: '8px', background: theme.accent }} />
+      <header style={{ padding: '36px 42px 26px', borderBottom: `2px solid ${theme.accentDark}` }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '26px' }}>
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <h1 style={{ margin: 0, color: theme.accentDark, fontSize: '38px', fontWeight: 700, lineHeight: 1.04, letterSpacing: '-0.035em', overflowWrap: 'anywhere' }}>{displayName}</h1>
+          </div>
+          {personalInfo.photo && <PhotoFrame photo={personalInfo.photo} size={78} radius="3px" border={`2px solid ${theme.line}`} />}
         </div>
-      </div>
-      <div style={{ padding: '28px 38px 34px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: hasSupportingRegion ? 'minmax(0, 1.38fr) minmax(220px, 0.82fr)' : '1fr', gap: '28px' }}>
-          <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} />
-          {hasSupportingRegion && (
+        <div style={{ marginTop: '16px', paddingTop: '12px', borderTop: `1px solid ${theme.line}` }}>
+          <ContactPanel contactItems={contactItems} theme={theme} contactStyle="inline" />
+        </div>
+        {summary && <div style={{ marginTop: '20px', maxWidth: '650px', color: theme.muted, lineHeight: 1.7 }}>{summary}</div>}
+      </header>
+      <div style={{ display: 'grid', gridTemplateColumns: hasSupportingRegion ? 'minmax(0, 1.42fr) minmax(220px, 0.82fr)' : '1fr', gap: '28px', padding: '30px 42px 38px' }}>
+        <main style={{ paddingRight: '12px' }}>
+          <div style={{ width: '36px', height: '3px', marginBottom: '18px', background: theme.accent }} />
+          <SectionColumn sections={mainSections} theme={theme} regionKey="main" layoutEditor={layoutEditor} gap="26px" />
+        </main>
+        {hasSupportingRegion && (
+          <aside style={{ padding: '20px 18px', borderTop: `4px solid ${theme.accent}`, background: theme.accentSoft }}>
             <SectionPanels
               sections={supportingSections}
               theme={theme}
               regionKey="supporting"
               layoutEditor={layoutEditor}
-              shellStyle={{ padding: '16px 18px', borderRadius: '18px', background: theme.accentSoft, border: `1px solid ${theme.line}` }}
+              shellStyle={{ padding: 0, background: 'transparent', border: 'none' }}
             />
-          )}
-        </div>
+          </aside>
+        )}
       </div>
     </div>
   );
