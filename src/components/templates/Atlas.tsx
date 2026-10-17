@@ -28,8 +28,6 @@ export default function Atlas({ data, layoutEditor }: Props) {
   const displayName = personalInfo.fullName || t(language, 'fullName');
   const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
-  const leadRole = '';
-
   const baseStyle: CSSProperties = {
     fontFamily: theme.fontFamily,
     fontSize: '11.2px',
@@ -44,32 +42,37 @@ export default function Atlas({ data, layoutEditor }: Props) {
 
   return (
     <div style={baseStyle}>
-      <div style={{ padding: '28px 30px 32px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.24fr) 218px', gap: '22px', marginBottom: '22px' }}>
-          <div style={{ padding: '22px 24px 20px', background: '#ffffff', borderLeft: `8px solid ${theme.accent}`, display: 'flex', gap: '20px', alignItems: 'center' }}>
-            {personalInfo.photo && <PhotoFrame photo={personalInfo.photo} size={116} radius="6px" border={`2px solid ${theme.line}`} />}
-            <div style={{ minWidth: 0, flex: 1 }}>
-            <h1 style={{ margin: 0, fontSize: '31px', lineHeight: 1.08, color: theme.accentDark, fontWeight: 800 }}>{displayName}</h1>
-            {leadRole && <div style={{ marginTop: '8px', color: theme.muted }}>{leadRole}</div>}
-            <div style={{ marginTop: '16px' }}>
-              <ContactPanel contactItems={contactItems} theme={theme} contactStyle="inline" />
-            </div>
+      <header style={{ padding: '34px 38px 24px', background: '#f3f7f4', borderBottom: `1px solid ${theme.line}` }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.1fr) minmax(200px, 0.9fr)', gap: '25px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px', minWidth: 0 }}>
+            {personalInfo.photo && <PhotoFrame photo={personalInfo.photo} size={86} radius="4px" border={`2px solid ${theme.accent}`} />}
+            <div style={{ minWidth: 0 }}>
+              <div style={{ marginBottom: '10px', color: theme.accent, fontSize: '9px', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase' }}>Atlas / Professional Record</div>
+              <h1 style={{ margin: 0, color: theme.accentDark, fontSize: '36px', fontWeight: 750, lineHeight: 1.02, letterSpacing: '-0.04em', overflowWrap: 'anywhere' }}>{displayName}</h1>
             </div>
           </div>
-          <div style={{ padding: '18px 18px 16px', background: `linear-gradient(180deg, ${theme.accentSoft}, #ffffff)`, border: `1px solid ${theme.line}` }}>
-            {summary && <div style={{ marginTop: '16px' }}><SummaryBlock summary={summary} theme={theme} /></div>}
+          <div style={{ paddingLeft: '20px', borderLeft: `1px solid ${theme.line}` }}>
+            <ContactPanel contactItems={contactItems} theme={theme} contactStyle="stack" />
           </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.3fr) 218px', gap: '22px' }}>
-          <SectionColumn sections={leftSections} theme={theme} regionKey="left" layoutEditor={layoutEditor} />
+        {summary && <div style={{ marginTop: '23px', padding: '13px 17px', borderLeft: `3px solid ${theme.accentAlt}`, background: '#ffffff', color: theme.muted }}><SummaryBlock summary={summary} theme={theme} /></div>}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '4px', marginTop: '20px' }}>
+          {Array.from({ length: 12 }).map((_, index) => <span key={index} style={{ height: '3px', background: index % 3 === 0 ? theme.accent : theme.line }} />)}
+        </div>
+      </header>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.45fr) 235px', gap: '28px', padding: '30px 38px 38px' }}>
+        <main style={{ paddingLeft: '20px', borderLeft: `2px solid ${theme.line}` }}>
+          <SectionColumn sections={leftSections} theme={theme} regionKey="left" layoutEditor={layoutEditor} gap="27px" />
+        </main>
+        <aside style={{ padding: '18px 17px', background: theme.accentSoft, borderTop: `4px solid ${theme.accent}` }}>
           <SectionPanels
             sections={rightSections}
             theme={theme}
             regionKey="right"
             layoutEditor={layoutEditor}
-            shellStyle={{ padding: '16px 16px 14px', background: '#ffffff', border: `1px solid ${theme.line}` }}
+            shellStyle={{ padding: 0, background: 'transparent', border: 'none' }}
           />
-        </div>
+        </aside>
       </div>
     </div>
   );
