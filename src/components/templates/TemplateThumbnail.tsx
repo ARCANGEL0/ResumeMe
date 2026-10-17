@@ -18,7 +18,7 @@ const LAYOUTS: Record<TemplateId, ThumbnailLayout> = {
   minimal: 'single',
   creative: 'mosaic',
   professional: 'leftRail',
-  executive: 'darkBand',
+  executive: 'single',
   slate: 'rightRail',
   sarif: 'leftRail',
   ivory: 'centered',

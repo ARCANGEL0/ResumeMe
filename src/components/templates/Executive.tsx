@@ -1,78 +1,37 @@
-// src/components/templates/Executive.tsx
-import { type CSSProperties } from 'react';
 import { t } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
 import type { CVData } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems } from './templateUtils';
-import { HeaderBlock, SectionColumn, SectionPanels, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
+import { ContactPanel, PhotoFrame, SectionColumn, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
-interface Props {
-  data: CVData;
-  layoutEditor?: TemplateLayoutEditor;
-}
+interface Props { data: CVData; layoutEditor?: TemplateLayoutEditor }
 
 export default function Executive({ data, layoutEditor }: Props) {
   const language = useCVStore((state) => state.language);
-  const theme = TEMPLATE_THEMES['executive'];
+  const theme = TEMPLATE_THEMES.executive;
   const { personalInfo, sections } = data;
-  const layoutState = ensureTemplateLayout('executive', data.layoutOverride, sections);
+  const layout = ensureTemplateLayout('executive', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
   const contactItems = getContactItems(personalInfo, language);
   const summary = personalInfo.summary.trim();
-  const baseStyle: CSSProperties = {
-    fontFamily: theme.fontFamily,
-    fontSize: '11.2px',
-    lineHeight: '1.65',
-    color: theme.text,
-    background: theme.page,
-    minHeight: '297mm',
-  };
-
-  const leftSections = getSectionsForRegion(sections, layoutState, 'left');
-  const rightSections = getSectionsForRegion(sections, layoutState, 'right');
+  const career = getSectionsForRegion(sections, layout, 'left');
+  const qualifications = getSectionsForRegion(sections, layout, 'right');
 
   return (
-    <div style={baseStyle}>
-      <header style={{ padding: '36px 42px 26px', background: theme.headerBg, color: theme.headerText, borderBottom: `5px solid ${theme.accent}` }}>
-        <div style={{ marginBottom: '12px', color: theme.accent, fontSize: '9px', fontWeight: 700, letterSpacing: '0.24em', textTransform: 'uppercase' }}>Leadership Profile</div>
-        <HeaderBlock
-          photo={personalInfo.photo}
-          photoPlacement="left"
-          photoSize={86}
-          photoRadius="4px"
-          displayName={displayName}
-          summary=""
-          contactItems={contactItems}
-          theme={theme}
-          language={language}
-          onDark
-          contactStyle="inline"
-          titleSize="34px"
-          hideDivider
-        />
-      </header>
-      {summary && (
-        <div style={{ display: 'grid', gridTemplateColumns: '120px minmax(0, 1fr)', gap: '20px', padding: '20px 42px', background: theme.accentSoft, borderBottom: `1px solid ${theme.line}` }}>
-          <div style={{ color: theme.accentDark, fontSize: '9px', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase' }}>{t(language, 'profile')}</div>
-          <div style={{ color: theme.muted, lineHeight: 1.7 }}><SummaryBlock summary={summary} theme={theme} /></div>
+    <div style={{ minHeight: '297mm', padding: '38px 48px 44px', background: '#fff', color: '#171717', fontFamily: 'Arial, sans-serif', fontSize: '10.7px', lineHeight: 1.68 }}>
+      <header style={{ display: 'grid', gridTemplateColumns: personalInfo.photo ? '102px minmax(0, 1fr)' : '1fr', gap: '24px', alignItems: 'center', padding: '0 0 20px', borderTop: '2px solid #171717', borderBottom: '1px solid #aaa' }}>
+        {personalInfo.photo && <PhotoFrame photo={personalInfo.photo} size={92} radius="0" border="1px solid #888" />}
+        <div style={{ minWidth: 0, padding: '18px 0' }}>
+          <h1 style={{ minWidth: 0, margin: 0, color: '#171717', fontFamily: 'Georgia, serif', fontSize: '38px', fontWeight: 400, lineHeight: 1.04, letterSpacing: '-0.035em', overflowWrap: 'anywhere' }}>{displayName}</h1>
+          {contactItems.length > 0 && <div style={{ marginTop: '13px' }}><ContactPanel contactItems={contactItems} theme={theme} contactStyle="inline" /></div>}
         </div>
-      )}
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.48fr) 238px', gap: '26px', padding: '30px 42px 38px' }}>
-        <main style={{ paddingRight: '14px' }}>
-          <SectionColumn sections={leftSections} theme={theme} regionKey="left" layoutEditor={layoutEditor} gap="28px" />
-        </main>
-        <aside style={{ padding: '18px 18px 20px', borderTop: `3px solid ${theme.accent}`, borderBottom: `1px solid ${theme.line}`, background: '#fbf8f2' }}>
-          <SectionPanels
-            sections={rightSections}
-            theme={theme}
-            regionKey="right"
-            layoutEditor={layoutEditor}
-            shellStyle={{ padding: 0, borderRadius: 0, background: 'transparent', border: 'none' }}
-          />
-        </aside>
-      </div>
+      </header>
+      {summary && <section style={{ maxWidth: '710px', margin: '21px auto 29px', color: '#414141', fontFamily: 'Georgia, serif', fontSize: '12px', lineHeight: 1.78, textAlign: 'center' }}><SummaryBlock summary={summary} theme={theme} /></section>}
+      <main style={{ paddingTop: summary ? 0 : '25px' }}><SectionColumn sections={career} theme={theme} regionKey="left" layoutEditor={layoutEditor} gap="28px" /></main>
+      {qualifications.length > 0 && <footer style={{ marginTop: '31px', padding: '18px 20px 20px', borderTop: '2px solid #222', background: '#f5f5f5' }}><SectionColumn sections={qualifications} theme={theme} regionKey="right" layoutEditor={layoutEditor} gap="19px" /></footer>}
     </div>
   );
 }
+
