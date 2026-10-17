@@ -347,7 +347,7 @@ const DEFAULT_TEMPLATE_NAMES: Record<TemplateId, string> = {
   creative: 'Folio',
   professional: 'Mercer',
   executive: 'Principal',
-  slate: 'Slate',
+  slate: 'Column',
   sarif: 'Sarif',
   ivory: 'Ivory',
   summit: 'Summit',

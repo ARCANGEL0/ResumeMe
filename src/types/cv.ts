@@ -154,7 +154,7 @@ export const TEMPLATES: TemplateInfo[] = [
   { id: 'creative', name: 'Folio', description: 'An editorial single-column profile with a typographic header and clear section hierarchy' },
   { id: 'professional', name: 'Mercer', description: 'A balanced résumé with a compact information rail and clear career history' },
   { id: 'executive', name: 'Principal', description: 'A senior leadership profile with a concise introduction and full-width career history' },
-  { id: 'slate', name: 'Slate', description: 'Cool editorial resume with a right-hand rail' },
+  { id: 'slate', name: 'Column', description: 'An even two-column layout with a compact profile header and clear section divisions' },
   { id: 'sarif', name: 'Sarif', description: 'Dark sidebar on the left with clean main content' },
   { id: 'ivory', name: 'Ivory', description: 'Warm serif layout with soft dividers' },
   { id: 'summit', name: 'Summit', description: 'Confident two-column layout with skill meters' },
