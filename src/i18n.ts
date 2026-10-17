@@ -352,7 +352,7 @@ const DEFAULT_TEMPLATE_NAMES: Record<TemplateId, string> = {
   ivory: 'Ledger',
   summit: 'Apex',
   studio: 'Studio',
-  atlas: 'Atlas',
+  atlas: 'Gridline',
   dossier: 'Dossier',
   north: 'North',
   zenith: 'Zenith',

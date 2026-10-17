@@ -24,7 +24,7 @@ const LAYOUTS: Record<TemplateId, ThumbnailLayout> = {
   ivory: 'rightRail',
   summit: 'single',
   studio: 'mosaic',
-  atlas: 'cards',
+  atlas: 'columns',
   north: 'leftRail',
   zenith: 'timeline',
   editorial: 'columns',
