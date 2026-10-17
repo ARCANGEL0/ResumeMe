@@ -70,9 +70,9 @@ export default function Toon({ data, layoutEditor }: Props) {
             <PhotoFrame photo={photo} size={168} radius="8px" />
           </span>
         )}
-        <div style={{ flex: 1, minWidth: 0, paddingTop: '4px' }}>
+        <div style={{ flex: 1, minWidth: 0, paddingTop: '4px', overflowWrap: 'anywhere' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '10px' }}>
-            <h1 style={{ margin: 0, fontSize: '34px', fontWeight: 800, lineHeight: 1.04, letterSpacing: '-0.01em', color: INK }}>
+            <h1 style={{ minWidth: 0, margin: 0, fontSize: '34px', fontWeight: 800, lineHeight: 1.04, letterSpacing: '-0.01em', color: INK, overflowWrap: 'anywhere' }}>
               {displayName}
             </h1>
             <Sparkle />
@@ -94,7 +94,7 @@ export default function Toon({ data, layoutEditor }: Props) {
             </span>
           )}
           {summary && (
-            <div style={{ position: 'relative', zIndex: 2, marginTop: '14px', marginLeft: '-56px' }}>
+            <div style={{ position: 'relative', zIndex: 2, minWidth: 0, maxWidth: '100%', marginTop: '14px' }}>
               <ToonCard color={CARD_COLORS[0]} title={t(language, 'profile')}>
                 {summary}
               </ToonCard>
@@ -167,7 +167,7 @@ export default function Toon({ data, layoutEditor }: Props) {
 
 function ToonCard({ children, color, title }: { children: React.ReactNode; color?: string; title: string }) {
   return (
-    <div style={{ border: BORDER, borderRadius: '12px', background: color, boxShadow: SHADOW, overflow: 'hidden' }}>
+    <div style={{ minWidth: 0, maxWidth: '100%', boxSizing: 'border-box', border: BORDER, borderRadius: '12px', background: color, boxShadow: SHADOW, overflow: 'hidden', overflowWrap: 'anywhere' }}>
       <div
         style={{
           display: 'flex',
@@ -184,7 +184,7 @@ function ToonCard({ children, color, title }: { children: React.ReactNode; color
         <span>{title}</span>
         <span style={{ fontSize: '12px', letterSpacing: '0.12em' }}>+ +</span>
       </div>
-      <div style={{ padding: '10px 12px 12px' }}>{children}</div>
+      <div style={{ minWidth: 0, maxWidth: '100%', padding: '10px 12px 12px', overflowWrap: 'anywhere' }}>{children}</div>
     </div>
   );
 }
