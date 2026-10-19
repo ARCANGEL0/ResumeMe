@@ -1,4 +1,4 @@
-import { Fragment, type CSSProperties } from 'react';
+import { Fragment, type CSSProperties, type SVGProps } from 'react';
 import { t } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
 import type { CVData, CVSection, TemplateId } from '../../types/cv';
@@ -8,12 +8,14 @@ import { getContactItems, getEntryDate, getEntryDetailLines, getEntrySubtitle, g
 import {
   ContactPanel,
   CustomSectionRegion,
+  LinkedText,
   PhotoFrame,
   SectionBlockBody,
   SectionColumn,
   SummaryBlock,
   type TemplateLayoutEditor,
 } from './templateComponents';
+import ContactIcon from '../../ui/ContactIcon';
 
 interface Props {
   data: CVData;
@@ -38,9 +40,9 @@ const PALETTES: Partial<Record<TemplateId, Partial<TemplateTheme>>> = {
   corvus: { fontFamily: "Arial, 'Helvetica Neue', sans-serif", page: '#fff', text: '#1c1c1c', muted: '#666', line: '#c9c9c9', accent: '#242424', accentAlt: '#929292', accentSoft: '#ececec', accentDark: '#242424', sidebarBg: '#d6d6d6', sidebarText: '#292929', headerBg: '#ededed', headerText: '#292929', sectionHeading: 'bar', entryStyle: 'plain', skillStyle: 'list', languageStyle: 'words' },
   insignia: { fontFamily: "'Arial', sans-serif", page: '#ffffff', text: '#202020', muted: '#646464', line: '#d3d3d3', accent: '#222', accentAlt: '#8b8b8b', accentSoft: '#ffffff', accentDark: '#292929', sidebarBg: '#ffffff', sidebarText: '#242424', sectionHeading: 'rule', entryStyle: 'plain', skillStyle: 'list', languageStyle: 'words' },
   bulletin: { fontFamily: "Arial, 'Helvetica Neue', sans-serif", page: '#fff', text: '#202020', muted: '#5c5c5c', line: '#c9c9c9', accent: '#262626', accentAlt: '#888', accentSoft: '#ededed', accentDark: '#292929', sidebarBg: '#f1f1f1', sidebarText: '#242424', sectionHeading: 'caps', entryStyle: 'timeline', skillStyle: 'list', languageStyle: 'words' },
-  verso: { fontFamily: "'Arial', sans-serif", page: '#fff', text: '#171717', muted: '#626262', line: '#cdcdcd', accent: '#171717', accentAlt: '#888', accentSoft: '#efefef', accentDark: '#292929', sidebarBg: '#f1f1f1', sidebarText: '#222', sectionHeading: 'rule', entryStyle: 'plain', skillStyle: 'bars', languageStyle: 'words' },
-  hexon: { fontFamily: "Arial, 'Helvetica Neue', sans-serif", page: '#fff', text: '#202020', muted: '#666', line: '#d0d0d0', accent: '#262626', accentAlt: '#8b8b8b', accentSoft: '#f1f1f1', accentDark: '#292929', sidebarBg: '#f4f4f4', sidebarText: '#262626', sectionHeading: 'rule', entryStyle: 'plain', skillStyle: 'bars', languageStyle: 'words' },
-  signal: { fontFamily: "'Arial', sans-serif", page: '#f5f7f8', text: '#182227', muted: '#53636b', line: '#c5d0d4', accent: '#276879', accentAlt: '#81aeba', accentSoft: '#e8f0f2', accentDark: '#24353b', sidebarBg: '#edf2f3', sidebarText: '#24343a', headerBg: '#24353b', headerText: '#fff', sectionHeading: 'label', entryStyle: 'plain', skillStyle: 'bars', languageStyle: 'words' },
+  verso: { fontFamily: "'Arial', sans-serif", page: '#fff', text: '#171717', muted: '#626262', line: '#cdcdcd', accent: '#171717', accentAlt: '#888', accentSoft: '#efefef', accentDark: '#292929', sidebarBg: '#f1f1f1', sidebarText: '#222', sectionHeading: 'rule', entryStyle: 'plain', skillStyle: 'micro-bars', languageStyle: 'words' },
+  hexon: { fontFamily: "'Segoe UI', Arial, sans-serif", page: '#ffffff', text: '#262626', muted: '#656565', line: '#d8d8d8', accent: '#3b3b3b', accentAlt: '#888888', accentSoft: '#f1f1f1', accentDark: '#343434', sidebarBg: '#f6f6f6', sidebarText: '#292929', headerBg: '#3b3b3b', headerText: '#ffffff', sectionHeading: 'caps', entryStyle: 'plain', skillStyle: 'compact-dots', languageStyle: 'words' },
+  signal: { fontFamily: "'Arial', sans-serif", page: '#f5f7f8', text: '#182227', muted: '#53636b', line: '#c5d0d4', accent: '#276879', accentAlt: '#81aeba', accentSoft: '#e8f0f2', accentDark: '#24353b', sidebarBg: '#edf2f3', sidebarText: '#24343a', headerBg: '#24353b', headerText: '#fff', sectionHeading: 'label', entryStyle: 'plain', skillStyle: 'compact-dots', languageStyle: 'words' },
   professional: { fontFamily: "Arial, 'Helvetica Neue', sans-serif", page: '#fff', text: '#242424', muted: '#5c5c5c', line: '#cfcfcf', accent: '#242424', accentAlt: '#777', accentSoft: '#ededed', accentDark: '#242424', sectionHeading: 'rule', entryStyle: 'timeline', skillStyle: 'list', languageStyle: 'words' },
 };
 
@@ -343,20 +345,51 @@ export default function ReferenceResume({ data, layoutEditor, template }: Props)
   }
 
   if (template === 'hexon') {
-    return <div style={{ ...page, padding: '25px 31px 38px', background: '#fff' }}>
-      <header style={{ display: 'grid', gridTemplateColumns: personalInfo.photo ? '98px minmax(0,1fr)' : '1fr', gap: '22px', alignItems: 'center', padding: '8px 0 19px', borderBottom: '1px solid #777' }}>
-        {photo(92, '0', '1px solid #aaa')}
-        <div><h1 style={{ margin: 0, color: 'inherit', fontSize: '31px', lineHeight: 1.06, fontWeight: 700, letterSpacing: '.03em', textTransform: 'uppercase' }}>{name}</h1>{role && <div style={{ marginTop: '5px', fontSize: '12px', letterSpacing: '.15em', textTransform: 'uppercase' }}>{role}</div>}</div>
+    const hexonColumn = (key: string, gap = '21px') => (
+      <CustomSectionRegion
+        sections={region(key)}
+        regionKey={key}
+        layoutEditor={layoutEditor}
+        gap={gap}
+        renderSection={(section) => (
+          <section>
+            <HexonSectionHeading title={section.title} type={section.type} />
+            <SectionBlockBody section={section} theme={theme} />
+          </section>
+        )}
+      />
+    );
+
+    return <div style={{ ...page, padding: 0, background: '#ffffff', border: '1px solid #d8d8d8' }}>
+      <header style={{ position: 'relative', overflow: 'hidden', padding: '13px 27px 12px 34px', color: '#282828', background: '#ffffff' }}>
+        <span style={{ position: 'absolute', inset: '0 auto 0 0', width: '6px', background: '#555555' }} />
+        <div style={{ position: 'absolute', top: 0, right: 0, width: '32%', height: '100%', background: '#f2f2f2', clipPath: 'polygon(28% 0,100% 0,100% 100%,0 100%)' }} />
+        <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: personalInfo.photo ? 'minmax(0,1fr) 70px' : 'minmax(0,1fr)', gap: '18px', alignItems: 'center' }}>
+          <div>
+            <h1 style={{ margin: 0, color: 'inherit', fontSize: '27px', lineHeight: 1.05, fontWeight: 700, letterSpacing: '.025em', textTransform: 'uppercase', overflowWrap: 'anywhere' }}>{name}</h1>
+            {role && <div style={{ marginTop: '4px', color: '#666666', fontSize: '11px', fontWeight: 600, letterSpacing: '.12em', textTransform: 'uppercase' }}>{role}</div>}
+          </div>
+          {personalInfo.photo && <div style={{ justifySelf: 'end', padding: '4px', border: '1px solid #8c8c8c', background: '#ffffff', boxShadow: '3px 3px 0 #e2e2e2' }}>{photo(58, '0', 'none')}</div>}
+        </div>
       </header>
-      <div style={{ display: 'grid', gridTemplateColumns: '178px minmax(0,1fr)', gap: '24px', marginTop: '18px' }}>
-        <aside style={{ paddingRight: '16px', borderRight: '1px solid #888' }}>
-          <h2 style={railLabel}>{t(language, 'contact')}</h2>{contact('stack')}
-          <div style={{ marginTop: '24px' }}>{column('sidebar', {}, '21px')}</div>
-        </aside>
+      {contacts.length > 0 && <div style={{ position: 'relative', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', columnGap: '20px', rowGap: '10px', padding: '11px 27px', background: '#f7f7f7' }}>
+        <span style={{ position: 'absolute', inset: '0 auto 0 0', width: '6px', background: '#555555' }} />
+        {contacts.map((item) => <span key={item.key} style={{ display: 'inline-flex', minWidth: 0, alignItems: 'center', gap: '6px', color: '#333333', fontSize: '8px', lineHeight: 1.35 }}>
+          <span style={{ display: 'inline-flex', flex: '0 0 14px', width: '14px', height: '14px', alignItems: 'center', justifyContent: 'center', color: '#454545' }}><ContactIcon name={item.icon} style={{ display: 'block', width: '13px', height: '13px' }} /></span>
+          <LinkedText href={item.href} style={{ minWidth: 0, overflowWrap: 'anywhere' }}>{item.value}</LinkedText>
+        </span>)}
+      </div>}
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.55fr) minmax(185px,.82fr)', gap: '24px', padding: '22px 25px 32px' }}>
         <main style={{ minWidth: 0 }}>
-          {summary && <section style={{ marginBottom: '23px' }}><h2 style={{ ...railLabel, fontSize: '12px', letterSpacing: '.18em' }}>{t(language, 'profile')}</h2>{profile()}</section>}
-          {column('main', {}, '24px')}
+          {summary && <section style={{ marginBottom: '23px', padding: '14px 16px', background: '#ffffff', borderLeft: '3px solid #666666', boxShadow: '0 2px 8px rgba(0,0,0,.035)' }}>
+            <HexonSectionHeading title={t(language, 'profile')} type="profile" />
+            {profile()}
+          </section>}
+          {hexonColumn('main', '23px')}
         </main>
+        <aside style={{ minWidth: 0, padding: '16px 15px', background: '#f6f6f6', borderTop: '3px solid #666666', borderBottom: '1px solid #d8d8d8' }}>
+          {hexonColumn('sidebar', '23px')}
+        </aside>
       </div>
     </div>;
   }
@@ -376,6 +409,44 @@ export default function ReferenceResume({ data, layoutEditor, template }: Props)
 function getPrimaryRole(sections: CVSection[]) {
   const experience = sections.find((section) => section.type === 'experience');
   return experience?.entries.map((entry) => entry.fields.position?.trim()).find(Boolean) ?? '';
+}
+
+function HexonSectionHeading({ title, type }: { title: string; type: CVSection['type'] | 'profile' | 'contact' }) {
+  return (
+    <h2 style={{ display: 'flex', alignItems: 'center', gap: '9px', margin: '0 0 12px', color: '#303030', fontSize: '11px', fontWeight: 800, letterSpacing: '.11em', lineHeight: 1.2, textTransform: 'uppercase' }}>
+      <span style={{ display: 'inline-flex', flex: '0 0 18px', width: '18px', height: '18px', alignItems: 'center', justifyContent: 'center', color: '#454545' }}>
+        <HexonSectionGlyph type={type} />
+      </span>
+      <span>{title}</span>
+      <span style={{ flex: 1, height: '1px', marginLeft: '2px', background: 'linear-gradient(90deg,#c4c4c4,transparent)' }} />
+      <span style={{ display: 'inline-block', flex: '0 0 5px', width: '5px', height: '5px', background: '#8a8a8a', transform: 'rotate(45deg)' }} />
+    </h2>
+  );
+}
+
+function HexonSectionGlyph({ type }: { type: CVSection['type'] | 'profile' | 'contact' }) {
+  const common: SVGProps<SVGSVGElement> = { viewBox: '0 0 24 24', width: '15', height: '15', fill: 'none', stroke: 'currentColor', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round', display: 'block', 'aria-hidden': true };
+
+  switch (type) {
+    case 'contact':
+      return <svg {...common}><rect x="3.5" y="5" width="17" height="14" rx="2" /><path d="m5 7 7 5 7-5" /></svg>;
+    case 'profile':
+      return <svg {...common}><circle cx="12" cy="8" r="3" /><path d="M5.5 20c.6-3.4 2.8-5.2 6.5-5.2s5.9 1.8 6.5 5.2" /></svg>;
+    case 'experience':
+      return <svg {...common}><rect x="3.5" y="7" width="17" height="12" rx="1.5" /><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7m-12 4h16m-10 0v2h4v-2" /></svg>;
+    case 'education':
+      return <svg {...common}><path d="m2.5 9 9.5-5 9.5 5-9.5 5-9.5-5Z" /><path d="M6 11v5c3.7 2.7 8.3 2.7 12 0v-5m3.5-2v6" /></svg>;
+    case 'skills':
+      return <svg {...common}><path d="m12 3 2 4 4.5.7-3.2 3.1.8 4.5-4.1-2.1-4.1 2.1.8-4.5-3.2-3.1L10 7l2-4Z" /><path d="M5 19h14" /></svg>;
+    case 'languages':
+      return <svg {...common}><circle cx="12" cy="12" r="8.5" /><path d="M3.8 12h16.4M12 3.5a13.5 13.5 0 0 1 0 17m0-17a13.5 13.5 0 0 0 0 17" /></svg>;
+    case 'projects':
+      return <svg {...common}><path d="m8.5 7-5 5 5 5m7-10 5 5-5 5m-2.5-12-2 14" /></svg>;
+    case 'certifications':
+      return <svg {...common}><circle cx="12" cy="9" r="5.5" /><path d="m8.5 13.2-1 7 4.5-2.5 4.5 2.5-1-7" /><path d="m10 9 1.3 1.3L14.5 7" /></svg>;
+    default:
+      return <svg {...common}><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" /><path d="m4 7.5 8 4.7 8-4.7M12 12.2V21" /></svg>;
+  }
 }
 
 function JsonSection({ section }: { section: CVSection }) {

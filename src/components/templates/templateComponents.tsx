@@ -922,6 +922,31 @@ function SkillsSection({
     );
   }
 
+  if (theme.skillStyle === 'micro-bars') {
+    const barHeights = ['3px', '4.5px', '6px', '7.5px', '9px'];
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', color: textColor }}>
+        {section.entries.map((entry) => {
+          const score = getSkillLevelScore(entry.fields.level || '');
+          const name = entry.fields.name || entry.fields.title;
+          return (
+            <div key={entry.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
+              <span>{name}</span>
+              {score > 0 && (
+                <span role="meter" aria-label={`${name} proficiency`} aria-valuemin={0} aria-valuemax={5} aria-valuenow={score} style={{ display: 'inline-flex', flex: '0 0 auto', alignItems: 'flex-end', gap: '2px', height: '9px' }}>
+                  {barHeights.map((height, index) => (
+                    <span key={index} style={{ width: '3px', height, background: index < score ? fillColor : lineColor }} />
+                  ))}
+                </span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
   if (theme.skillStyle === 'parallelogram') {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -953,18 +978,21 @@ function SkillsSection({
     );
   }
 
-  if (theme.skillStyle === 'dots') {
+  if (theme.skillStyle === 'dots' || theme.skillStyle === 'compact-dots') {
+    const compact = theme.skillStyle === 'compact-dots';
+
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', color: textColor }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: compact ? '5px' : '10px', color: textColor }}>
         {section.entries.map((entry) => {
           const score = getSkillLevelScore(entry.fields.level || '');
+          const name = entry.fields.name || entry.fields.title;
           return (
             <div key={entry.id} style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', alignItems: 'center' }}>
-              <span>{entry.fields.name || entry.fields.title}</span>
+              <span>{name}</span>
               {score > 0 && (
-                <span style={{ display: 'inline-flex', gap: '4px' }}>
+                <span role="meter" aria-label={`${name} proficiency`} aria-valuemin={0} aria-valuemax={5} aria-valuenow={score} style={{ display: 'inline-flex', flex: '0 0 auto', gap: compact ? '3px' : '4px' }}>
                   {Array.from({ length: 5 }).map((_, index) => (
-                    <span key={index} style={{ width: '8px', height: '8px', borderRadius: '999px', background: index < score ? fillColor : lineColor }} />
+                    <span key={index} style={{ width: compact ? '5px' : '8px', height: compact ? '5px' : '8px', borderRadius: '999px', background: index < score ? fillColor : lineColor }} />
                   ))}
                 </span>
               )}

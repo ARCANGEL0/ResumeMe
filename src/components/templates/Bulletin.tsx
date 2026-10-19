@@ -66,8 +66,8 @@ function SkillMeterSection({ section }: { section: CVSection }) {
         const score = getSkillLevelScore(entry.fields.level || '');
         return <div key={entry.id}>
           <div style={{ marginBottom: 3, color: '#242424', fontSize: 11.5 }}>{entry.fields.name || entry.fields.title}</div>
-          {score > 0 && <div aria-label={`Skill level ${score} of 5`} style={{ display: 'grid', gridTemplateColumns: 'repeat(15,minmax(0,1fr))', gap: 3 }}>
-            {Array.from({ length: 15 }).map((_, index) => <span key={index} style={{ height: 9, background: index < Math.round(score * 3) ? '#100b0b' : '#d9d9d9' }} />)}
+          {score > 0 && <div role="meter" aria-label={`${entry.fields.name || entry.fields.title} proficiency`} aria-valuemin={0} aria-valuemax={5} aria-valuenow={score} style={{ display: 'flex', gap: 2 }}>
+            {Array.from({ length: 15 }).map((_, index) => <span key={index} style={{ width: 6, height: 6, flex: '0 0 6px', background: index < Math.round(score * 3) ? '#100b0b' : '#d9d9d9' }} />)}
           </div>}
         </div>;
       })}

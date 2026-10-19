@@ -4,7 +4,7 @@ export type TemplateFamily = 'sidebar' | 'split' | 'single' | 'band';
 export type SectionHeadingStyle = 'rule' | 'pill' | 'bar' | 'label' | 'caps' | 'underline' | 'xp';
 export type ContactStyle = 'stack' | 'inline' | 'pills';
 export type EntryStyle = 'timeline' | 'card' | 'plain' | 'bordered';
-export type SkillStyle = 'bars' | 'chips' | 'list' | 'inline' | 'dots' | 'rounded-segments' | 'solid-bar' | 'parallelogram' | 'sarif' | 'retro';
+export type SkillStyle = 'bars' | 'chips' | 'list' | 'inline' | 'dots' | 'compact-dots' | 'micro-bars' | 'rounded-segments' | 'solid-bar' | 'parallelogram' | 'sarif' | 'retro';
 export type LanguageStyle = 'bars' | 'cefr' | 'words' | 'dots' | 'parallelogram';
 export type SummaryStyle = 'plain' | 'card' | 'quote';
 export type ThumbLayout = 'sidebar' | 'split' | 'single' | 'band';
@@ -672,23 +672,23 @@ export const TEMPLATE_THEMES: Record<TemplateId, TemplateTheme> = {
   hexon: {
     family: 'sidebar',
     thumbLayout: 'sidebar',
-    sidebarPosition: 'left',
+    sidebarPosition: 'right',
     fontFamily: "'Segoe UI', Arial, sans-serif",
-    page: '#eceef1',
-    text: '#2b3242',
-    muted: '#5c6472',
-    line: '#c3c9d2',
-    accent: '#152238',
-    accentAlt: '#4a6d99',
-    accentSoft: '#e2e6eb',
-    accentDark: '#0e1728',
-    sidebarBg: 'linear-gradient(180deg, #152238 0%, #0e1728 100%)',
-    sidebarText: '#d9dfe8',
+    page: '#ffffff',
+    text: '#262626',
+    muted: '#656565',
+    line: '#d8d8d8',
+    accent: '#3b3b3b',
+    accentAlt: '#888888',
+    accentSoft: '#f1f1f1',
+    accentDark: '#343434',
+    sidebarBg: '#f6f6f6',
+    sidebarText: '#292929',
     headerAlign: 'left',
     sectionHeading: 'caps',
     contactStyle: 'stack',
     entryStyle: 'plain',
-    skillStyle: 'bars',
+    skillStyle: 'compact-dots',
     languageStyle: 'bars',
     summaryStyle: 'plain',
     sidebarSections: ['skills', 'languages', 'certifications'],
@@ -831,7 +831,7 @@ export const TEMPLATE_THEMES: Record<TemplateId, TemplateTheme> = {
     sectionHeading: 'caps',
     contactStyle: 'stack',
     entryStyle: 'plain',
-    skillStyle: 'list',
+    skillStyle: 'micro-bars',
     languageStyle: 'words',
     summaryStyle: 'plain',
     sidebarSections: ['skills', 'languages', 'certifications'],
@@ -899,7 +899,7 @@ export const TEMPLATE_THEMES: Record<TemplateId, TemplateTheme> = {
     sectionHeading: 'caps',
     contactStyle: 'inline',
     entryStyle: 'plain',
-    skillStyle: 'list',
+    skillStyle: 'compact-dots',
     languageStyle: 'words',
     summaryStyle: 'plain',
     sidebarSections: ['skills', 'languages', 'certifications'],

@@ -24,7 +24,7 @@ export default function Verso({ data, layoutEditor }: { data: CVData; layoutEdit
     sidebarText: '#172b36',
     sectionHeading: 'bar' as const,
     entryStyle: 'plain' as const,
-    skillStyle: 'bars' as const,
+    skillStyle: 'micro-bars' as const,
     languageStyle: 'words' as const,
   };
   const layout = ensureTemplateLayout('verso', data.layoutOverride, sections);
