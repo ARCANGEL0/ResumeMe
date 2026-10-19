@@ -341,6 +341,7 @@ const DEVELOPED_BY_TRANSLATIONS: Partial<Record<UILanguage, string>> = {
 
 // Default template names
 const DEFAULT_TEMPLATE_NAMES: Record<TemplateId, string> = {
+  europass: 'Europass',
   modern: 'Modern',
   classic: 'Classic',
   minimal: 'Forme',

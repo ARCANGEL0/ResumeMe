@@ -40,6 +40,29 @@ export interface TemplateTheme {
 }
 
 export const TEMPLATE_THEMES: Record<TemplateId, TemplateTheme> = {
+  europass: {
+    family: 'single',
+    thumbLayout: 'single',
+    fontFamily: "Arial, 'Helvetica Neue', sans-serif",
+    page: '#ffffff',
+    text: '#000000',
+    muted: '#000000',
+    line: '#000000',
+    accent: '#000000',
+    accentAlt: '#000000',
+    accentSoft: '#ffffff',
+    accentDark: '#000000',
+    headerBg: '#ffffff',
+    headerText: '#000000',
+    headerAlign: 'left',
+    sectionHeading: 'underline',
+    contactStyle: 'inline',
+    entryStyle: 'plain',
+    skillStyle: 'inline',
+    languageStyle: 'words',
+    summaryStyle: 'plain',
+    sidebarSections: [],
+  },
   modern: {
     family: 'sidebar',
     thumbLayout: 'sidebar',

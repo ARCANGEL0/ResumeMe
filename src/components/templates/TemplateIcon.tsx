@@ -9,6 +9,23 @@ import windows95Flag from '../../assets/template-logos/windows-95-flag.svg?url';
 import { TEMPLATE_THEMES } from './templateCatalog';
 
 const ICONS: Record<TemplateId, ReactNode> = {
+  europass: <g stroke="none">
+    <rect x="1" y="4.5" width="22" height="15" fill="#003399" />
+    <g fill="#ffcc00">
+      <path d="M12 6.7 12.22 7.35h.69l-.56.4.21.65-.56-.4-.56.4.21-.65-.56-.4h.69L12 6.7Z" />
+      <path d="M14.65 7.45 14.87 8.1h.69l-.56.4.21.65-.56-.4-.56.4.21-.65-.56-.4h.69l.21-.65Z" />
+      <path d="M16.5 9.3 16.72 9.95h.69l-.56.4.21.65-.56-.4-.56.4.21-.65-.56-.4h.69l.21-.65Z" />
+      <path d="M17.2 12 17.42 12.65h.69l-.56.4.21.65-.56-.4-.56.4.21-.65-.56-.4h.69L17.2 12Z" />
+      <path d="M16.5 14.7 16.72 15.35h.69l-.56.4.21.65-.56-.4-.56.4.21-.65-.56-.4h.69l.21-.65Z" />
+      <path d="M14.65 16.55 14.87 17.2h.69l-.56.4.21.65-.56-.4-.56.4.21-.65-.56-.4h.69l.21-.65Z" />
+      <path d="M12 17.3 12.22 17.95h.69l-.56.4.21.65-.56-.4-.56.4.21-.65-.56-.4h.69L12 17.3Z" />
+      <path d="M9.35 16.55 9.57 17.2h.69l-.56.4.21.65-.56-.4-.56.4.21-.65-.56-.4h.69l.21-.65Z" />
+      <path d="M7.5 14.7 7.72 15.35h.69l-.56.4.21.65-.56-.4-.56.4.21-.65-.56-.4h.69l.21-.65Z" />
+      <path d="M6.8 12 7.02 12.65h.69l-.56.4.21.65-.56-.4-.56.4.21-.65-.56-.4h.69L6.8 12Z" />
+      <path d="M7.5 9.3 7.72 9.95h.69l-.56.4.21.65-.56-.4-.56.4.21-.65-.56-.4h.69L7.5 9.3Z" />
+      <path d="M9.35 7.45 9.57 8.1h.69l-.56.4.21.65-.56-.4-.56.4.21-.65-.56-.4h.69l.21-.65Z" />
+    </g>
+  </g>,
   hexon: <>
     <path d="m12 2.5 8 4.7v9.6l-8 4.7-8-4.7V7.2l8-4.7Z" />
     <path d="m12 7.1 4 2.3v4.8l-4 2.4-4-2.4V9.4l4-2.3Z" />
@@ -198,6 +215,8 @@ export default function TemplateIcon({ id }: { id: TemplateId }) {
         ? { color: '#000080', backgroundColor: '#c0c0c0', borderColor: '#666' }
         : id === 'corvus'
           ? { color: '#202020', backgroundColor: '#e7e7e7', borderColor: '#777' }
+          : id === 'europass'
+            ? { color: '#ffcc00', backgroundColor: '#003399', borderColor: '#003399' }
           : { color: theme.accentDark, backgroundColor: theme.accentSoft };
 
   return (

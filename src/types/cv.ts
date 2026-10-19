@@ -31,6 +31,8 @@ export interface PersonalInfo {
   email: string;
   phone: string;
   location: string;
+  nationality?: string;
+  gender?: string;
   summary: string;
   photo?: string;
   dateOfBirth?: string;
@@ -98,7 +100,8 @@ export type TemplateId =
   | 'toon'
   | 'hexon'
   | 'lagoon'
-  | 'scribe';
+  | 'scribe'
+  | 'europass';
 
 export interface TemplateInfo {
   id: TemplateId;
@@ -111,6 +114,7 @@ export interface CVData {
   sections: CVSection[];
   selectedTemplate: TemplateId;
   layoutOverride?: TemplateLayoutState;
+  showEuropassBranding?: boolean;
 }
 
 export type TemplateLayoutState = Partial<Record<string, string[]>>;
@@ -140,6 +144,7 @@ export const DEFAULT_SECTION_TITLES: Record<SectionType, string> = {
 
 export const TEMPLATES: TemplateInfo[] = [
   { id: 'north', name: 'Nord', description: 'A centered profile header above a quiet two-column résumé layout' },
+  { id: 'europass', name: 'Europass', description: 'A European CV layout with Europass branding, labeled contact details, and ruled sections' },
   { id: 'hexon', name: 'Hexon', description: 'A clean two-column résumé with a photo masthead and profile band' },
   { id: 'beacon', name: 'Beacon', description: 'Strict single column tuned for ATS parsing' },
   { id: 'meridian', name: 'Axiom', description: 'A numbered identity header and contact strip above a single-column career record' },

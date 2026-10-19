@@ -12,11 +12,12 @@ function isValidTemplateId(id: string): id is TemplateId {
 }
 
 export default function PreviewPanel() {
-  const { personalInfo, sections, selectedTemplate, templateLayouts } = useCVStore(
+  const { personalInfo, sections, selectedTemplate, showEuropassBranding, templateLayouts } = useCVStore(
     useShallow((state) => ({
       personalInfo: state.personalInfo,
       sections: state.sections,
       selectedTemplate: state.selectedTemplate,
+      showEuropassBranding: state.showEuropassBranding,
       templateLayouts: state.templateLayouts,
     }))
   );
@@ -27,8 +28,9 @@ export default function PreviewPanel() {
       sections,
       selectedTemplate: safeTemplate,
       layoutOverride: templateLayouts[safeTemplate],
+      showEuropassBranding,
     }),
-    [personalInfo, sections, safeTemplate, templateLayouts]
+    [personalInfo, sections, safeTemplate, showEuropassBranding, templateLayouts]
   );
   const Component = getTemplate(safeTemplate);
 

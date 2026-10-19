@@ -8,6 +8,7 @@ export interface TemplateProps {
 }
 
 const TEMPLATE_MAP: Record<TemplateId, ComponentType<TemplateProps>> = {
+  europass: lazy(() => import('../templates/Europass')),
   atlas: lazy(() => import('../templates/Atlas')),
   beacon: lazy(() => import('../templates/Beacon')),
   classic: lazy(() => import('../templates/Classic')),

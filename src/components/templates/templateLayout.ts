@@ -14,6 +14,12 @@ export interface TemplateLayoutPreset {
 const FALLBACK_REGION = 'main';
 
 export const TEMPLATE_LAYOUT_PRESETS: Record<TemplateId, TemplateLayoutPreset> = {
+  europass: {
+    regions: [{ key: 'main', label: 'Main' }],
+    defaultLayout: {
+      main: ['experience', 'education', 'skills', 'certifications', 'projects', 'languages', 'custom'],
+    },
+  },
   modern: {
     regions: [{ key: 'sidebar', label: 'Sidebar' }, { key: 'main', label: 'Main' }],
     defaultLayout: {

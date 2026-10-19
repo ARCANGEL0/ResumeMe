@@ -12,6 +12,7 @@ export default function PersonalInfoEditor() {
     language,
     personalInfo,
     removeSocialLink,
+    selectedTemplate,
     updatePersonalInfo,
   } = useCVStore();
   const [draftPlatform, setDraftPlatform] = useState<SocialPlatform>('custom');
@@ -70,6 +71,18 @@ export default function PersonalInfoEditor() {
           onChange={(value) => updatePersonalInfo('dateOfBirth', value)}
           type="date"
         />
+        {selectedTemplate === 'europass' && <>
+          <FieldEditor
+            label="Nationality"
+            value={personalInfo.nationality || ''}
+            onChange={(value) => updatePersonalInfo('nationality', value)}
+          />
+          <FieldEditor
+            label="Gender"
+            value={personalInfo.gender || ''}
+            onChange={(value) => updatePersonalInfo('gender', value)}
+          />
+        </>}
         <PhotoField
           label={t(language, 'photo')}
           value={personalInfo.photo || ''}

@@ -12,7 +12,7 @@ import ZoomablePreview from '../preview/ZoomablePreview';
 import TemplateIcon from './TemplateIcon';
 
 export default function TemplateSelector() {
-  const { language, personalInfo, sections, selectedTemplate, setTemplate, setTemplateLayout, setView, templateLayouts } =
+  const { language, personalInfo, sections, selectedTemplate, setTemplate, setTemplateLayout, setView, setShowEuropassBranding, showEuropassBranding, templateLayouts } =
     useCVStore();
   const currentIndex = TEMPLATES.findIndex((template) => template.id === selectedTemplate);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -114,6 +114,10 @@ export default function TemplateSelector() {
           <div className="template-panel">
             <div className="template-panel__inner">
               <div className="editor-section-heading">{t(language, 'templates')}</div>
+              {selectedTemplate === 'europass' && <label style={{ display: 'flex', alignItems: 'center', gap: '9px', marginBottom: '12px', padding: '10px 12px', border: '1px solid var(--clr-border)', borderRadius: '10px', color: 'var(--clr-text)', fontSize: '12px', cursor: 'pointer' }}>
+                <input type="checkbox" checked={showEuropassBranding ?? true} onChange={(event) => setShowEuropassBranding(event.target.checked)} />
+                <span>Show Europass logo and title</span>
+              </label>}
               <div className="template-list">
                 {TEMPLATES.map((template) => {
                   const isSelected = template.id === selectedTemplate;
@@ -194,8 +198,8 @@ function TemplatePreview({
   onDragStart: (regionKey: string, sectionId: string) => void;
   onDropSection: (sourceRegion: string, targetRegion: string, sectionId: string, targetIndex: number) => void;
 }) {
-  const { personalInfo, sections, selectedTemplate } = useCVStore();
-  const cvData = { personalInfo, sections, selectedTemplate, layoutOverride };
+  const { personalInfo, sections, selectedTemplate, showEuropassBranding } = useCVStore();
+  const cvData = { personalInfo, sections, selectedTemplate, layoutOverride, showEuropassBranding };
   const regionLabels = Object.fromEntries(
     getTemplateLayoutPreset(selectedTemplate).regions.map((region) => [region.key, region.label]),
   );

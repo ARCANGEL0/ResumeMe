@@ -23,6 +23,8 @@ const defaultPersonalInfo: PersonalInfo = {
   email: '',
   phone: '',
   location: '',
+  nationality: '',
+  gender: '',
   summary: '',
   photo: '',
   dateOfBirth: '',
@@ -91,6 +93,7 @@ interface CVStore extends CVData {
   // Template
   setTemplate: (templateId: TemplateId) => void;
   setTemplateLayout: (templateId: TemplateId, layout: TemplateLayoutState) => void;
+  setShowEuropassBranding: (show: boolean) => void;
 }
 // edited func. diff -> now supports persistance saving on local browser cache.
 export const useCVStore = create<CVStore>()(
@@ -99,6 +102,7 @@ export const useCVStore = create<CVStore>()(
   personalInfo: defaultPersonalInfo,
   sections: defaultSections,
   selectedTemplate: 'north',
+  showEuropassBranding: true,
   templateLayouts: {},
   currentView: 'landing',
   language: DEFAULT_LANGUAGE,
@@ -111,6 +115,7 @@ export const useCVStore = create<CVStore>()(
       personalInfo: nextDocument.personalInfo,
       sections: nextDocument.sections,
       selectedTemplate: nextDocument.selectedTemplate,
+      showEuropassBranding: nextDocument.showEuropassBranding ?? true,
       templateLayouts: {},
       currentView: view,
     });
@@ -276,6 +281,7 @@ export const useCVStore = create<CVStore>()(
   },
 
   setTemplate: (templateId) => set({ selectedTemplate: templateId }),
+  setShowEuropassBranding: (show) => set({ showEuropassBranding: show }),
   setTemplateLayout: (templateId, layout) =>
     set((state) => ({
       templateLayouts: {
