@@ -108,12 +108,12 @@ const sections: CVSection[] = [
     type: 'skills',
     title: 'Skills',
     entries: [
-      { id: id('entry'), fields: { name: 'TypeScript', level: 'expert' } },
-      { id: id('entry'), fields: { name: 'React', level: 'expert' } },
-      { id: id('entry'), fields: { name: 'Node.js', level: 'advanced' } },
-      { id: id('entry'), fields: { name: 'PostgreSQL', level: 'advanced' } },
-      { id: id('entry'), fields: { name: 'Kubernetes', level: 'intermediate' } },
-      { id: id('entry'), fields: { name: 'Go', level: 'intermediate' } },
+      { id: id('entry'), fields: { name: 'TypeScript', level: '5' } },
+      { id: id('entry'), fields: { name: 'React', level: '5' } },
+      { id: id('entry'), fields: { name: 'Node.js', level: '4' } },
+      { id: id('entry'), fields: { name: 'PostgreSQL', level: '4' } },
+      { id: id('entry'), fields: { name: 'Kubernetes', level: '3' } },
+      { id: id('entry'), fields: { name: 'Go', level: '3' } },
     ],
   },
   {

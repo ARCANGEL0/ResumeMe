@@ -39,11 +39,7 @@ function getFieldType(key: string): 'text' | 'textarea' | 'date' | 'month' {
 
 function getFieldOptions(key: string, value: string) {
   if (key === 'level') {
-    const options = ['1', '2', '3', '4', '5'].map((level) => ({ label: level, value: level }));
-    if (value && !['1', '2', '3', '4', '5'].includes(value)) {
-      return [{ label: value, value }, ...options];
-    }
-    return options;
+    return ['1', '2', '3', '4', '5'].map((level) => ({ label: level, value: level }));
   }
   if (key !== 'proficiency') return undefined;
   const options = LANGUAGE_PROFICIENCY_OPTIONS.map((level) => ({

@@ -24,7 +24,7 @@ export default function Europass({ data, layoutEditor }: { data: CVData; layoutE
   const name = personalInfo.fullName || t(language, 'fullName');
   const showBranding = data.showEuropassBranding ?? true;
   const birthDate = formatEuropassDate(personalInfo.dateOfBirth || '');
-  const details = [
+  const details: Array<{ key: string; label: string; value: string; href?: string }> = [
     { key: 'dateOfBirth', label: t(language, 'dateOfBirth'), value: birthDate },
     { key: 'nationality', label: 'Nationality', value: personalInfo.nationality || '' },
     { key: 'gender', label: 'Gender', value: personalInfo.gender || '' },
