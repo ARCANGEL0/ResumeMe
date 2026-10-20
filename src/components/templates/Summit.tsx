@@ -4,7 +4,7 @@ import { useCVStore } from '../../store/cvStore';
 import type { CVData, CVEntry, CVSection } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
-import { getContactItems, getEntryDate, getEntryDetailLines, getEntrySubtitle, getEntryTitle, toExternalHref } from './templateUtils';
+import { getContactItems, getEntryDate, getEntryDetailLines, getEntrySubtitle, getEntryTitle, getResumeRole, toExternalHref } from './templateUtils';
 import { CustomSectionRegion, LinkedText, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
 export default function Summit({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
@@ -15,8 +15,7 @@ export default function Summit({ data, layoutEditor }: { data: CVData; layoutEdi
   const mainSections = getSectionsForRegion(sections, layout, 'main');
   const sideSections = getSectionsForRegion(sections, layout, 'side');
   const name = personalInfo.fullName || t(language, 'fullName');
-  const role = sections.find((section) => section.type === 'experience')?.entries
-    .map((entry) => entry.fields.position?.trim()).find(Boolean) ?? '';
+  const role = getResumeRole(personalInfo);
   const contacts = getContactItems(personalInfo, language);
   const orderedContacts = [
     ...contacts.filter((item) => item.key === 'location'),

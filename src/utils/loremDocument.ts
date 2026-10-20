@@ -21,6 +21,7 @@ const LOREM_PHOTO =
 
 const personalInfo: PersonalInfo = {
   fullName: 'John Doe',
+  role: 'Senior Product Engineer',
   email: 'john.doe@example.com',
   phone: '+1 (415) 555-0132',
   location: 'San Francisco, CA',

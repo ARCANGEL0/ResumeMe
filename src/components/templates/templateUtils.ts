@@ -19,6 +19,10 @@ export interface ContactItem {
   type: 'core' | 'social';
 }
 
+export function getResumeRole(personalInfo: PersonalInfo): string {
+  return personalInfo.role?.trim() ?? '';
+}
+
 const CORE_ICONS = {
   email: 'email',
   phone: 'phone',

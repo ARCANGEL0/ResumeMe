@@ -4,7 +4,7 @@ import type { CVData, CVSection } from '../../types/cv';
 import ContactIcon from '../../ui/ContactIcon';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
-import { getContactItems, getSkillLevelScore } from './templateUtils';
+import { getContactItems, getResumeRole, getSkillLevelScore } from './templateUtils';
 import { CustomSectionRegion, LinkedText, SectionBlockBody, type TemplateLayoutEditor } from './templateComponents';
 
 export default function Bulletin({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
@@ -16,7 +16,7 @@ export default function Bulletin({ data, layoutEditor }: { data: CVData; layoutE
   const skills = getSectionsForRegion(sections, layout, 'side');
   const lower = getSectionsForRegion(sections, layout, 'bottom');
   const name = personalInfo.fullName || t(language, 'fullName');
-  const role = sections.find((section) => section.type === 'experience')?.entries.map((entry) => entry.fields.position?.trim()).find(Boolean) ?? '';
+  const role = getResumeRole(personalInfo);
   const contacts = getContactItems(personalInfo, language);
   const contactRow = (item: typeof contacts[number]) => <div key={item.key} style={{ display: 'flex', alignItems: 'center', gap: 9, marginTop: 5, fontSize: 11.5, lineHeight: 1.35 }}><ContactIcon name={item.icon} style={{ width: 17, height: 17, flexShrink: 0 }} /><LinkedText href={item.href}>{item.value}</LinkedText></div>;
 

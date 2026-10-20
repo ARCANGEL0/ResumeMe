@@ -28,6 +28,7 @@ export interface SocialLink {
 
 export interface PersonalInfo {
   fullName: string;
+  role?: string;
   email: string;
   phone: string;
   location: string;

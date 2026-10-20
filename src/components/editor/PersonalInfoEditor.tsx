@@ -98,6 +98,12 @@ export default function PersonalInfoEditor() {
           placeholder={t(language, 'professionalSummaryPlaceholder')}
           className="editor-field--full"
         />
+        <FieldEditor
+          label={t(language, 'role')}
+          value={personalInfo.role || ''}
+          onChange={(value) => updatePersonalInfo('role', value)}
+          className="editor-field--full"
+        />
       </div>
 
       <div className="editor-socials">

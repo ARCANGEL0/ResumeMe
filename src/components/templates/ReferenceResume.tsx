@@ -4,7 +4,7 @@ import { useCVStore } from '../../store/cvStore';
 import type { CVData, CVSection, TemplateId } from '../../types/cv';
 import { TEMPLATE_THEMES, type TemplateTheme } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
-import { getContactItems, getEntryDate, getEntryDetailLines, getEntrySubtitle, getEntryTitle } from './templateUtils';
+import { getContactItems, getEntryDate, getEntryDetailLines, getEntrySubtitle, getEntryTitle, getResumeRole } from './templateUtils';
 import {
   ContactPanel,
   CustomSectionRegion,
@@ -52,7 +52,7 @@ export default function ReferenceResume({ data, layoutEditor, template }: Props)
   const layout = ensureTemplateLayout(template, data.layoutOverride, sections);
   const theme = { ...TEMPLATE_THEMES[template], ...PALETTES[template] };
   const name = personalInfo.fullName || t(language, 'fullName');
-  const role = getPrimaryRole(sections);
+  const role = getResumeRole(personalInfo);
   const summary = personalInfo.summary.trim();
   const contacts = getContactItems(personalInfo, language);
   const region = (key: string) => getSectionsForRegion(sections, layout, key);
@@ -404,11 +404,6 @@ export default function ReferenceResume({ data, layoutEditor, template }: Props)
   }
 
   return <div style={{ ...page, display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 190px', gap: '28px' }}><main><h1 style={{ marginTop: 0, color: 'inherit' }}>{name}</h1>{role && <div>{role}</div>}{profile()}{column('main')}</main><aside>{contact()}{column('side')}</aside></div>;
-}
-
-function getPrimaryRole(sections: CVSection[]) {
-  const experience = sections.find((section) => section.type === 'experience');
-  return experience?.entries.map((entry) => entry.fields.position?.trim()).find(Boolean) ?? '';
 }
 
 function HexonSectionHeading({ title, type }: { title: string; type: CVSection['type'] | 'profile' | 'contact' }) {

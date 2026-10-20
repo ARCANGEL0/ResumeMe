@@ -3,7 +3,7 @@ import { t } from '../../i18n';
 import { useCVStore } from '../../store/cvStore';
 import type { CVData, CVSection } from '../../types/cv';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
-import { getContactItems, getEntryDate, getEntrySubtitle, getEntryTitle } from './templateUtils';
+import { getContactItems, getEntryDate, getEntrySubtitle, getEntryTitle, getResumeRole } from './templateUtils';
 import { CustomSectionRegion, type TemplateLayoutEditor } from './templateComponents';
 
 export default function Studio({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
@@ -14,7 +14,7 @@ export default function Studio({ data, layoutEditor }: { data: CVData; layoutEdi
   const additional = getSectionsForRegion(sections, layout, 'side');
   const contacts = getContactItems(personalInfo, language);
   const name = personalInfo.fullName || t(language, 'fullName');
-  const role = sections.find((section) => section.type === 'experience')?.entries.map((entry) => entry.fields.position?.trim()).find(Boolean) ?? '';
+  const role = getResumeRole(personalInfo);
 
   return (
     <div style={{ minHeight: '297mm', padding: '32px 42px 42px', background: '#fff', color: '#252b33', fontFamily: "'IBM Plex Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace", fontSize: 11.5, lineHeight: 1.65 }}>

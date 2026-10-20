@@ -20,6 +20,7 @@ const genId = () => `id-${Date.now()}-${nextId++}`;
 
 const defaultPersonalInfo: PersonalInfo = {
   fullName: '',
+  role: '',
   email: '',
   phone: '',
   location: '',

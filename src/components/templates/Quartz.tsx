@@ -3,7 +3,7 @@ import { useCVStore } from '../../store/cvStore';
 import type { CVData } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
-import { getContactItems } from './templateUtils';
+import { getContactItems, getResumeRole } from './templateUtils';
 import { ContactPanel, PhotoFrame, SectionColumn, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
 export default function Quartz({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
@@ -32,8 +32,7 @@ export default function Quartz({ data, layoutEditor }: { data: CVData; layoutEdi
   const sideSections = getSectionsForRegion(sections, layout, 'side');
   const contacts = getContactItems(personalInfo, language);
   const name = personalInfo.fullName || t(language, 'fullName');
-  const role = sections.find((section) => section.type === 'experience')?.entries
-    .map((entry) => entry.fields.position?.trim()).find(Boolean) ?? '';
+  const role = getResumeRole(personalInfo);
   const summary = personalInfo.summary.trim();
 
   return (

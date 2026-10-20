@@ -4,7 +4,7 @@ import { useCVStore } from '../../store/cvStore';
 import type { CVData, CVEntry, CVSection } from '../../types/cv';
 import { TEMPLATE_THEMES, type TemplateTheme } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
-import { getContactItems, getEntryDate, getEntryDetailLines, getEntrySubtitle, getEntryTitle } from './templateUtils';
+import { getContactItems, getEntryDate, getEntryDetailLines, getEntrySubtitle, getEntryTitle, getResumeRole } from './templateUtils';
 import { ContactPanel, CustomSectionRegion, SectionBlockBody, SectionColumn, SectionHeading, type TemplateLayoutEditor } from './templateComponents';
 
 interface Props {
@@ -117,9 +117,7 @@ export default function Minimal({ data, layoutEditor }: Props) {
   const { personalInfo, sections } = data;
   const layout = ensureTemplateLayout('minimal', data.layoutOverride, sections);
   const displayName = personalInfo.fullName || t(language, 'fullName');
-  const role = sections
-    .find((section) => section.type === 'experience')
-    ?.entries.find((entry) => entry.fields.position?.trim())?.fields.position?.trim() ?? '';
+  const role = getResumeRole(personalInfo);
   const contactItems = getContactItems(personalInfo, language);
   const lowerLeftSections = getSectionsForRegion(sections, layout, 'lowerLeft');
   const lowerMiddleSections = getSectionsForRegion(sections, layout, 'lowerMiddle');

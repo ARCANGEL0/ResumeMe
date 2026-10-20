@@ -3,7 +3,7 @@ import { useCVStore } from '../../store/cvStore';
 import type { CVData } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
-import { getContactItems } from './templateUtils';
+import { getContactItems, getResumeRole } from './templateUtils';
 import { ContactPanel, PhotoFrame, SectionColumn, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
 export default function Editorial({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
@@ -15,7 +15,7 @@ export default function Editorial({ data, layoutEditor }: { data: CVData; layout
   const middleSections = getSectionsForRegion(sections, layout, 'middle');
   const rightSections = getSectionsForRegion(sections, layout, 'right');
   const name = personalInfo.fullName || t(language, 'fullName');
-  const role = sections.find((section) => section.type === 'experience')?.entries.map((entry) => entry.fields.position?.trim()).find(Boolean) ?? '';
+  const role = getResumeRole(personalInfo);
   const summary = personalInfo.summary.trim();
   const contacts = getContactItems(personalInfo, language);
 

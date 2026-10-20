@@ -55,6 +55,7 @@
     "language": "Idioma",
     "remove": "Remover",
     "company": "Empresa",
+    "role": "Cargo",
     "position": "Cargo",
     "startDate": "Data de Início",
     "endDate": "Data de Fim",

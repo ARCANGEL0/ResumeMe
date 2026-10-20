@@ -19,6 +19,7 @@
     "showOnlyStartDate": "시작일만 표시",
     "showOnlyEndDate": "종료일만 표시",
     "company": "회사",
+    "role": "직책",
     "position": "직책",
     "startDate": "시작일",
     "endDate": "종료일",

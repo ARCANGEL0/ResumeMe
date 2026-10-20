@@ -4,7 +4,7 @@ import type { CVData } from '../../types/cv';
 import ContactIcon from '../../ui/ContactIcon';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
-import { getContactItems } from './templateUtils';
+import { getContactItems, getResumeRole } from './templateUtils';
 import { LinkedText, PhotoFrame, SectionColumn, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
 export default function North({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
@@ -15,6 +15,7 @@ export default function North({ data, layoutEditor }: { data: CVData; layoutEdit
   const mainSections = getSectionsForRegion(sections, layout, 'main');
   const sideSections = getSectionsForRegion(sections, layout, 'sidebar');
   const name = personalInfo.fullName || t(language, 'fullName');
+  const role = getResumeRole(personalInfo);
   const contacts = getContactItems(personalInfo, language);
   const core = contacts.filter((item) => item.type === 'core');
   const socials = contacts.filter((item) => item.type === 'social');
@@ -32,7 +33,7 @@ export default function North({ data, layoutEditor }: { data: CVData; layoutEdit
       <header style={{ display: 'grid', gridTemplateColumns: personalInfo.photo ? 'minmax(0,1fr) 106px' : 'minmax(0,1fr)', gap: 22, alignItems: 'center', padding: '7px 0 21px', borderBottom: '2px solid #383838' }}>
         <div>
           <h1 style={{ margin: 0, color: '#363636', fontSize: 31, fontWeight: 400, lineHeight: 1.05, letterSpacing: '.12em', textTransform: 'uppercase', overflowWrap: 'anywhere' }}>{name}</h1>
-          {sections.find((section) => section.type === 'experience')?.entries.map((entry) => entry.fields.position?.trim()).find(Boolean) && <div style={{ marginTop: 7, color: '#444', fontSize: 11, fontWeight: 600, letterSpacing: '.2em', textTransform: 'uppercase' }}>{sections.find((section) => section.type === 'experience')?.entries.map((entry) => entry.fields.position?.trim()).find(Boolean)}</div>}
+          {role && <div style={{ marginTop: 7, color: '#444', fontSize: 11, fontWeight: 600, letterSpacing: '.2em', textTransform: 'uppercase' }}>{role}</div>}
         </div>
         {personalInfo.photo && <div style={{ justifySelf: 'end' }}><PhotoFrame photo={personalInfo.photo} size={102} radius="50%" border="1px solid #595959" /></div>}
       </header>
