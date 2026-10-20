@@ -96,7 +96,13 @@
     "removePhoto": "삭제",
     "dropHere": "여기에 놓기",
     "dateOfBirth": "생년월일",
-    "born": "출생"
+    "born": "출생",
+    "draft": "초안",
+    "saveModel": "모델 저장",
+    "modelSave": "저장",
+    "modelCancel": "취소",
+    "noSavedModels": "저장된 모델이 아직 없습니다",
+    "modelsUnavailable": "이 브라우저에서 저장된 모델을 사용할 수 없습니다"
   },
   "sectionTitles": {
     "education": "교육",

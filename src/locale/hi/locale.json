@@ -97,7 +97,13 @@
     "removePhoto": "हटाएँ",
     "dropHere": "यहाँ छोड़ें",
     "dateOfBirth": "जन्म तिथि",
-    "born": "जन्म"
+    "born": "जन्म",
+    "draft": "मसौदा",
+    "saveModel": "मॉडल सहेजें",
+    "modelSave": "सहेजें",
+    "modelCancel": "रद्द करें",
+    "noSavedModels": "अभी तक कोई मॉडल सहेजा नहीं गया है",
+    "modelsUnavailable": "इस ब्राउज़र में सहेजे गए मॉडल उपलब्ध नहीं हैं"
   },
   "sectionTitles": {
     "experience": "अनुभव",

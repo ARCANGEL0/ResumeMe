@@ -96,7 +96,13 @@
     "removePhoto": "Verwijderen",
     "dropHere": "Hier neerzetten",
     "dateOfBirth": "Geboortedatum",
-    "born": "Geboren op"
+    "born": "Geboren op",
+    "draft": "Concept",
+    "saveModel": "Model opslaan",
+    "modelSave": "Opslaan",
+    "modelCancel": "Annuleren",
+    "noSavedModels": "Nog geen opgeslagen modellen",
+    "modelsUnavailable": "Opgeslagen modellen zijn niet beschikbaar in deze browser"
   },
   "sectionTitles": {
     "education": "Opleiding",

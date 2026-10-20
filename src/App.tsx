@@ -3,6 +3,7 @@ import LandingPage from './components/landing/LandingPage';
 import EditorPanel from './components/editor/EditorPanel';
 import PreviewPanel from './components/preview/PreviewPanel';
 import ResumeMark from './ui/ResumeMark';
+import ResumeModelSelector from './ui/ResumeModelSelector';
 import TemplateSelector from './components/templates/TemplateSelector';
 import LanguageSelector from './ui/LanguageSelector';
 import { t } from './i18n';
@@ -83,7 +84,8 @@ export default function App() {
         </div>
 
         {/* Language selector inside header on mobile */}
-        <div className="topbar__language-mobile">
+        <div className="topbar__language-mobile topbar__selectors no-print">
+          <ResumeModelSelector />
           <LanguageSelector className="language-fab no-print" />
         </div>
       </header>

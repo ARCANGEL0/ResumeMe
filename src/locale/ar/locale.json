@@ -96,7 +96,13 @@
     "removePhoto": "إزالة",
     "dropHere": "أفلت هنا",
     "dateOfBirth": "تاريخ الميلاد",
-    "born": "مواليد"
+    "born": "مواليد",
+    "draft": "مسودة",
+    "saveModel": "حفظ النموذج",
+    "modelSave": "حفظ",
+    "modelCancel": "إلغاء",
+    "noSavedModels": "لا توجد نماذج محفوظة بعد",
+    "modelsUnavailable": "النماذج المحفوظة غير متاحة في هذا المتصفح"
   },
   "sectionTitles": {
     "education": "التعليم",

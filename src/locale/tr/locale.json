@@ -96,7 +96,13 @@
     "removePhoto": "Kaldır",
     "dropHere": "Buraya bırak",
     "dateOfBirth": "Doğum tarihi",
-    "born": "Doğum"
+    "born": "Doğum",
+    "draft": "Taslak",
+    "saveModel": "Modeli kaydet",
+    "modelSave": "Kaydet",
+    "modelCancel": "İptal",
+    "noSavedModels": "Henüz kaydedilmiş model yok",
+    "modelsUnavailable": "Kaydedilmiş modeller bu tarayıcıda kullanılamıyor"
   },
   "sectionTitles": {
     "education": "Eğitim",

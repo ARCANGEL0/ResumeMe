@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "ಇಲ್ಲಿ ಬಿಡಿ",
     "dateOfBirth": "ಹುಟ್ಟಿದ ದಿನಾಂಕ",
-    "born": "ಜನನ"
+    "born": "ಜನನ",
+    "draft": "ಕರಡು",
+    "saveModel": "ಮಾದರಿಯನ್ನು ಉಳಿಸಿ",
+    "modelSave": "ಉಳಿಸಿ",
+    "modelCancel": "ರದ್ದು",
+    "noSavedModels": "ಇನ್ನೂ ಉಳಿಸಿದ ಮಾದರಿಗಳಿಲ್ಲ",
+    "modelsUnavailable": "ಈ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಉಳಿಸಿದ ಮಾದರಿಗಳು ಲಭ್ಯವಿಲ್ಲ"
   },
   "sectionTitles": {
     "experience": "ಅನುಭವ",

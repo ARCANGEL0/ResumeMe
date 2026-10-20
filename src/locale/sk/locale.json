@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "Presunúť sem",
     "dateOfBirth": "Dátum narodenia",
-    "born": "Nar."
+    "born": "Nar.",
+    "draft": "Koncept",
+    "saveModel": "Uložiť model",
+    "modelSave": "Uložiť",
+    "modelCancel": "Zrušiť",
+    "noSavedModels": "Zatiaľ žiadne uložené modely",
+    "modelsUnavailable": "Uložené modely nie sú v tomto prehliadači dostupné"
   },
   "sectionTitles": {
     "experience": "Skúsenosti",

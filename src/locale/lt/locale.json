@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "Numesti čia",
     "dateOfBirth": "Gimimo data",
-    "born": "Gimė"
+    "born": "Gimė",
+    "draft": "Juodraštis",
+    "saveModel": "Išsaugoti modelį",
+    "modelSave": "Išsaugoti",
+    "modelCancel": "Atšaukti",
+    "noSavedModels": "Išsaugotų modelių dar nėra",
+    "modelsUnavailable": "Išsaugoti modeliai šioje naršyklėje nepasiekiami"
   },
   "sectionTitles": {
     "experience": "Patirtis",

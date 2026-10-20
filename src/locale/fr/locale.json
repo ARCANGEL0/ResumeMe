@@ -98,7 +98,13 @@
     "removePhoto": "Retirer",
     "dropHere": "Déposer ici",
     "dateOfBirth": "Date de naissance",
-    "born": "Né le"
+    "born": "Né le",
+    "draft": "Brouillon",
+    "saveModel": "Enregistrer le modèle",
+    "modelSave": "Enregistrer",
+    "modelCancel": "Annuler",
+    "noSavedModels": "Aucun modèle enregistré pour le moment",
+    "modelsUnavailable": "Les modèles enregistrés ne sont pas disponibles dans ce navigateur"
   },
   "sectionTitles": {
     "education": "Formation",

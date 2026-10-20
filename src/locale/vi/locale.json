@@ -97,7 +97,13 @@
     "removePhoto": "Xóa",
     "dropHere": "Thả vào đây",
     "dateOfBirth": "Ngày sinh",
-    "born": "Sinh"
+    "born": "Sinh",
+    "draft": "Bản nháp",
+    "saveModel": "Lưu mẫu",
+    "modelSave": "Lưu",
+    "modelCancel": "Hủy",
+    "noSavedModels": "Chưa có mẫu nào được lưu",
+    "modelsUnavailable": "Các mẫu đã lưu không khả dụng trong trình duyệt này"
   },
   "sectionTitles": {
     "experience": "Kinh nghiệm",

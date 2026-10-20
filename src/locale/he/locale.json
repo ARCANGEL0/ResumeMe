@@ -97,7 +97,13 @@
     "removePhoto": "הסרה",
     "dropHere": "שחרר כאן",
     "dateOfBirth": "תאריך לידה",
-    "born": "נולד"
+    "born": "נולד",
+    "draft": "טיוטה",
+    "saveModel": "שמירת דגם",
+    "modelSave": "שמור",
+    "modelCancel": "ביטול",
+    "noSavedModels": "אין דגמים שמורים עדיין",
+    "modelsUnavailable": "דגמים שמורים אינם זמינים בדפדפן זה"
   },
   "sectionTitles": {
     "experience": "ניסיון",

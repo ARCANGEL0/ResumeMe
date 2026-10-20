@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "Spusti tukaj",
     "dateOfBirth": "Datum rojstva",
-    "born": "Rojen"
+    "born": "Rojen",
+    "draft": "Osnutek",
+    "saveModel": "Shrani model",
+    "modelSave": "Shrani",
+    "modelCancel": "Prekliči",
+    "noSavedModels": "Za zdaj ni shranjenih modelov",
+    "modelsUnavailable": "Shranjeni modeli v tem brskalniku niso na voljo"
   },
   "sectionTitles": {
     "experience": "Izkušnje",

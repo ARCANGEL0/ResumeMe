@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "اینجا رها کنید",
     "dateOfBirth": "تاریخ تولد",
-    "born": "متولد"
+    "born": "متولد",
+    "draft": "پیش‌نویس",
+    "saveModel": "ذخیره مدل",
+    "modelSave": "ذخیره",
+    "modelCancel": "لغو",
+    "noSavedModels": "هنوز مدلی ذخیره نشده است",
+    "modelsUnavailable": "مدل‌های ذخیره‌شده در این مرورگر در دسترس نیستند"
   },
   "sectionTitles": {
     "experience": "تجربه",

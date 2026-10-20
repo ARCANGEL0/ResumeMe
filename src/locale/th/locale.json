@@ -97,7 +97,13 @@
     "removePhoto": "ลบ",
     "dropHere": "วางที่นี่",
     "dateOfBirth": "วันเกิด",
-    "born": "เกิด"
+    "born": "เกิด",
+    "draft": "ฉบับร่าง",
+    "saveModel": "บันทึกโมเดล",
+    "modelSave": "บันทึก",
+    "modelCancel": "ยกเลิก",
+    "noSavedModels": "ยังไม่มีโมเดลที่บันทึกไว้",
+    "modelsUnavailable": "โมเดลที่บันทึกไว้ไม่พร้อมใช้งานในเบราว์เซอร์นี้"
   },
   "sectionTitles": {
     "experience": "ประสบการณ์",

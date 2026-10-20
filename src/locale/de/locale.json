@@ -98,7 +98,13 @@
     "removePhoto": "Entfernen",
     "dropHere": "Hier ablegen",
     "dateOfBirth": "Geburtsdatum",
-    "born": "Geboren am"
+    "born": "Geboren am",
+    "draft": "Entwurf",
+    "saveModel": "Modell speichern",
+    "modelSave": "Speichern",
+    "modelCancel": "Abbrechen",
+    "noSavedModels": "Noch keine gespeicherten Modelle",
+    "modelsUnavailable": "Gespeicherte Modelle sind in diesem Browser nicht verfügbar"
   },
   "sectionTitles": {
     "education": "Ausbildung",

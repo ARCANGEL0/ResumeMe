@@ -98,7 +98,13 @@
     "removePhoto": "Ta bort",
     "dropHere": "Släpp här",
     "dateOfBirth": "Födelsedatum",
-    "born": "Född"
+    "born": "Född",
+    "draft": "Utkast",
+    "saveModel": "Spara modell",
+    "modelSave": "Spara",
+    "modelCancel": "Avbryt",
+    "noSavedModels": "Inga sparade modeller ännu",
+    "modelsUnavailable": "Sparade modeller är inte tillgängliga i den här webbläsaren"
   },
   "sectionTitles": {
     "experience": "Erfarenhet",

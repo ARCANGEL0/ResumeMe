@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "یہاں چھوڑیں",
     "dateOfBirth": "تاریخ پیدائش",
-    "born": "پیدائش"
+    "born": "پیدائش",
+    "draft": "مسودہ",
+    "saveModel": "ماڈل محفوظ کریں",
+    "modelSave": "محفوظ کریں",
+    "modelCancel": "منسوخ کریں",
+    "noSavedModels": "ابھی تک کوئی محفوظ شدہ ماڈل نہیں",
+    "modelsUnavailable": "اس براؤزر میں محفوظ شدہ ماڈل دستیاب نہیں ہیں"
   },
   "sectionTitles": {
     "experience": "تجربہ",

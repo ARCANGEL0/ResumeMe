@@ -99,7 +99,13 @@
     "removePhoto": "Remove",
     "dropHere": "Drop here",
     "dateOfBirth": "Date of birth",
-    "born": "Born"
+    "born": "Born",
+    "draft": "Draft",
+    "saveModel": "Save model",
+    "modelSave": "Save",
+    "modelCancel": "Cancel",
+    "noSavedModels": "No saved models yet",
+    "modelsUnavailable": "Saved models are unavailable in this browser"
   },
   "sectionTitles": {
     "education": "Education",

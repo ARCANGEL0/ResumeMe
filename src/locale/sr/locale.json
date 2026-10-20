@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "Испусти овде",
     "dateOfBirth": "Датум рођења",
-    "born": "Рођен"
+    "born": "Рођен",
+    "draft": "Нацрт",
+    "saveModel": "Сачувај модел",
+    "modelSave": "Сачувај",
+    "modelCancel": "Откажи",
+    "noSavedModels": "Још нема сачуваних модела",
+    "modelsUnavailable": "Сачувани модели нису доступни у овом прегледачу"
   },
   "sectionTitles": {
     "experience": "Искуство",

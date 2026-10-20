@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "Ide húzza",
     "dateOfBirth": "Születési dátum",
-    "born": "Szül."
+    "born": "Szül.",
+    "draft": "Piszkozat",
+    "saveModel": "Modell mentése",
+    "modelSave": "Mentés",
+    "modelCancel": "Mégse",
+    "noSavedModels": "Még nincsenek mentett modellek",
+    "modelsUnavailable": "A mentett modellek nem érhetők el ebben a böngészőben"
   },
   "sectionTitles": {
     "experience": "Tapasztalat",

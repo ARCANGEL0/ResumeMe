@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "Пуснете тук",
     "dateOfBirth": "Дата на раждане",
-    "born": "Роден"
+    "born": "Роден",
+    "draft": "Чернова",
+    "saveModel": "Запази модел",
+    "modelSave": "Запази",
+    "modelCancel": "Отказ",
+    "noSavedModels": "Все още няма запазени модели",
+    "modelsUnavailable": "Запазените модели не са налични в този браузър"
   },
   "sectionTitles": {
     "experience": "Опит",

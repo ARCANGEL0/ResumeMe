@@ -97,7 +97,13 @@
     "removePhoto": "Odebrat",
     "dropHere": "Přetáhnout sem",
     "dateOfBirth": "Datum narození",
-    "born": "Nar."
+    "born": "Nar.",
+    "draft": "Koncept",
+    "saveModel": "Uložit model",
+    "modelSave": "Uložit",
+    "modelCancel": "Zrušit",
+    "noSavedModels": "Zatím žádné uložené modely",
+    "modelsUnavailable": "Uložené modely nejsou v tomto prohlížeči dostupné"
   },
   "sectionTitles": {
     "experience": "Zkušenosti",

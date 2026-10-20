@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "Kukuta siia",
     "dateOfBirth": "Sünnikuupäev",
-    "born": "Sündinud"
+    "born": "Sündinud",
+    "draft": "Mustand",
+    "saveModel": "Salvesta mudel",
+    "modelSave": "Salvesta",
+    "modelCancel": "Tühista",
+    "noSavedModels": "Salvestatud mudeleid veel pole",
+    "modelsUnavailable": "Salvestatud mudelid pole selles brauseris saadaval"
   },
   "sectionTitles": {
     "experience": "Kogemus",

@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "येथे सोडा",
     "dateOfBirth": "जन्मतारीख",
-    "born": "जन्म"
+    "born": "जन्म",
+    "draft": "मसुदा",
+    "saveModel": "मॉडेल जतन करा",
+    "modelSave": "जतन करा",
+    "modelCancel": "रद्द करा",
+    "noSavedModels": "अद्याप कोणतेही मॉडेल जतन केलेले नाहीत",
+    "modelsUnavailable": "या ब्राउझरमध्ये जतन केलेले मॉडेल उपलब्ध नाहीत"
   },
   "sectionTitles": {
     "experience": "अनुभव",

@@ -102,7 +102,13 @@
     "removePhoto": "Quitar",
     "dropHere": "Soltar aquí",
     "dateOfBirth": "Fecha de nacimiento",
-    "born": "Nacido el"
+    "born": "Nacido el",
+    "draft": "Borrador",
+    "saveModel": "Guardar modelo",
+    "modelSave": "Guardar",
+    "modelCancel": "Cancelar",
+    "noSavedModels": "Aún no hay modelos guardados",
+    "modelsUnavailable": "Los modelos guardados no están disponibles en este navegador"
   },
   "sectionTitles": {
     "education": "Educación",

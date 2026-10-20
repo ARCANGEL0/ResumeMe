@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "Dondosha hapa",
     "dateOfBirth": "Tarehe ya kuzaliwa",
-    "born": "Alizaliwa"
+    "born": "Alizaliwa",
+    "draft": "Rasimu",
+    "saveModel": "Hifadhi muundo",
+    "modelSave": "Hifadhi",
+    "modelCancel": "Ghairi",
+    "noSavedModels": "Bado hakuna miundo iliyohifadhiwa",
+    "modelsUnavailable": "Miundo iliyohifadhiwa haipatikani kwenye kivinjari hiki"
   },
   "sectionTitles": {
     "experience": "Uzoefu",

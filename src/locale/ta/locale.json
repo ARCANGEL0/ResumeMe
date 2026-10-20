@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "இங்கே விடவும்",
     "dateOfBirth": "பிறந்த தேதி",
-    "born": "பிறப்பு"
+    "born": "பிறப்பு",
+    "draft": "வரைவு",
+    "saveModel": "மாதிரியைச் சேமி",
+    "modelSave": "சேமி",
+    "modelCancel": "ரத்து",
+    "noSavedModels": "இதுவரை சேமித்த மாதிரிகள் இல்லை",
+    "modelsUnavailable": "இந்த உலாவியில் சேமித்த மாதிரிகளை அணுக முடியாது"
   },
   "sectionTitles": {
     "experience": "அனுபவம்",

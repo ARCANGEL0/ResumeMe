@@ -96,7 +96,13 @@
     "removePhoto": "Видалити",
     "dropHere": "Помістити сюди",
     "dateOfBirth": "Дата народження",
-    "born": "Нар."
+    "born": "Нар.",
+    "draft": "Чернетка",
+    "saveModel": "Зберегти модель",
+    "modelSave": "Зберегти",
+    "modelCancel": "Скасувати",
+    "noSavedModels": "Збережених моделей ще немає",
+    "modelsUnavailable": "Збережені моделі недоступні в цьому браузері"
   },
   "sectionTitles": {
     "education": "Освіта",

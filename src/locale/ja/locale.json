@@ -96,7 +96,13 @@
     "removePhoto": "削除",
     "dropHere": "ここにドロップ",
     "dateOfBirth": "生年月日",
-    "born": "生年月日"
+    "born": "生年月日",
+    "draft": "下書き",
+    "saveModel": "モデルを保存",
+    "modelSave": "保存",
+    "modelCancel": "キャンセル",
+    "noSavedModels": "保存済みモデルはありません",
+    "modelsUnavailable": "このブラウザーでは保存済みモデルを利用できません"
   },
   "sectionTitles": {
     "education": "学歴",

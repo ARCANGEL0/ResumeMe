@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "Nomest šeit",
     "dateOfBirth": "Dzimšanas datums",
-    "born": "Dzimis"
+    "born": "Dzimis",
+    "draft": "Melnraksts",
+    "saveModel": "Saglabāt modeli",
+    "modelSave": "Saglabāt",
+    "modelCancel": "Atcelt",
+    "noSavedModels": "Vēl nav saglabātu modeļu",
+    "modelsUnavailable": "Saglabātie modeļi šajā pārlūkā nav pieejami"
   },
   "sectionTitles": {
     "experience": "Pieredze",

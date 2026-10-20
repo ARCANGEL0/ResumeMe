@@ -96,7 +96,13 @@
     "removePhoto": "移除",
     "dropHere": "放到这里",
     "dateOfBirth": "出生日期",
-    "born": "出生"
+    "born": "出生",
+    "draft": "草稿",
+    "saveModel": "保存模型",
+    "modelSave": "保存",
+    "modelCancel": "取消",
+    "noSavedModels": "尚无已保存的模型",
+    "modelsUnavailable": "此浏览器中无法使用已保存的模型"
   },
   "sectionTitles": {
     "education": "教育",

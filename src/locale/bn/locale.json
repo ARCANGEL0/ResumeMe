@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "এখানে ছাড়ুন",
     "dateOfBirth": "জন্ম তারিখ",
-    "born": "জন্ম"
+    "born": "জন্ম",
+    "draft": "খসড়া",
+    "saveModel": "মডেল সংরক্ষণ",
+    "modelSave": "সংরক্ষণ",
+    "modelCancel": "বাতিল",
+    "noSavedModels": "এখনও কোনো সংরক্ষিত মডেল নেই",
+    "modelsUnavailable": "এই ব্রাউজারে সংরক্ষিত মডেলগুলি উপলব্ধ নয়"
   },
   "sectionTitles": {
     "experience": "অভিজ্ঞতা",

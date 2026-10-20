@@ -98,7 +98,13 @@
     "removePhoto": "Fjern",
     "dropHere": "Slipp her",
     "dateOfBirth": "Fødselsdato",
-    "born": "Født"
+    "born": "Født",
+    "draft": "Utkast",
+    "saveModel": "Lagre modell",
+    "modelSave": "Lagre",
+    "modelCancel": "Avbryt",
+    "noSavedModels": "Ingen lagrede modeller ennå",
+    "modelsUnavailable": "Lagrede modeller er ikke tilgjengelige i denne nettleseren"
   },
   "sectionTitles": {
     "experience": "Erfaring",

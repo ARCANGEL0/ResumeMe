@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "Lepaskan di sini",
     "dateOfBirth": "Tarikh lahir",
-    "born": "Lahir"
+    "born": "Lahir",
+    "draft": "Draf",
+    "saveModel": "Simpan model",
+    "modelSave": "Simpan",
+    "modelCancel": "Batal",
+    "noSavedModels": "Tiada model yang disimpan lagi",
+    "modelsUnavailable": "Model tersimpan tidak tersedia dalam pelayar ini"
   },
   "sectionTitles": {
     "experience": "Pengalaman",

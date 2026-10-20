@@ -98,7 +98,13 @@
     "removePhoto": "Fjern",
     "dropHere": "Slip her",
     "dateOfBirth": "Fødselsdato",
-    "born": "Født"
+    "born": "Født",
+    "draft": "Kladde",
+    "saveModel": "Gem model",
+    "modelSave": "Gem",
+    "modelCancel": "Annuller",
+    "noSavedModels": "Ingen gemte modeller endnu",
+    "modelsUnavailable": "Gemte modeller er ikke tilgængelige i denne browser"
   },
   "sectionTitles": {
     "experience": "Erfaring",

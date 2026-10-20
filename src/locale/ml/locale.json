@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "ഇവിടെ ഇടുക",
     "dateOfBirth": "ജനനത്തീയതി",
-    "born": "ജനനം"
+    "born": "ജനനം",
+    "draft": "കരട്",
+    "saveModel": "മോഡൽ സംരക്ഷിക്കുക",
+    "modelSave": "സംരക്ഷിക്കുക",
+    "modelCancel": "റദ്ദാക്കുക",
+    "noSavedModels": "ഇതുവരെ സംരക്ഷിച്ച മോഡലുകളില്ല",
+    "modelsUnavailable": "ഈ ബ്രൗസറിൽ സംരക്ഷിച്ച മോഡലുകൾ ലഭ്യമല്ല"
   },
   "sectionTitles": {
     "experience": "അനുഭവം",

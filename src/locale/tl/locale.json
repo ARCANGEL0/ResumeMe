@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "Ihulog dito",
     "dateOfBirth": "Petsa ng kapanganakan",
-    "born": "Ipinanganak"
+    "born": "Ipinanganak",
+    "draft": "Burador",
+    "saveModel": "I-save ang modelo",
+    "modelSave": "I-save",
+    "modelCancel": "Kanselahin",
+    "noSavedModels": "Wala pang naka-save na modelo",
+    "modelsUnavailable": "Hindi available sa browser na ito ang mga naka-save na modelo"
   },
   "sectionTitles": {
     "experience": "Karanasan",

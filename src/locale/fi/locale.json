@@ -97,7 +97,13 @@
     "removePhoto": "Poista",
     "dropHere": "Pudota tähän",
     "dateOfBirth": "Syntymäaika",
-    "born": "Syntynyt"
+    "born": "Syntynyt",
+    "draft": "Luonnos",
+    "saveModel": "Tallenna malli",
+    "modelSave": "Tallenna",
+    "modelCancel": "Peruuta",
+    "noSavedModels": "Tallennettuja malleja ei vielä ole",
+    "modelsUnavailable": "Tallennetut mallit eivät ole käytettävissä tässä selaimessa"
   },
   "sectionTitles": {
     "experience": "Kokemus",

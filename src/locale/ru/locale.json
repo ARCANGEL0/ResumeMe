@@ -96,7 +96,13 @@
     "removePhoto": "Удалить",
     "dropHere": "Поместить сюда",
     "dateOfBirth": "Дата рождения",
-    "born": "Род."
+    "born": "Род.",
+    "draft": "Черновик",
+    "saveModel": "Сохранить модель",
+    "modelSave": "Сохранить",
+    "modelCancel": "Отмена",
+    "noSavedModels": "Пока нет сохраненных моделей",
+    "modelsUnavailable": "Сохраненные модели недоступны в этом браузере"
   },
   "sectionTitles": {
     "education": "Образование",

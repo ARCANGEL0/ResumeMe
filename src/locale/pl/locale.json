@@ -96,7 +96,13 @@
     "removePhoto": "Usuń",
     "dropHere": "Upuść tutaj",
     "dateOfBirth": "Data urodzenia",
-    "born": "Ur."
+    "born": "Ur.",
+    "draft": "Wersja robocza",
+    "saveModel": "Zapisz model",
+    "modelSave": "Zapisz",
+    "modelCancel": "Anuluj",
+    "noSavedModels": "Brak zapisanych modeli",
+    "modelsUnavailable": "Zapisane modele są niedostępne w tej przeglądarce"
   },
   "sectionTitles": {
     "education": "Wykształcenie",

@@ -96,7 +96,13 @@
     "removePhoto": "Rimuovi",
     "dropHere": "Rilascia qui",
     "dateOfBirth": "Data di nascita",
-    "born": "Nato il"
+    "born": "Nato il",
+    "draft": "Bozza",
+    "saveModel": "Salva modello",
+    "modelSave": "Salva",
+    "modelCancel": "Annulla",
+    "noSavedModels": "Nessun modello salvato",
+    "modelsUnavailable": "I modelli salvati non sono disponibili in questo browser"
   },
   "sectionTitles": {
     "education": "Istruzione",

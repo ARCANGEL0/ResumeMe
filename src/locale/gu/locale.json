@@ -97,7 +97,13 @@
     "removePhoto": "Remove",
     "dropHere": "અહીં મૂકો",
     "dateOfBirth": "જન્મ તારીખ",
-    "born": "જન્મ"
+    "born": "જન્મ",
+    "draft": "મુસદ્દો",
+    "saveModel": "મોડેલ સાચવો",
+    "modelSave": "સાચવો",
+    "modelCancel": "રદ કરો",
+    "noSavedModels": "હજુ સુધી કોઈ મોડેલ સાચવ્યું નથી",
+    "modelsUnavailable": "આ બ્રાઉઝરમાં સાચવેલા મોડેલ ઉપલબ્ધ નથી"
   },
   "sectionTitles": {
     "experience": "અનુભવ",

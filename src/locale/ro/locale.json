@@ -97,7 +97,13 @@
     "removePhoto": "Elimină",
     "dropHere": "Plasați aici",
     "dateOfBirth": "Data nașterii",
-    "born": "Născut"
+    "born": "Născut",
+    "draft": "Ciornă",
+    "saveModel": "Salvează modelul",
+    "modelSave": "Salvează",
+    "modelCancel": "Anulează",
+    "noSavedModels": "Nu există încă modele salvate",
+    "modelsUnavailable": "Modelele salvate nu sunt disponibile în acest browser"
   },
   "sectionTitles": {
     "experience": "Experiență",
