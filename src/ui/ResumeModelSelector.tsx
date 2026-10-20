@@ -1,12 +1,21 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { t } from '../i18n';
 import { useCVStore } from '../store/cvStore';
-import type { CVData } from '../types/cv';
+import type { CVData, TemplateId, TemplateLayoutState } from '../types/cv';
 import { getResumeModels, saveResumeModel, type ResumeModel } from '../utils/resumeModels';
 import { useShallow } from 'zustand/react/shallow';
 
 export default function ResumeModelSelector() {
-  const { language, personalInfo, sections, selectedTemplate, showEuropassBranding, templateLayouts } = useCVStore(
+  const {
+    language,
+    personalInfo,
+    sections,
+    selectedTemplate,
+    showEuropassBranding,
+    templateLayouts,
+    loadDocument,
+    setTemplateLayout,
+  } = useCVStore(
     useShallow((state) => ({
       language: state.language,
       personalInfo: state.personalInfo,
@@ -14,6 +23,8 @@ export default function ResumeModelSelector() {
       selectedTemplate: state.selectedTemplate,
       showEuropassBranding: state.showEuropassBranding,
       templateLayouts: state.templateLayouts,
+      loadDocument: state.loadDocument,
+      setTemplateLayout: state.setTemplateLayout,
     }))
   );
   const [isOpen, setIsOpen] = useState(false);
@@ -80,6 +91,20 @@ export default function ResumeModelSelector() {
     }
   };
 
+  // Load a fresh copy so edits do not change the saved model.
+  const handleLoad = (mdl: ResumeModel) => {
+    loadDocument(mdl.data);
+    for (const templateId of Object.keys(mdl.templateLayouts) as TemplateId[]) {
+      const layout = mdl.templateLayouts[templateId];
+      if (!layout) continue;
+      const layoutCopy = Object.fromEntries(
+        Object.entries(layout).map(([region, sectionIds]) => [region, sectionIds ? [...sectionIds] : sectionIds])
+      ) as TemplateLayoutState;
+      setTemplateLayout(templateId, layoutCopy);
+    }
+    setIsOpen(false);
+  };
+
   return (
     <div ref={rootRef} className={`resume-model-picker ${isOpen ? 'is-open' : ''}`}>
       <button
@@ -110,18 +135,24 @@ export default function ResumeModelSelector() {
           <span>{t(language, 'saveModel')}</span>
         </button>
 
-        <div className="resume-model-picker__list" role="list">
+        <div className="resume-model-picker__list">
           {storageError ? (
             <p className="resume-model-picker__empty" role="status">{t(language, 'modelsUnavailable')}</p>
           ) : listaModelos.length ? (
             listaModelos.map((mdl) => (
-              <div key={mdl.id} className="resume-model-picker__model" role="listitem">
+              <button
+                key={mdl.id}
+                type="button"
+                className="resume-model-picker__model"
+                role="menuitem"
+                onClick={() => handleLoad(mdl)}
+              >
                 <ModelIcon />
                 <span>{mdl.name}</span>
-              </div>
+              </button>
             ))
           ) : (
-            <p className="resume-model-picker__empty">{t(language, 'noSavedModels')}</p>
+            <p className="resume-model-picker__empty" role="none">{t(language, 'noSavedModels')}</p>
           )}
         </div>
       </div>}
