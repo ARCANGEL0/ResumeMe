@@ -1008,6 +1008,44 @@ function SkillsSection({
     );
   }
 
+  if (theme.skillStyle === 'hexagons') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '9px', color: textColor }}>
+        {section.entries.map((entry) => {
+          const score = getSkillLevelScore(entry.fields.level || '');
+          const name = entry.fields.name || entry.fields.title;
+          return (
+            <div key={entry.id}>
+              <div style={{ marginBottom: '3px' }}>{name}</div>
+              {score > 0 && (
+                <span
+                  role="meter"
+                  aria-label={`${name} proficiency`}
+                  aria-valuemin={0}
+                  aria-valuemax={5}
+                  aria-valuenow={score}
+                  style={{ display: 'inline-flex', gap: '3px', verticalAlign: 'middle' }}
+                >
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <span
+                      key={index}
+                      style={{
+                        width: '8px',
+                        height: '7px',
+                        background: index < score ? fillColor : lineColor,
+                        clipPath: 'polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)',
+                      }}
+                    />
+                  ))}
+                </span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
   if (theme.skillStyle === 'dots' || theme.skillStyle === 'compact-dots') {
     const compact = theme.skillStyle === 'compact-dots';
 

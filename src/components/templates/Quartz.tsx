@@ -24,7 +24,7 @@ export default function Quartz({ data, layoutEditor }: { data: CVData; layoutEdi
     sidebarText: '#172a35',
     sectionHeading: 'bar' as const,
     entryStyle: 'plain' as const,
-    skillStyle: 'bars' as const,
+    skillStyle: 'hexagons' as const,
     languageStyle: 'words' as const,
   };
   const layout = ensureTemplateLayout('quartz', data.layoutOverride, sections);
