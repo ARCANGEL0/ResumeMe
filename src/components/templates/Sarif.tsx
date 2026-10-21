@@ -7,7 +7,7 @@ import type { CVData, CVSection, CVEntry, SocialPlatform } from '../../types/cv'
 import ContactIcon from '../../ui/ContactIcon';
 import { getContactItems, getEntryTitle, getEntryDate, getEntryDetailLines, getSkillLevelScore } from './templateUtils';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
-import { LinkedText, type TemplateLayoutEditor } from './templateComponents';
+import { LinkedText, ResumeUrl, type TemplateLayoutEditor } from './templateComponents';
 
 interface Props {
   data: CVData;
@@ -446,17 +446,12 @@ function ProjectEntry({ entry }: { entry: CVEntry }) {
           )}
         </div>
         <div style={S.projectTitle}>
-          {entry.fields.url ? (
-            <a href={entry.fields.url} style={S.projectLink} target="_blank" rel="noopener noreferrer">
-              {entry.fields.name || entry.fields.title}
-            </a>
-          ) : (
-            entry.fields.name || entry.fields.title
-          )}
+          {entry.fields.name || entry.fields.title}
         </div>
       </div>
       <div style={S.projectDesc}>{entry.fields.description}</div>
       {entry.fields.technologies && <div style={S.projectStack}>{entry.fields.technologies}</div>}
+      {entry.fields.url && <div style={{ marginTop: 5, fontSize: 10, overflowWrap: 'anywhere' }}><ResumeUrl value={entry.fields.url} sectionType="projects" style={S.projectLink} /></div>}
     </div>
   );
 }

@@ -51,6 +51,7 @@
     "level": "Līmenis",
     "languageField": "Valoda",
     "proficiency": "Prasmju līmenis",
+    "credentialUrl": "Sertifikāta URL",
     "url": "URL",
     "technologies": "Tehnoloģijas",
     "issuer": "Izdevējs",

@@ -47,6 +47,21 @@ export function toExternalHref(value: string): string {
   return /^https?:\/\//i.test(value.trim()) ? value.trim() : '';
 }
 
+export function getResumeUrlLabel(value: string, sectionType: SectionType, language: UILanguage): string {
+  const href = toExternalHref(value);
+  if (!href) return value;
+  if (sectionType === 'certifications') return t(language, 'credentialUrl');
+
+  try {
+    const url = new URL(href);
+    const host = url.hostname.replace(/^www\./i, '');
+    const path = url.pathname.replace(/\/$/, '');
+    return `${host}${path}${url.search}${url.hash}`;
+  } catch {
+    return value.replace(/^https?:\/\//i, '').replace(/\/$/, '');
+  }
+}
+
 function getHostLabel(url: string): string {
   try {
     return new URL(url).hostname.replace(/^www\./i, '');

@@ -51,6 +51,7 @@
     "level": "ระดับ",
     "languageField": "ภาษา",
     "proficiency": "ระดับความชำนาญ",
+    "credentialUrl": "URL ใบรับรอง",
     "url": "URL",
     "technologies": "เทคโนโลยี",
     "issuer": "ผู้ออก",

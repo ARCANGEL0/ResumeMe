@@ -67,6 +67,7 @@
     "level": "Niveau",
     "languageField": "Sprache",
     "proficiency": "Kenntnisstand",
+    "credentialUrl": "Zertifikats-URL",
     "url": "URL",
     "technologies": "Technologien",
     "issuer": "Aussteller",

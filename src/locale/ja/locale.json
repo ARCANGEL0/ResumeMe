@@ -30,6 +30,7 @@
     "level": "レベル",
     "languageField": "言語",
     "proficiency": "レベル",
+    "credentialUrl": "認定証のURL",
     "url": "URL",
     "technologies": "技術",
     "issuer": "発行元",

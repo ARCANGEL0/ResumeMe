@@ -30,6 +30,7 @@
     "level": "수준",
     "languageField": "언어",
     "proficiency": "수준",
+    "credentialUrl": "자격증 URL",
     "url": "URL",
     "technologies": "기술",
     "issuer": "발급 기관",

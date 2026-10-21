@@ -51,6 +51,7 @@
     "level": "Raven",
     "languageField": "Jezik",
     "proficiency": "Raven znanja",
+    "credentialUrl": "URL certifikata",
     "url": "URL",
     "technologies": "Tehnologije",
     "issuer": "Izdajatelj",

@@ -22,6 +22,7 @@
     "location": "Location",
     "socialValue": "Profile URL / username",
     "sectionLibrary": "Section Library",
+    "credentialUrl": "证书链接",
     "url": "URL",
     "titleField": "Title",
     "templates": "Templates",

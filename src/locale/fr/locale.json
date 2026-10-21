@@ -67,6 +67,7 @@
     "level": "Niveau",
     "languageField": "Langue",
     "proficiency": "Maitrise",
+    "credentialUrl": "URL du certificat",
     "url": "URL",
     "technologies": "Technologies",
     "issuer": "Emetteur",

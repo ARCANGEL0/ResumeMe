@@ -51,6 +51,7 @@
     "level": "Επίπεδο",
     "languageField": "Γλώσσα",
     "proficiency": "Επίπεδο γνώσης",
+    "credentialUrl": "URL πιστοποιητικού",
     "url": "URL",
     "technologies": "Τεχνολογίες",
     "issuer": "Εκδότης",

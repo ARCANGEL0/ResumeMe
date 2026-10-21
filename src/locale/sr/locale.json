@@ -51,6 +51,7 @@
     "level": "Nivo",
     "languageField": "Jezik",
     "proficiency": "Nivo znanja",
+    "credentialUrl": "URL sertifikata",
     "url": "URL",
     "technologies": "Tehnologije",
     "issuer": "Izdavač",

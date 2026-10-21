@@ -51,6 +51,7 @@
     "level": "Ниво",
     "languageField": "Език",
     "proficiency": "Ниво на владеене",
+    "credentialUrl": "URL на сертификата",
     "url": "URL",
     "technologies": "Технологии",
     "issuer": "Издател",

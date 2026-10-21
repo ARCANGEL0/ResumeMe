@@ -11,10 +11,9 @@ import {
   getEntrySubtitle,
   getEntryTitle,
   getLangLevel,
-  toExternalHref,
 } from './templateUtils';
 import ContactIcon from '../../ui/ContactIcon';
-import { CustomSectionRegion, LinkedText, PhotoFrame, type TemplateLayoutEditor } from './templateComponents';
+import { CustomSectionRegion, LinkedText, PhotoFrame, ResumeUrl, type TemplateLayoutEditor } from './templateComponents';
 
 interface Props {
   data: CVData;
@@ -242,9 +241,7 @@ function SectionBody({ language, section }: { language: string; section: CVSecti
             ))}
             {entry.fields.url && (
               <div style={{ marginLeft: '14px', fontWeight: 700 }}>
-                <LinkedText href={toExternalHref(entry.fields.url)}>
-                  {entry.fields.url}
-                </LinkedText>
+                <ResumeUrl value={entry.fields.url} sectionType={section.type} />
               </div>
             )}
           </div>

@@ -30,6 +30,7 @@
     "level": "Poziom",
     "languageField": "Jezyk",
     "proficiency": "Poziom",
+    "credentialUrl": "Link do certyfikatu",
     "url": "URL",
     "technologies": "Technologie",
     "issuer": "Wydawca",

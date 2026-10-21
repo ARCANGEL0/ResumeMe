@@ -12,7 +12,7 @@ import {
   normalizeLanguageProficiency,
   toExternalHref,
 } from './templateUtils';
-import { CustomSectionRegion, LinkedText, type TemplateLayoutEditor } from './templateComponents';
+import { CustomSectionRegion, LinkedText, ResumeUrl, type TemplateLayoutEditor } from './templateComponents';
 
 export default function Europass({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
   const language = useCVStore((state) => state.language);
@@ -124,11 +124,11 @@ function EuropassSectionBody({ section, language }: { section: CVSection; langua
   }
 
   return <div style={{ display: 'flex', flexDirection: 'column', gap: '17px', marginLeft: '20px' }}>
-    {section.entries.map((entry) => <EuropassEntry key={entry.id} entry={entry} language={language} />)}
+    {section.entries.map((entry) => <EuropassEntry key={entry.id} entry={entry} language={language} sectionType={section.type} />)}
   </div>;
 }
 
-function EuropassEntry({ entry, language }: { entry: CVEntry; language: string }) {
+function EuropassEntry({ entry, language, sectionType }: { entry: CVEntry; language: string; sectionType: CVSection['type'] }) {
   const date = getEntryDate(entry, language);
   const location = entry.fields.location || entry.fields.city || '';
   const title = getEntryTitle(entry);
@@ -147,7 +147,7 @@ function EuropassEntry({ entry, language }: { entry: CVEntry; language: string }
         {details.map((detail, index) => <li key={`${index}-${detail}`}>{detail}</li>)}
       </ul>}
       {technologies && <div style={{ marginTop: '7px', color: '#000000', fontSize: '11px' }}><strong>Technologies:</strong> {technologies}</div>}
-      {entry.fields.url && <div style={{ marginTop: '7px', fontSize: '11px' }}><LinkedText href={toExternalHref(entry.fields.url)} style={{ color: '#000000', textDecoration: 'underline' }}>{entry.fields.url}</LinkedText></div>}
+      {entry.fields.url && <div style={{ marginTop: '7px', fontSize: '11px' }}><ResumeUrl value={entry.fields.url} sectionType={sectionType} style={{ color: '#000000' }} /></div>}
     </article>
   );
 }

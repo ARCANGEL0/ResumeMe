@@ -51,6 +51,7 @@
     "level": "Razina",
     "languageField": "Jezik",
     "proficiency": "Razina znanja",
+    "credentialUrl": "URL certifikata",
     "url": "URL",
     "technologies": "Tehnologije",
     "issuer": "Izdavatelj",

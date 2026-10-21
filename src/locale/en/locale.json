@@ -68,6 +68,7 @@
     "level": "Level",
     "languageField": "Language",
     "proficiency": "Proficiency",
+    "credentialUrl": "Credential URL",
     "url": "URL",
     "technologies": "Technologies",
     "issuer": "Issuer",

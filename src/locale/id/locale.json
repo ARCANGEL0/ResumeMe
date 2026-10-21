@@ -45,6 +45,7 @@
     "level": "Level",
     "languageField": "Bahasa",
     "proficiency": "Kemahiran",
+    "credentialUrl": "URL sertifikat",
     "url": "URL",
     "technologies": "Teknologi",
     "issuer": "Penerbit",

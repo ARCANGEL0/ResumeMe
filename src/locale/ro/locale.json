@@ -51,6 +51,7 @@
     "level": "Nivel",
     "languageField": "Limbă",
     "proficiency": "Nivel de cunoaștere",
+    "credentialUrl": "URL certificat",
     "url": "URL",
     "technologies": "Tehnologii",
     "issuer": "Emitent",

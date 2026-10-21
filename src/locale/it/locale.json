@@ -30,6 +30,7 @@
     "level": "Livello",
     "languageField": "Lingua",
     "proficiency": "Livello",
+    "credentialUrl": "URL della credenziale",
     "url": "URL",
     "technologies": "Tecnologie",
     "issuer": "Ente emittente",

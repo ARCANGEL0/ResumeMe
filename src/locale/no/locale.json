@@ -58,6 +58,7 @@
     "level": "Nivå",
     "languageField": "Språk",
     "proficiency": "Ferdighetsnivå",
+    "credentialUrl": "Sertifikat-URL",
     "url": "URL",
     "technologies": "Teknologier",
     "issuer": "Utsteder",

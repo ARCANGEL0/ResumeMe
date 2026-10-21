@@ -4,8 +4,8 @@ import { useCVStore } from '../../store/cvStore';
 import type { CVData, CVEntry, CVSection } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
-import { getContactItems, getEntryDate, getEntryDetailLines, getEntrySubtitle, getEntryTitle, getResumeRole, toExternalHref } from './templateUtils';
-import { CustomSectionRegion, LinkedText, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
+import { getContactItems, getEntryDate, getEntryDetailLines, getEntrySubtitle, getEntryTitle, getResumeRole } from './templateUtils';
+import { CustomSectionRegion, LinkedText, ResumeUrl, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
 export default function Summit({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
   const language = useCVStore((state) => state.language);
@@ -102,7 +102,7 @@ function ApexSection({ section, language }: { section: CVSection; language: stri
               {date && <div style={{ color: '#777777', fontSize: 10.5, lineHeight: 1.45 }}>{date}</div>}
             </div>
             <div style={{ minWidth: 0, paddingTop: index === 0 && date ? 26 : 0 }}>
-              <ApexEntry entry={entry} />
+          <ApexEntry entry={entry} sectionType={section.type} />
             </div>
           </article>
         );
@@ -112,7 +112,7 @@ function ApexSection({ section, language }: { section: CVSection; language: stri
   );
 }
 
-function ApexEntry({ entry }: { entry: CVEntry }) {
+function ApexEntry({ entry, sectionType }: { entry: CVEntry; sectionType: CVSection['type'] }) {
   const title = getEntryTitle(entry);
   const subtitle = getEntrySubtitle(entry);
   const details = getEntryDetailLines(entry);
@@ -127,7 +127,7 @@ function ApexEntry({ entry }: { entry: CVEntry }) {
       {entry.fields.location && <div style={{ marginTop: 2, color: '#686868' }}>{entry.fields.location}</div>}
       {details.map((detail, index) => <p key={`${entry.id}-${index}`} style={{ margin: '8px 0 0', color: '#555555', lineHeight: 1.45 }}>{detail}</p>)}
       {technologies && <div style={{ marginTop: 7, color: '#666666', fontSize: 9.5 }}>{technologies}</div>}
-      {url && <div style={{ maxWidth: '100%', marginTop: 5, overflowWrap: 'anywhere' }}><LinkedText href={toExternalHref(url)} style={{ color: '#555555', textDecoration: 'underline', overflowWrap: 'anywhere' }}>{url}</LinkedText></div>}
+      {url && <div style={{ maxWidth: '100%', marginTop: 5, overflowWrap: 'anywhere' }}><ResumeUrl value={url} sectionType={sectionType} style={{ color: '#555555' }} /></div>}
     </div>
   );
 }

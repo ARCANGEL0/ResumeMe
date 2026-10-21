@@ -13,6 +13,7 @@ import {
   getEntryTitle,
   getLangLevel,
   getLangScore,
+  getResumeUrlLabel,
   getSkillLevelScore,
   toExternalHref,
   type ContactItem,
@@ -48,6 +49,35 @@ export function LinkedText({
     <a href={href} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', ...style }}>
       {children}
     </a>
+  );
+}
+
+export function ResumeUrl({
+  onDark = false,
+  sectionType,
+  style,
+  value,
+}: {
+  onDark?: boolean;
+  sectionType: CVSection['type'];
+  style?: CSSProperties;
+  value: string;
+}) {
+  const language = useCVStore((state) => state.language);
+  const href = toExternalHref(value);
+
+  return (
+    <LinkedText
+      href={href || undefined}
+      style={{
+        color: onDark ? 'rgba(255,255,255,0.88)' : undefined,
+        textDecoration: href ? 'underline' : 'none',
+        overflowWrap: 'anywhere',
+        ...style,
+      }}
+    >
+      {getResumeUrlLabel(value, sectionType, language)}
+    </LinkedText>
   );
 }
 
@@ -641,7 +671,7 @@ export function SectionBlockBody({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
       {section.entries.map((entry) => (
-        <EntryBlock key={entry.id} entry={entry} theme={theme} onDark={onDark} borderColor={borderColor} titleColor={titleColor} />
+        <EntryBlock key={entry.id} entry={entry} sectionType={section.type} theme={theme} onDark={onDark} borderColor={borderColor} titleColor={titleColor} />
       ))}
     </div>
   );
@@ -1267,12 +1297,14 @@ function EntryBlock({
   borderColor,
   entry,
   onDark,
+  sectionType,
   theme,
   titleColor,
 }: {
   borderColor: string;
   entry: CVEntry;
   onDark: boolean;
+  sectionType: CVSection['type'];
   theme: TemplateTheme;
   titleColor: string;
 }) {
@@ -1337,7 +1369,7 @@ function EntryBlock({
 
       {entry.fields.url && (
         <div style={{ marginTop: '6px', color: onDark ? 'rgba(255,255,255,0.88)' : theme.accent, fontSize: '10px' }}>
-          <LinkedText href={toExternalHref(entry.fields.url)}>{entry.fields.url}</LinkedText>
+          <ResumeUrl value={entry.fields.url} sectionType={sectionType} onDark={onDark} />
         </div>
       )}
     </div>

@@ -51,6 +51,7 @@
     "level": "Tase",
     "languageField": "Keel",
     "proficiency": "Oskustase",
+    "credentialUrl": "Sertifikaadi URL",
     "url": "URL",
     "technologies": "Tehnoloogiad",
     "issuer": "Väljastaja",

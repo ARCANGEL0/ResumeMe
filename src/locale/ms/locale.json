@@ -51,6 +51,7 @@
     "level": "Tahap",
     "languageField": "Bahasa",
     "proficiency": "Tahap penguasaan",
+    "credentialUrl": "URL sijil",
     "url": "URL",
     "technologies": "Teknologi",
     "issuer": "Penerbit",

@@ -51,6 +51,7 @@
     "level": "Taso",
     "languageField": "Kieli",
     "proficiency": "Taitotaso",
+    "credentialUrl": "Todistuksen URL",
     "url": "URL",
     "technologies": "Teknologiat",
     "issuer": "Myöntäjä",

@@ -30,6 +30,7 @@
     "level": "Рівень",
     "languageField": "Мова",
     "proficiency": "Рiвень",
+    "credentialUrl": "URL сертифіката",
     "url": "URL",
     "technologies": "Технології",
     "issuer": "Видавець",

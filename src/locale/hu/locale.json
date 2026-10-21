@@ -51,6 +51,7 @@
     "level": "Szint",
     "languageField": "Nyelv",
     "proficiency": "Jártasság",
+    "credentialUrl": "Tanúsítvány URL",
     "url": "URL",
     "technologies": "Technológiák",
     "issuer": "Kibocsátó",

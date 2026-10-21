@@ -30,6 +30,7 @@
     "level": "Seviye",
     "languageField": "Dil",
     "proficiency": "Seviye",
+    "credentialUrl": "Sertifika URLsi",
     "url": "URL",
     "technologies": "Teknolojiler",
     "issuer": "Veren kurum",

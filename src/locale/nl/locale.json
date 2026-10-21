@@ -30,6 +30,7 @@
     "level": "Niveau",
     "languageField": "Taal",
     "proficiency": "Niveau",
+    "credentialUrl": "Certificaat-URL",
     "url": "URL",
     "technologies": "Technologieen",
     "issuer": "Uitgever",

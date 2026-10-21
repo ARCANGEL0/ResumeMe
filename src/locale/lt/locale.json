@@ -51,6 +51,7 @@
     "level": "Lygis",
     "languageField": "Kalba",
     "proficiency": "Mokėjimo lygis",
+    "credentialUrl": "Sertifikato URL",
     "url": "URL",
     "technologies": "Technologijos",
     "issuer": "Išdavėjas",

@@ -4,7 +4,7 @@ import type { CVData, CVSection } from '../../types/cv';
 import { TEMPLATE_THEMES } from './templateCatalog';
 import { ensureTemplateLayout, getSectionsForRegion } from './templateLayout';
 import { getContactItems, getEntryDate, getEntryDetailLines, getEntrySubtitle, getEntryTitle } from './templateUtils';
-import { ContactPanel, CustomSectionRegion, PhotoFrame, SectionBlockBody, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
+import { ContactPanel, CustomSectionRegion, PhotoFrame, ResumeUrl, SectionBlockBody, SummaryBlock, type TemplateLayoutEditor } from './templateComponents';
 
 export default function Zenith({ data, layoutEditor }: { data: CVData; layoutEditor?: TemplateLayoutEditor }) {
   const language = useCVStore((state) => state.language);
@@ -66,7 +66,7 @@ function WaypointSection({ section, theme }: { section: CVSection; theme: typeof
                 <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'baseline', minWidth: 0 }}><strong style={{ minWidth: 0, color: '#202020', fontSize: 11, overflowWrap: 'anywhere' }}>{getEntryTitle(entry)}</strong></div>
                 {subtitle && <div style={{ marginTop: 2, color: '#333', fontWeight: 600 }}>{subtitle}</div>}
                 {details.length > 0 && <ul style={{ margin: '6px 0 0 15px', padding: 0, color: '#555' }}>{details.map((detail) => <li key={detail} style={{ marginBottom: 3 }}>{detail}</li>)}</ul>}
-                {entry.fields.url && <a href={entry.fields.url} target="_blank" rel="noreferrer" style={{ display: 'block', maxWidth: '100%', minWidth: 0, marginTop: 5, color: '#444', textDecoration: 'underline', overflowWrap: 'anywhere', wordBreak: 'break-word' }}>{entry.fields.url}</a>}
+                {entry.fields.url && <ResumeUrl value={entry.fields.url} sectionType={section.type} style={{ display: 'block', maxWidth: '100%', minWidth: 0, marginTop: 5, color: '#444', wordBreak: 'break-word' }} />}
               </div>
             </article>
           );

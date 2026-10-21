@@ -51,6 +51,7 @@
     "level": "Úroveň",
     "languageField": "Jazyk",
     "proficiency": "Úroveň znalosti",
+    "credentialUrl": "URL certifikátu",
     "url": "URL",
     "technologies": "Technologie",
     "issuer": "Vydavatel",
